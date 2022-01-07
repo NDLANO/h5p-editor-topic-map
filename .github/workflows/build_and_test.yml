@@ -20,6 +20,20 @@ jobs:
       - name: Lint
         run: npm run lint
 
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: "15.x"
+
+      - name: Install Node.js dependencies
+        run: npm ci
+
       - name: Test
         run: npm run test
         env:
@@ -74,13 +88,48 @@ jobs:
         with:
           node-version: "16.x"
 
+      - name: Build main project
+        run: |
+          if test -f "h5p-editor-topic-map/package.json"
+          then
+            pushd h5p-editor-topic-map
+            npm install
+            npm run build --if-present
+            popd
+          fi
+
       - name: Get H5P dependencies
         run: |
           mkdir -p dist
-          cd dist
-          while read -r repo; do git clone ${repo}; done < ../h5p-editor-topic-map/build_info/repos
+          pushd dist
+
+          while read -r repo
+          do
+            git clone ${repo}
+            echo "Repo: ${repo}"
+
+          done < ../h5p-editor-topic-map/build_info/repos
 
           cp -r ../h5p-editor-topic-map .
+          popd
+
+      - name: Build dependencies
+        run: |
+          pushd dist
+
+          for dependency in */ ; do
+            echo "Dependency name: ${dependency}"
+
+            if test -f "${dependency}package.json"
+            then 
+              pushd ${dependency}
+              npm install
+              npm run build --if-present
+              popd
+            fi
+          done
+
+          popd
 
       - name: Load library.json
         id: set_library
@@ -117,7 +166,12 @@ jobs:
               steps.version.outputs.version
             )
           }}
-          h5p validate h5p-editor-topic-map.h5p
+          ${{
+            format(
+              'h5p validate h5p-editor-topic-map_{0}.h5p',
+              steps.version.outputs.version
+            )
+          }}
 
       - name: Archive H5P pack
         uses: actions/upload-artifact@v2
