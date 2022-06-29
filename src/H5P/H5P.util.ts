@@ -1,4 +1,4 @@
-import { H5PEditor } from "h5p-utils/src/utils/H5P.utils";
+import { H5PEditor } from "h5p-utils";
 import { TranslationKey } from "../types/TranslationKey";
 
 export const t: (

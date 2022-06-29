@@ -1,5 +1,5 @@
-import { H5PField, H5PForm } from "h5p-types";
-import { H5PEditor } from "h5p-utils/src/utils/H5P.utils";
+import type { H5PField, H5PForm } from "h5p-types";
+import { H5PEditor } from "h5p-utils";
 import * as React from "react";
 import { t } from "../../H5P/H5P.util";
 import { Params } from "../../types/Params";

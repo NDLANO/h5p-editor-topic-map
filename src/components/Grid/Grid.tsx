@@ -1,4 +1,4 @@
-import { H5P } from "h5p-utils/src/utils/H5P.utils";
+import { H5P } from "h5p-utils";
 import * as React from "react";
 import { FC, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useEffectOnce } from "react-use";

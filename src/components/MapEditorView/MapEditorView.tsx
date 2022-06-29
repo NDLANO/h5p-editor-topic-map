@@ -1,5 +1,5 @@
-import { H5PForm, H5PFieldGroup } from "h5p-types";
-import { getImageUrl } from "h5p-utils/src/utils/H5P.utils";
+import type { H5PForm, H5PFieldGroup } from "h5p-types";
+import { getImageUrl } from "h5p-utils";
 import * as React from "react";
 import { useState } from "react";
 import { t } from "../../H5P/H5P.util";

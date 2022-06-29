@@ -1,5 +1,5 @@
-import { H5PField, H5PFieldGroup, H5PFieldImage } from "h5p-types";
-import { H5PEditor } from "h5p-utils/src/utils/H5P.utils";
+import type { H5PField, H5PFieldGroup, H5PFieldImage } from "h5p-types";
+import { H5PEditor } from "h5p-utils";
 import { Params } from "../../types/Params";
 
 const getSingleField = <Type extends H5PField>(

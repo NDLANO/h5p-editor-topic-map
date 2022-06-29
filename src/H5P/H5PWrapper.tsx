@@ -1,4 +1,4 @@
-import { H5PFieldGroup, IH5PWidget } from "h5p-types";
+import type { H5PFieldGroup, IH5PWidget } from "h5p-types";
 import { H5PWidget } from "h5p-utils";
 import * as React from "react";
 import { createRoot } from "react-dom/client";

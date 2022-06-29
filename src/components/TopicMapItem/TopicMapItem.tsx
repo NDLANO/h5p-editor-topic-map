@@ -1,4 +1,4 @@
-import { getImageUrl } from "h5p-utils/src/utils/H5P.utils";
+import { getImageUrl } from "h5p-utils";
 import * as React from "react";
 import { useAppWidth } from "../../hooks/useAppWidth";
 import { BreakpointSize } from "../../types/BreakpointSize";
