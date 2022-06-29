@@ -1,4 +1,4 @@
-import { H5PFieldImage, H5PForm } from "h5p-types";
+import type { H5PFieldImage, H5PForm } from "h5p-types";
 import * as React from "react";
 import { t } from "../../H5P/H5P.util";
 import { Params } from "../../types/Params";

@@ -1,4 +1,4 @@
-import { H5PField, H5PFieldGroup, H5PForm } from "h5p-types";
+import type { H5PField, H5PFieldGroup, H5PForm } from "h5p-types";
 import * as React from "react";
 import { Params } from "../../types/Params";
 import { getLabel } from "../../utils/arrow.utils";

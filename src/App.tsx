@@ -1,5 +1,5 @@
 import useResizeObserver from "@react-hook/resize-observer";
-import { H5PFieldGroup, H5PForm } from "h5p-types";
+import type { H5PFieldGroup, H5PForm } from "h5p-types";
 import * as React from "react";
 import { MapEditorView } from "./components/MapEditorView/MapEditorView";
 import { AppWidthContext } from "./contexts/AppWidthContext";
