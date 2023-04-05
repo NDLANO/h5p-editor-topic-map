@@ -58,6 +58,9 @@ export const MapEditorView: React.FC<MapEditorViewProps> = ({
     updateGrid.current(newItems),
   );
 
+  // Used to trigger rebuilding of H5P instances
+  const [triggerLibraryBuild, setTriggerLibraryBuild] = useState(0);
+
   const setActive = (newValue: ToolbarButtonType | null): void => {
     setActiveTool(newValue);
   };
@@ -76,6 +79,11 @@ export const MapEditorView: React.FC<MapEditorViewProps> = ({
     },
     [setParams],
   );
+
+  // Inform TopicMapItems to rebuild H5P library instance
+  const updateH5PInstances = React.useCallback(() => {
+    setTriggerLibraryBuild(trigger => trigger + 1);
+  }, []);
 
   const updateItems = React.useCallback(
     (items: Array<TopicMapItemType>) => {
@@ -180,6 +188,7 @@ export const MapEditorView: React.FC<MapEditorViewProps> = ({
           updateGrid={updateGrid}
           currentItemsLength={currentItemsLength}
           setCurrentItemsLength={setCurrentItemsLength}
+          triggerLibraryBuild={triggerLibraryBuild}
         />
         <Dialog
           isOpen={showDeleteConfirmationDialog}
@@ -227,6 +236,7 @@ export const MapEditorView: React.FC<MapEditorViewProps> = ({
               params={params}
               parent={parent}
               onSave={newParams => {
+                updateH5PInstances();
                 updateItems(newParams.topicMapItems ?? []);
                 updateArrows(newParams.arrowItems ?? []);
                 setEditedItem(null);

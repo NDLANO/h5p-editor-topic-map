@@ -11,6 +11,7 @@ import { Position } from "../../types/Position";
 import { ResizeDirection } from "../../types/ResizeDirection";
 import { Size } from "../../types/Size";
 import { TopicMapItemType } from "../../types/TopicMapItemType";
+import { TopicMapSubcontentType } from "../../types/TopicMapSubcontentType";
 import {
   adjustArrowEndPosition,
   adjustArrowStartPosition,
@@ -43,6 +44,7 @@ import { Draggable } from "../Draggable/Draggable";
 import { GridIndicator } from "../GridIndicator/GridIndicator";
 import { ToolbarButtonType } from "../Toolbar/Toolbar";
 import { TopicMapItem } from "../TopicMapItem/TopicMapItem";
+import { TopicMapSubcontent } from "../TopicMapSubcontent/TopicMapSubcontent";
 import styles from "./Grid.module.scss";
 
 export type GridDimensions = {
@@ -53,7 +55,7 @@ export type GridDimensions = {
 export type GridProps = {
   numberOfColumns: number;
   numberOfRows: number;
-  initialItems: Array<TopicMapItemType>;
+  initialItems: Array<TopicMapItemType | TopicMapSubcontentType>;
   updateItems: (items: Array<TopicMapItemType>) => void;
   initialArrowItems?: Array<ArrowItemType>;
   updateArrowItems: (items: Array<ArrowItemType>) => void;
@@ -70,6 +72,7 @@ export type GridProps = {
   updateGrid: React.MutableRefObject<(newItems: TopicMapItemType[]) => void>;
   currentItemsLength: number;
   setCurrentItemsLength: (itemsLength: number) => void;
+  triggerLibraryBuild: number;
 };
 
 export const Grid: FC<GridProps> = ({
@@ -91,6 +94,7 @@ export const Grid: FC<GridProps> = ({
   updateGrid,
   currentItemsLength,
   setCurrentItemsLength,
+  triggerLibraryBuild,
 }) => {
   const [size, setSize] = useState<Size | null>(null);
   const [items, setItems] = useState(initialItems);
@@ -115,6 +119,11 @@ export const Grid: FC<GridProps> = ({
   };
   const [currentMousePosition, setCurrentMousePosition] =
     useState<Position | null>(null);
+
+  const isSubcontent = (
+    item: TopicMapItemType | TopicMapSubcontentType,
+  ): item is TopicMapSubcontentType =>
+    (item as TopicMapSubcontentType).subcontent != null;
 
   useEffectOnce(() => {
     // eslint-disable-next-line no-param-reassign
@@ -858,7 +867,14 @@ export const Grid: FC<GridProps> = ({
         onPointerDown={pointerPosition => createArrow(item.id, pointerPosition)}
         activeTool={activeTool}
       >
-        <TopicMapItem item={item} />
+        {isSubcontent(item) ? (
+          <TopicMapSubcontent
+            item={item}
+            triggerLibraryBuild={triggerLibraryBuild}
+          />
+        ) : (
+          <TopicMapItem item={item} />
+        )}
       </Draggable>
     ));
   }, [
@@ -877,6 +893,7 @@ export const Grid: FC<GridProps> = ({
     updateItemPosition,
     startResize,
     createArrow,
+    triggerLibraryBuild,
   ]);
 
   const renderArrow = useCallback(
