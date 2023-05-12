@@ -322,7 +322,7 @@ export const findHeightPercentage = (
 };
 
 export const createTopicMapItem = (): TopicMapItemType => {
-  const id = H5P.createUUID();
+  const id = crypto.randomUUID();
 
   // backgroundImage is intentionally set to undefined here
   // to correctly make the image field empty on item creation
@@ -352,7 +352,7 @@ export const createArrowItem = (
   breakpoints: Array<Position>,
   relativeBreakpoints: Array<Position>,
 ): ArrowItemType => {
-  const id = H5P.createUUID();
+  const id = crypto.randomUUID();
 
   const item: ArrowItemType = {
     id,
