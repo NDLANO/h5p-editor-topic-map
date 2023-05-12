@@ -1,12 +1,12 @@
-import type { Image } from 'h5p-types';
-import { DialogContent } from './DialogContent';
+import type { H5PImage } from "h5p-types";
+import { DialogContent } from "./DialogContent";
 
 export type CommonItemType = {
   id: string;
   label: string;
 
   description?: string;
-  topicImage?: Image;
+  topicImage?: H5PImage;
   topicImageAltText?: string;
 
   dialog?: DialogContent;
