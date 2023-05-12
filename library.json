@@ -8,12 +8,10 @@
   "license": "MIT",
   "preloadedJs": [
     {
-      "path": "dist/bundle.js"
-    }
-  ],
-  "preloadedCss": [
+      "path": "dist/h5p-editor-topic-map.js"
+    },
     {
-      "path": "dist/main.css"
+      "path": "dist/vendor.js"
     }
   ],
   "preloadedDependencies": [
