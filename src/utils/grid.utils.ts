@@ -1,4 +1,4 @@
-import { H5P } from "h5p-utils";
+import { H5P } from 'h5p-utils';
 import { ArrowItemType } from '../types/ArrowItemType';
 import { ArrowType } from '../types/ArrowType';
 import { Cell } from '../types/Cell';
