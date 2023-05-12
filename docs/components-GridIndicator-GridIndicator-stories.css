@@ -1,0 +1,3 @@
+.GridIndicator-module__gridIndicator--pHc2y{background-color:rgba(0,0,0,0);border-radius:20%;border:.125rem dashed var(--theme-color-3);display:block;height:0;opacity:.6;padding:calc(100% - .3em) 0 0 0;position:relative;transition-duration:.4s;transition-property:background-color,border-color;transition-timing-function:ease-in-out;width:100%}.GridIndicator-module__gridIndicator--pHc2y::before{content:"";left:calc(-1*var(--gap-size));height:calc(100% + 2*var(--gap-size));position:absolute;top:calc(-1*var(--gap-size));width:calc(100% + 2*var(--gap-size))}
+
+/*# sourceMappingURL=components-GridIndicator-GridIndicator-stories.css.map*/
