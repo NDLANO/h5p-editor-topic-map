@@ -1,10 +1,11 @@
 import type { H5PAudio, H5PVideo } from 'h5p-types';
+import type { H5PText } from './H5PText';
 import { Link } from './Link';
 
 export type DialogContent = {
   hasNote: boolean;
   links?: Array<Link>;
-  text?: string;
+  text?: H5PText;
   video?: H5PVideo;
   audio?: {
     /**

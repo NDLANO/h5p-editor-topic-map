@@ -20,7 +20,11 @@ export const params: Params = {
           { id: "link-2", label: "Example 2", url: "https://example.com/2" },
         ],
       },
-      description: "",
+      description: {
+        params: {
+          text: ""
+        }
+      },
     },
     {
       heightPercentage: 100,
@@ -30,7 +34,11 @@ export const params: Params = {
       xPercentagePosition: 0,
       yPercentagePosition: 0,
       topicImage: undefined,
-      description: "",
+      description: {
+        params: {
+          text: ""
+        }
+      },
     },
   ],
   arrowItems: [

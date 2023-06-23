@@ -3,6 +3,7 @@ import * as React from 'react';
 import { useAppWidth } from '../../hooks/useAppWidth';
 import { BreakpointSize } from '../../types/BreakpointSize';
 import { TopicMapItemType } from '../../types/TopicMapItemType';
+import { stripHTML } from '../../utils/string.utils';
 import styles from './TopicMapItem.module.scss';
 
 type TopicMapItemTypeWithoutPositions = Omit<
@@ -32,6 +33,10 @@ export const TopicMapItem: React.FC<TopicMapItemProps> = ({ item }) => {
     [AppWidth],
   );
 
+  const plainDescriptionText = item.description?.params.text ?
+    stripHTML(item.description.params.text) :
+    undefined;
+
   return (
     <div className={className}>
       {item.topicImage && imageUrl && (
@@ -53,10 +58,10 @@ export const TopicMapItem: React.FC<TopicMapItemProps> = ({ item }) => {
           className={styles.label}
           dangerouslySetInnerHTML={{ __html: item.label }}
         />
-        {item.description && (
+        {plainDescriptionText && (
           <div
             className={styles.description}
-            dangerouslySetInnerHTML={{ __html: item.description }}
+            dangerouslySetInnerHTML={{ __html: plainDescriptionText }}
           />
         )}
       </div>

@@ -27,7 +27,7 @@ describe(resizeItem.name, () => {
       heightPercentage: 20,
       topicImage: { path: '', alt: '' },
       label: 'Label',
-      description: '',
+      description: { params: { text: '' } },
     };
 
     const scaleFactor = 0.5;
@@ -40,7 +40,7 @@ describe(resizeItem.name, () => {
       heightPercentage: 10,
       topicImage: { path: '', alt: '' },
       label: 'Label',
-      description: '',
+      description: { params: { text: '' } },
     };
 
     const actualItem = resizeItem(item, scaleFactor);
@@ -57,7 +57,7 @@ describe(resizeItem.name, () => {
       heightPercentage: 20,
       topicImage: { path: '', alt: '' },
       label: 'Label',
-      description: '',
+      description: { params: { text: '' } },
     };
 
     const scaleFactor = 2;
@@ -70,7 +70,7 @@ describe(resizeItem.name, () => {
       heightPercentage: 40,
       topicImage: { path: '', alt: '' },
       label: 'Label',
-      description: '',
+      description: { params: { text: '' } },
     };
 
     const actualItem = resizeItem(item, scaleFactor);
@@ -87,7 +87,7 @@ describe(resizeItem.name, () => {
       heightPercentage: 20,
       topicImage: { path: '', alt: '' },
       label: 'Label',
-      description: '',
+      description: { params: { text: '' } },
     };
 
     const scaleFactor = 1;
@@ -100,7 +100,7 @@ describe(resizeItem.name, () => {
       heightPercentage: 20,
       topicImage: { path: '', alt: '' },
       label: 'Label',
-      description: '',
+      description: { params: { text: '' } },
     };
 
     const actualItem = resizeItem(item, scaleFactor);
@@ -123,7 +123,7 @@ describe(resizeItem.name, () => {
             hasNote: true,
             links: [],
           },
-          description: '',
+          description: { params: { text: '' } },
         };
 
         const expectedItem: TopicMapItemType = {
@@ -138,7 +138,7 @@ describe(resizeItem.name, () => {
             hasNote: true,
             links: [],
           },
-          description: '',
+          description: { params: { text: '' } },
         };
 
         const actualItem = resizeItem(item, scaleFactor);
@@ -183,7 +183,7 @@ describe(updateItem.name, () => {
       heightPercentage: 10,
       topicImage: { path: '', alt: '' },
       label: 'Label',
-      description: '',
+      description: { params: { text: '' } },
     };
 
     const items: Array<TopicMapItemType> = [
@@ -196,7 +196,7 @@ describe(updateItem.name, () => {
         heightPercentage: 32,
         topicImage: { path: '', alt: '' },
         label: 'Label',
-        description: '',
+        description: { params: { text: '' } },
       },
     ];
 
@@ -221,7 +221,7 @@ describe(updateItem.name, () => {
       heightPercentage: 20,
       topicImage: { path: '', alt: '' },
       label: 'Label',
-      description: '',
+      description: { params: { text: '' } },
     };
 
     const actualItems = updateItem(items, item, width, height, {
@@ -239,7 +239,7 @@ describe(updateItem.name, () => {
         heightPercentage: 32,
         topicImage: { path: '', alt: '' },
         label: 'Label',
-        description: '',
+        description: { params: { text: '' } },
       },
     ]);
   });
@@ -253,7 +253,7 @@ describe(updateItem.name, () => {
       heightPercentage: 10,
       topicImage: { path: '', alt: '' },
       label: 'Label',
-      description: '',
+      description: { params: { text: '' } },
     };
 
     const items: Array<TopicMapItemType> = [
@@ -266,7 +266,7 @@ describe(updateItem.name, () => {
         heightPercentage: 32,
         topicImage: { path: '', alt: '' },
         label: 'Label',
-        description: '',
+        description: { params: { text: '' } },
       },
     ];
 
@@ -293,7 +293,7 @@ describe(updateItem.name, () => {
       heightPercentage: 10,
       topicImage: { path: '', alt: '' },
       label: 'Label',
-      description: '',
+      description: { params: { text: '' } },
     });
 
     expect(items[0]).toEqual<TopicMapItemType>({
@@ -304,7 +304,7 @@ describe(updateItem.name, () => {
       heightPercentage: 10,
       topicImage: { path: '', alt: '' },
       label: 'Label',
-      description: '',
+      description: { params: { text: '' } },
     });
 
     expect(items[1]).toEqual<TopicMapItemType>({
@@ -315,7 +315,7 @@ describe(updateItem.name, () => {
       heightPercentage: 32,
       topicImage: { path: '', alt: '' },
       label: 'Label',
-      description: '',
+      description: { params: { text: '' } },
     });
   });
 
@@ -328,7 +328,7 @@ describe(updateItem.name, () => {
       heightPercentage: 10,
       topicImage: { path: '', alt: '' },
       label: 'Label',
-      description: '',
+      description: { params: { text: '' } },
     };
 
     const items: Array<TopicMapItemType> = [
@@ -345,7 +345,7 @@ describe(updateItem.name, () => {
           hasNote: true,
           links: [],
         },
-        description: '',
+        description: { params: { text: '' } },
       },
     ];
 
@@ -365,7 +365,7 @@ describe(updateItem.name, () => {
       heightPercentage: 20,
       topicImage: { path: '', alt: '' },
       label: 'Label',
-      description: '',
+      description: { params: { text: '' } },
     };
 
     const actualItems = updateItem(items, item, width, height, {
@@ -386,7 +386,7 @@ describe(updateItem.name, () => {
           hasNote: true,
           links: [],
         },
-        description: '',
+        description: { params: { text: '' } },
       },
     ]);
   });
@@ -400,7 +400,7 @@ describe(updateItem.name, () => {
       heightPercentage: 10,
       topicImage: { path: '', alt: '' },
       label: 'Label',
-      description: '',
+      description: { params: { text: '' } },
     };
 
     const items: Array<TopicMapItemType> = [
@@ -417,7 +417,7 @@ describe(updateItem.name, () => {
           hasNote: true,
           links: [],
         },
-        description: '',
+        description: { params: { text: '' } },
       },
     ];
 
@@ -437,7 +437,7 @@ describe(updateItem.name, () => {
       heightPercentage: 10,
       topicImage: { path: '', alt: '' },
       label: 'Label',
-      description: '',
+      description: { params: { text: '' } },
     };
 
     const actualItems = updateItem(items, item, width, height, {
@@ -458,7 +458,7 @@ describe(updateItem.name, () => {
           hasNote: true,
           links: [],
         },
-        description: '',
+        description: { params: { text: '' } },
       },
     ]);
   });

@@ -50,7 +50,7 @@ const withItemsItems: Array<TopicMapItemType> = [
       alt: '',
     },
     label: 'Label 1',
-    description: '',
+    description: { params: { text: '' } },
   },
   {
     id: 'box-2',
@@ -63,8 +63,11 @@ const withItemsItems: Array<TopicMapItemType> = [
       alt: '',
     },
     label: 'Label 2',
-    description:
-      'Let\'s put some highlights on these little trees. The sun wouldn\'t forget them. I will take some magic white, and a little bit of Vandyke brown and a little touch of yellow. Didn\'t you know you had that much power? You can move mountains. You can do anything.',
+    description: {
+      params: {
+        text: 'Let\'s put some highlights on these little trees. The sun wouldn\'t forget them. I will take some magic white, and a little bit of Vandyke brown and a little touch of yellow. Didn\'t you know you had that much power? You can move mountains. You can do anything.'
+      }
+    },
   },
   {
     id: 'box-3',
@@ -77,8 +80,11 @@ const withItemsItems: Array<TopicMapItemType> = [
       alt: '',
     },
     label: 'Label 3',
-    description:
-      'You can do anything here - the only pre-requisite is that it makes you happy.',
+    description: {
+      params: {
+        text: 'You can do anything here - the only pre-requisite is that it makes you happy.'
+      }
+    },
   },
 ];
 
@@ -122,7 +128,7 @@ FullscreenWithItems.args = {
           alt: '',
         },
         label: 'Label 1',
-        description: '',
+        description: { params: { text: '' } },
       },
       {
         id: 'box-5',
@@ -135,8 +141,11 @@ FullscreenWithItems.args = {
           alt: '',
         },
         label: 'Label 2',
-        description:
-          'Let\'s put some highlights on these little trees. The sun wouldn\'t forget them. I will take some magic white, and a little bit of Vandyke brown and a little touch of yellow. Didn\'t you know you had that much power? You can move mountains. You can do anything.',
+        description: {
+          params: {
+            text: 'Let\'s put some highlights on these little trees. The sun wouldn\'t forget them. I will take some magic white, and a little bit of Vandyke brown and a little touch of yellow. Didn\'t you know you had that much power? You can move mountains. You can do anything.'
+          }
+        },
       },
       {
         id: 'box-6',
@@ -149,8 +158,11 @@ FullscreenWithItems.args = {
           alt: '',
         },
         label: 'Label 3',
-        description:
-          'You can do anything here - the only pre-requisite is that it makes you happy.',
+        description: {
+          params: {
+            text: 'You can do anything here - the only pre-requisite is that it makes you happy.'
+          }
+        },
       },
     ],
     arrowItems: [],

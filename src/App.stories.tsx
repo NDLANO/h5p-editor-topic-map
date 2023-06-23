@@ -31,7 +31,7 @@ WithArrows.args = {
         id: 'd1552416-8133-44ce-84b2-4d472f5c4607',
         label: 'Label 3 ⟶ ',
         arrowType: ArrowType.BiDirectional,
-        description: '',
+        description: { params: { text: '' } },
         startElementId: 'box-3',
         endElementId: '3c4af0be-654f-44bf-8ba6-100813a8f456',
         startPosition: {
@@ -57,7 +57,7 @@ WithArrows.args = {
         id: 'b1f1e4d8-45f5-4ee4-8cd4-05d976a83327',
         label: ' ⟶ Label 1',
         arrowType: ArrowType.Directional,
-        description: '',
+        description: { params: { text: '' } },
         startElementId: '3c4af0be-654f-44bf-8ba6-100813a8f456',
         endElementId: 'box-1',
         startPosition: {
@@ -83,7 +83,7 @@ WithArrows.args = {
         id: '416fa662-26ac-46f5-b1e7-e1888000c0f1',
         label: 'Label 1 ⟶ Label 2',
         arrowType: ArrowType.NonDirectional,
-        description: '',
+        description: { params: { text: '' } },
         startElementId: 'box-1',
         endElementId: 'box-2',
         startPosition: {
@@ -109,7 +109,7 @@ WithArrows.args = {
         id: '8fdbe0f1-774c-4c0a-9070-404e1820ebc6',
         label: 'Label 2 ⟶ Label 3',
         arrowType: ArrowType.Directional,
-        description: '',
+        description: { params: { text: '' } },
         startElementId: 'box-2',
         endElementId: 'box-3',
         startPosition: {
@@ -135,7 +135,7 @@ WithArrows.args = {
         id: 'fbefc064-2b54-4c39-a752-ff56a0f0feac',
         label: 'Label 3 ⟶ Label 1',
         arrowType: ArrowType.NonDirectional,
-        description: '',
+        description: { params: { text: '' } },
         startElementId: 'box-3',
         endElementId: 'box-1',
         startPosition: {
@@ -161,7 +161,7 @@ WithArrows.args = {
         id: 'f9863d3b-9c61-42f8-b3c5-4eebf613ff03',
         label: 'Label 2 ⟶ ',
         arrowType: ArrowType.BiDirectional,
-        description: '',
+        description: { params: { text: '' } },
         startElementId: 'box-2',
         endElementId: '3c4af0be-654f-44bf-8ba6-100813a8f456',
         startPosition: {
@@ -196,7 +196,7 @@ WithArrows.args = {
           alt: '',
         },
         label: 'Label 1',
-        description: '',
+        description: { params: { text: '' } },
       },
       {
         id: 'box-2',
@@ -209,8 +209,11 @@ WithArrows.args = {
           alt: '',
         },
         label: 'Label 2',
-        description:
-          'Let\'s put some highlights on these little trees. The sun wouldn\'t forget them. I will take some magic white, and a little bit of Vandyke brown and a little touch of yellow. Didn\'t you know you had that much power? You can move mountains. You can do anything.',
+        description: {
+          params: {
+            text: 'Let\'s put some highlights on these little trees. The sun wouldn\'t forget them. I will take some magic white, and a little bit of Vandyke brown and a little touch of yellow. Didn\'t you know you had that much power? You can move mountains. You can do anything.'
+          }
+        },
       },
       {
         id: 'box-3',
@@ -223,8 +226,11 @@ WithArrows.args = {
           alt: '',
         },
         label: 'Label 3',
-        description:
-          'You can do anything here - the only pre-requisite is that it makes you happy.',
+        description: {
+          params: {
+            text: 'You can do anything here - the only pre-requisite is that it makes you happy.'
+          }
+        },
       },
       {
         id: '3c4af0be-654f-44bf-8ba6-100813a8f456',
@@ -233,7 +239,7 @@ WithArrows.args = {
         widthPercentage: 25.80645161290323,
         heightPercentage: 26.31578947368421,
         label: 'Label 4',
-        description: '',
+        description: { params: { text: '' } },
         topicImage: {
           path: 'https://images.unsplash.com/photo-1506543090642-3b27724fdbef?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80',
         },
@@ -271,7 +277,7 @@ WithoutArrows.args = {
         },
         topicImageAltText: 'Red flower with white background.',
         label: 'Label 1',
-        description: '',
+        description: { params: { text: '' } },
       },
       {
         id: 'box-2',
@@ -285,8 +291,11 @@ WithoutArrows.args = {
         },
         topicImageAltText: 'Pink flower surrounded by green leaves.',
         label: 'Label 2',
-        description:
-          'Let\'s put some highlights on these little trees. The sun wouldn\'t forget them. I will take some magic white, and a little bit of Vandyke brown and a little touch of yellow. Didn\'t you know you had that much power? You can move mountains. You can do anything.',
+        description: {
+          params: {
+            text: 'Let\'s put some highlights on these little trees. The sun wouldn\'t forget them. I will take some magic white, and a little bit of Vandyke brown and a little touch of yellow. Didn\'t you know you had that much power? You can move mountains. You can do anything.'
+          }
+        },
       },
       {
         id: 'box-3',
@@ -300,8 +309,11 @@ WithoutArrows.args = {
         },
         topicImageAltText: 'Yellow flower with yellow background.',
         label: 'Label 3',
-        description:
-          'You can do anything here - the only pre-requisite is that it makes you happy.',
+        description: {
+          params: {
+            text: 'You can do anything here - the only pre-requisite is that it makes you happy.'
+          }
+        },
       },
     ],
     arrowItems: [],
