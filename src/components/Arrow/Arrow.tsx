@@ -1,6 +1,7 @@
 /* eslint-disable no-nested-ternary */
 import * as React from 'react';
-import { H5P, t } from '../../H5P/H5P.util';
+import { H5P } from 'h5p-utils';
+import { t } from '../../H5P/H5P.util';
 import { ArrowItemType } from '../../types/ArrowItemType';
 import { ArrowType } from '../../types/ArrowType';
 import { ContextMenuAction } from '../../types/ContextMenuAction';
@@ -132,11 +133,11 @@ export const Arrow: React.FC<ArrowProps> = ({
 
   const toPathElement = (position: Position): string => {
     return `L ${(position.x - 0.5) * (cellSize + gapSize)} ${(position.y - 0.5) * (cellSize + gapSize)
-    }`;
+      }`;
   };
 
   const pathDef = `M ${startPos.x} ${startPos.y} ${item.breakpoints?.map(toPathElement).join(' ') ?? ''
-  } L ${endPos.x} ${endPos.y}`;
+    } L ${endPos.x} ${endPos.y}`;
 
   const contextMenuPosition: Position = {
     x: isHorizontal
@@ -184,7 +185,7 @@ export const Arrow: React.FC<ArrowProps> = ({
         </defs>
         <path
           className={`${selectedItemId === null ? styles.path : styles.pathSelected
-          } ${arrowStartId === null ? styles.selectable : ''}`}
+            } ${arrowStartId === null ? styles.selectable : ''}`}
           d={pathDef}
           fill="transparent"
           stroke="var(--theme-color-4)"
