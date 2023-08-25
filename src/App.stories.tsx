@@ -207,7 +207,7 @@ export const WithArrows = {
           },
           label: 'Label 2',
           description:
-            "Let's put some highlights on these little trees. The sun wouldn't forget them. I will take some magic white, and a little bit of Vandyke brown and a little touch of yellow. Didn't you know you had that much power? You can move mountains. You can do anything.",
+            'Let\'s put some highlights on these little trees. The sun wouldn\'t forget them. I will take some magic white, and a little bit of Vandyke brown and a little touch of yellow. Didn\'t you know you had that much power? You can move mountains. You can do anything.',
         },
         {
           id: 'box-3',
@@ -284,7 +284,7 @@ export const WithoutArrows = {
           topicImageAltText: 'Pink flower surrounded by green leaves.',
           label: 'Label 2',
           description:
-            "Let's put some highlights on these little trees. The sun wouldn't forget them. I will take some magic white, and a little bit of Vandyke brown and a little touch of yellow. Didn't you know you had that much power? You can move mountains. You can do anything.",
+            'Let\'s put some highlights on these little trees. The sun wouldn\'t forget them. I will take some magic white, and a little bit of Vandyke brown and a little touch of yellow. Didn\'t you know you had that much power? You can move mountains. You can do anything.',
         },
         {
           id: 'box-3',
