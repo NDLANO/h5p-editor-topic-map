@@ -1,7 +1,7 @@
-import '../src/styles.scss';
+import { Decorator } from '@storybook/react';
+import * as React from 'react';
 import language from '../language/en.json';
-import * as React from "react";
-import { Decorator } from "@storybook/react";
+import '../src/styles.scss';
 
 export const parameters = {
   actions: { argTypesRegex: '^on[A-Z].*' },
@@ -33,9 +33,9 @@ export const parameters = {
 (window as any).H5PEditor.language['H5PEditor.TopicMap'] = language;
 
 export const decorators: Array<Decorator> = [
-  Story => (
+  (Story) => (
     <div className="h5p-editor-topic-map theme-1">
       <Story />
     </div>
   ),
-]
+];
