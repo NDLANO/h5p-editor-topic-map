@@ -1,3 +1,4 @@
+const million = require('million/compiler');
 const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
@@ -17,6 +18,7 @@ module.exports = {
   },
   target: ['browserslist'],
   plugins: [
+    million.webpack({ auto: true }), 
     new MiniCssExtractPlugin({
       filename: '[name].css',
     }),
@@ -36,7 +38,12 @@ module.exports = {
               presets: ['@babel/preset-env'],
             },
           },
-          { loader: 'ts-loader' },
+          { 
+            loader: 'ts-loader',
+            options: {
+              transpileOnly: true,
+            }
+          },
         ],
         exclude: /node_modules/,
       },
