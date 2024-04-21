@@ -156,7 +156,7 @@ export const Grid: FC<GridProps> = ({
     // The grid's size is updated by external factors,
     // but still affects the grid indicator size
   }, [size]);
-  
+
   const cellSize = useMemo(getCellSize, [
     gapSize,
     getCellSize,
@@ -198,7 +198,7 @@ export const Grid: FC<GridProps> = ({
           .find((element) =>
             element.classList.contains('grid-indicator'),
           ) as HTMLElement;
-          
+
         const gridPosition: Position = {
           x: parseInt(gridIndicator.dataset.x as string, 10),
           y: parseInt(gridIndicator.dataset.y as string, 10),
@@ -1028,6 +1028,7 @@ export const Grid: FC<GridProps> = ({
         gridTemplateColumns: `repeat(${numberOfColumns}, 1fr)`,
         gridTemplateRows: `repeat(${numberOfRows}, 1fr)`,
         cursor: isDragging ? 'pointer' : 'auto',
+        inset: 0
       }}
       onMouseUp={() => {
         createBoxEnd();
