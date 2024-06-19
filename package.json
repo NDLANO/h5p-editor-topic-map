@@ -9,11 +9,9 @@
   "scripts": {
     "watch": "webpack --watch --mode=development",
     "build": "webpack --mode=production",
-    "lint": "eslint ./src .storybook --ext .ts,.tsx,.js,.jsx",
+    "lint": "eslint ./src --ext .ts,.tsx,.js,.jsx",
     "lint:fix": "npm run lint -- --fix",
-    "test": "jest",
-    "storybook": "storybook dev -p 6006 -s ../language",
-    "build-storybook": "storybook build"
+    "test": "jest"
   },
   "dependencies": {
     "@radix-ui/react-dialog": "^1.0.5",
@@ -31,10 +29,6 @@
     "@babel/preset-react": "^7.24.1",
     "@babel/preset-typescript": "^7.24.1",
     "@mdx-js/react": "^3.0.1",
-    "@storybook/addon-essentials": "^7.5.3",
-    "@storybook/addon-links": "^7.5.3",
-    "@storybook/react": "^7.5.3",
-    "@storybook/react-webpack5": "^7.5.3",
     "@types/jest": "^29.5.12",
     "@types/jquery": "^3.5.29",
     "@types/lodash": "^4.17.0",
@@ -49,7 +43,6 @@
     "css-loader": "^6.10.0",
     "eslint": "^8.57.0",
     "eslint-config-ndla-h5p": "github:ndlano/eslint-config-ndla-h5p",
-    "eslint-plugin-storybook": "^0.6.15",
     "fast-check": "^3.17.0",
     "h5p-types": "^5.1.0",
     "identity-obj-proxy": "^3.0.0",
@@ -58,8 +51,6 @@
     "mini-css-extract-plugin": "^2.8.1",
     "sass": "^1.72.0",
     "sass-loader": "^14.1.1",
-    "storybook": "^7.5.3",
-    "storybook-addon-themes": "^6.1.0",
     "style-loader": "^3.3.4",
     "ts-loader": "^9.5.1",
     "ts-node": "^10.9.2",
