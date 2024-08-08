@@ -44,7 +44,10 @@ export const Dialog: FC<DialogProps> = ({
       <Overlay className={styles.overlay} />
       <Content className={styles.content} style={{ maxWidth }}>
         <Title className={styles.title}>{title}</Title>
-        {description && <Description>{description}</Description>}
+        {description ?
+          <Description>{description}</Description> :
+          <Description className={styles.visuallyHidden} aria-hidden="true" />
+        }
         <Close className={styles.closeButton} aria-label={closeButtonLabel}>
           <Cross2Icon />
         </Close>
