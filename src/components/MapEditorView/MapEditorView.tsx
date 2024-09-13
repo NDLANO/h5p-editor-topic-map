@@ -13,7 +13,7 @@ import { Dialog } from '../Dialog/Dialog';
 import { Grid, GridDimensions } from '../Grid/Grid';
 import { Toolbar, ToolbarButtonType } from '../Toolbar/Toolbar';
 import { TopicMapItemForm } from '../TopicMapItemForm/TopicMapItemForm';
-import styles from './MapEditorView.module.scss';
+import * as styles from './MapEditorView.module.scss';
 
 export type MapEditorViewProps = {
   gapSize?: number;
@@ -155,8 +155,7 @@ export const MapEditorView: FC<MapEditorViewProps> = ({
         backgroundImageField={backgroundImageField}
       />
       <div
-        className={`${styles.gridBorder} ${
-          backgroundImage ? styles.backgroundImage : ''
+        className={`${styles.gridBorder} ${backgroundImage ? styles.backgroundImage : ''
         }`}
         style={{ backgroundImage }}
       >

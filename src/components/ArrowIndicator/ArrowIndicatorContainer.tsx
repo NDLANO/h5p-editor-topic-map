@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { Position } from '../../types/Position';
-import styles from './ArrowIndicator.module.scss';
+import * as styles from './ArrowIndicator.module.scss';
 
 export type ArrowIndicatorProps = {
   arrowIndicators: JSX.Element[];
@@ -19,16 +19,14 @@ export const ArrowIndicatorContainer: FC<ArrowIndicatorProps> = ({
   currentMousePosition,
 }) => {
   const toPathElement = (position: Position): string => {
-    return `${(position.x - 0.5) * (cellSize + gapSize)} ${
-      (position.y - 0.5) * (cellSize + gapSize)
+    return `${(position.x - 0.5) * (cellSize + gapSize)} ${(position.y - 0.5) * (cellSize + gapSize)
     }`;
   };
   const pathDef =
     breakpoints && breakpoints.length > 0
       ? `M ${toPathElement(breakpoints[0])} ${breakpoints
         .map((pos) => `L ${toPathElement(pos)}`)
-        .join(' ')} ${
-        currentMousePosition ? `L ${toPathElement(currentMousePosition)}` : ''
+        .join(' ')} ${currentMousePosition ? `L ${toPathElement(currentMousePosition)}` : ''
       }`
       : '';
   return (

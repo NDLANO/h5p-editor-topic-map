@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { ContextMenuAction } from '../../types/ContextMenuAction';
 import { ContextMenuButton } from '../ContextMenuButton/ContextMenuButton';
-import styles from './ContextMenu.module.scss';
+import * as styles from './ContextMenu.module.scss';
 
 /*
   Name of svg icon should be similar to this,
@@ -50,8 +50,7 @@ export const ContextMenu: FC<ContextMenuProps> = ({
 
   return (
     <div
-      className={`${styles.contextMenu} ${className} ${
-        show && styles.show
+      className={`${styles.contextMenu} ${className} ${show && styles.show
       } context-menu-button`}
       style={
         x && y

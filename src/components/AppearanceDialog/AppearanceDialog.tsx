@@ -7,7 +7,7 @@ import { defaultTheme } from '../../utils/theme.utils';
 import { Dialog } from '../Dialog/Dialog';
 import { SemanticsForm } from '../SemanticsForm/SemanticsForm';
 import { ThemePicker } from '../ThemePicker/ThemePicker';
-import styles from './AppearanceDialog.module.scss';
+import * as styles from './AppearanceDialog.module.scss';
 
 export type AppearanceDialogProps = {
   isOpen: boolean;
@@ -43,14 +43,14 @@ export const AppearanceDialog: FC<AppearanceDialogProps> = ({
       onOpenChange={setIsOpen}
     >
       <div className={styles.dialogContent}>
-        <div className={styles.themePicker}>
+        <div>
           <ThemePicker
             setTheme={setTheme}
             activeTheme={params.colorTheme ?? defaultTheme}
           />
         </div>
 
-        <div className={styles.backgroundImageForm}>
+        <div>
           <SemanticsForm
             fields={[backgroundImageField]}
             params={params}

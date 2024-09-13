@@ -9,7 +9,7 @@ import {
 import { Cross2Icon } from '@radix-ui/react-icons';
 import { FC, ReactElement } from 'react';
 import { t } from '../../H5P/H5P.util';
-import styles from './Dialog.module.scss';
+import * as styles from './Dialog.module.scss';
 
 type DialogSize = 'medium' | 'large';
 

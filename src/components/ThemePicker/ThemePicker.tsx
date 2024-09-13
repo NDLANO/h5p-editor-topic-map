@@ -2,7 +2,7 @@ import { FC, useCallback, useMemo } from 'react';
 import { t } from '../../H5P/H5P.util';
 import { ColorTheme } from '../../types/ColorTheme';
 import { themes } from '../../utils/theme.utils';
-import styles from './ThemePicker.module.scss';
+import * as styles from './ThemePicker.module.scss';
 
 export type ThemePickerProps = {
   activeTheme: ColorTheme;
@@ -31,8 +31,7 @@ export const ThemePicker: FC<ThemePickerProps> = ({
         <button
           type="button"
           key={value}
-          className={`theme-${value} ${styles.button}${
-            value === activeTheme ? ` ${styles.buttonActive}` : ''
+          className={`theme-${value} ${styles.button}${value === activeTheme ? ` ${styles.buttonActive}` : ''
           }`}
           onClick={() => setTheme(value)}
         >
