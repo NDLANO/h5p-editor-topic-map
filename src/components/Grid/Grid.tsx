@@ -42,7 +42,7 @@ import { Draggable } from '../Draggable/Draggable';
 import { GridIndicator } from '../GridIndicator/GridIndicator';
 import { ToolbarButtonType } from '../Toolbar/Toolbar';
 import { TopicMapItem } from '../TopicMapItem/TopicMapItem';
-import styles from './Grid.module.scss';
+import * as styles from './Grid.module.scss';
 
 export type GridDimensions = {
   numberOfColumns: number;

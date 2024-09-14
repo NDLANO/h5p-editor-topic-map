@@ -5,7 +5,7 @@ import { Params } from '../../types/Params';
 import { TranslationKey } from '../../types/TranslationKey';
 import { AppearanceDialog } from '../AppearanceDialog/AppearanceDialog';
 import { ToolbarButton } from '../ToolbarButton/ToolbarButton';
-import styles from './Toolbar.module.scss';
+import * as styles from './Toolbar.module.scss';
 
 const labelTextKeys: Record<string, TranslationKey> = {
   mapAppearance: 'toolbar-button-type_map-appearance',

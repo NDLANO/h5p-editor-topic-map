@@ -1,18 +1,18 @@
 import { FC, useCallback, useEffect, useRef, useState, MouseEvent, TouchEvent } from 'react';
 import { capitalize } from '../../utils/string.utils';
-import styles from './ScaleHandle.module.scss';
+import * as styles from './ScaleHandle.module.scss';
 
 export type ScaleHandleProps = {
   labelText: string;
   position:
-    | 'top'
-    | 'bottom'
-    | 'left'
-    | 'right'
-    | 'top-right'
-    | 'bottom-right'
-    | 'bottom-left'
-    | 'top-left';
+  | 'top'
+  | 'bottom'
+  | 'left'
+  | 'right'
+  | 'top-right'
+  | 'bottom-right'
+  | 'bottom-left'
+  | 'top-left';
   onScaleStop: () => void;
   onScaleStart: () => void;
 };

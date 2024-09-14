@@ -3,7 +3,7 @@ import { FC, useMemo } from 'react';
 import { useAppWidth } from '../../hooks/useAppWidth';
 import { BreakpointSize } from '../../types/BreakpointSize';
 import { TopicMapItemType } from '../../types/TopicMapItemType';
-import styles from './TopicMapItem.module.scss';
+import * as styles from './TopicMapItem.module.scss';
 
 type TopicMapItemTypeWithoutPositions = Omit<
   TopicMapItemType,
@@ -45,8 +45,7 @@ export const TopicMapItem: FC<TopicMapItemProps> = ({ item }) => {
       )}
 
       <div
-        className={`${styles.inner} ${
-          item.topicImage?.path ? '' : styles.noImage
+        className={`${styles.inner} ${item.topicImage?.path ? '' : styles.noImage
         }`}
       >
         <div

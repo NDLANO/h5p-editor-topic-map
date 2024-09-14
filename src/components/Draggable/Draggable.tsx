@@ -1,4 +1,4 @@
-import { FC,  useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { FC, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { t } from '../../H5P/H5P.util';
 import { ContextMenuAction } from '../../types/ContextMenuAction';
 import { OccupiedCell } from '../../types/OccupiedCell';
@@ -15,7 +15,7 @@ import { checkIfRightSideOfGrid, positionIsFree } from '../../utils/grid.utils';
 import { ContextMenu, ContextMenuButtonType } from '../ContextMenu/ContextMenu';
 import { ScaleHandles } from '../ScaleHandles/ScaleHandles';
 import { ToolbarButtonType } from '../Toolbar/Toolbar';
-import styles from './Draggable.module.scss';
+import * as styles from './Draggable.module.scss';
 
 const labelTextKeys: Record<string, TranslationKey> = {
   selected: 'draggable_selected',
@@ -312,10 +312,8 @@ export const Draggable: FC<DraggableProps> = ({
       /* Prevent default because we implement drag ourselves */
       onDragStart={preventDefault}
       aria-grabbed={isDragging}
-      className={`${styles.draggable} ${
-        isPreview && styles.preview
-      } draggable ${
-        activeTool === ToolbarButtonType.CreateArrow && styles.arrow_mode
+      className={`${styles.draggable} ${isPreview && styles.preview
+      } draggable ${activeTool === ToolbarButtonType.CreateArrow
       }`}
       onMouseDown={startDrag}
       onTouchStart={startDrag}

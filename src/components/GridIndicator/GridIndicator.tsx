@@ -1,6 +1,6 @@
 import { FC, memo } from 'react';
 import { Position } from '../../types/Position';
-import styles from './GridIndicator.module.scss';
+import * as styles from './GridIndicator.module.scss';
 
 export type GridIndicatorProps = {
   onMouseDown: () => void;
