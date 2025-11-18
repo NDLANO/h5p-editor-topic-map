@@ -45,7 +45,7 @@ describe('Array utils', () => {
       const value = 1;
       const arr: Array<number> = [];
 
-      expect(() => findClosest(value, arr)).toThrowError();
+      expect(() => findClosest(value, arr)).toThrow();
     });
   });
 });
