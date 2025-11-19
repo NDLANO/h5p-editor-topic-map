@@ -116,7 +116,7 @@ export const Grid: FC<GridProps> = ({
     useState<Position | null>(null);
 
   useEffectOnce(() => {
-    // eslint-disable-next-line no-param-reassign
+     
     updateGrid.current = updateLocalGrid;
     updateGridDimensions({ numberOfColumns, numberOfRows });
   });

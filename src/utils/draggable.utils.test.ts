@@ -18,8 +18,6 @@ describe('draggable utils', () => {
       [ ] [ ] [ ] [ ]
     */
 
-    const validWidths: ReadonlyArray<number> = [10, 25, 40, 55];
-
     const gapSize = 5;
     const cellSize = 10;
     const gridWidth = 55;
@@ -122,8 +120,6 @@ describe('draggable utils', () => {
       [ ] [ ] [ ] [ ]
       [ ] [ ] [ ] [ ]
     */
-
-    const validXPositions: ReadonlyArray<number> = [0, 15, 30, 45];
 
     const gapSize = 5;
     const cellSize = 10;

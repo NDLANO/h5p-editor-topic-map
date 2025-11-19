@@ -13,7 +13,7 @@ export const findClosest = (
   let closestNumber: number = arr[0];
   let currentDiff: number = Number.MAX_VALUE;
 
-  // eslint-disable-next-line no-restricted-syntax
+   
   for (const num of arr) {
     const diff = Math.abs(value - num);
 
