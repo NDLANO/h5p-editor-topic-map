@@ -140,7 +140,7 @@ export const findOccupiedCells = (
 ): Array<OccupiedCell> => {
   const occupiedCells: Array<OccupiedCell> = [];
 
-  // eslint-disable-next-line no-restricted-syntax
+   
   for (const element of elements) {
     occupiedCells.push(
       ...findCellsElementOccupies(

@@ -1,4 +1,4 @@
-/* eslint-disable no-nested-ternary */
+ 
 import { H5P } from 'h5p-utils';
 import { FC, useCallback, useMemo, useState } from 'react';
 import { t } from '../../H5P/H5P.util';
