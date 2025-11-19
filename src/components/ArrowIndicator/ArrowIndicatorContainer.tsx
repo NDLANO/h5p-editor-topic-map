@@ -3,7 +3,7 @@ import { Position } from '../../types/Position';
 import * as styles from './ArrowIndicator.module.scss';
 
 export type ArrowIndicatorProps = {
-  arrowIndicators: JSX.Element[];
+  arrowIndicators: React.ReactElement[];
   breakpoints: Position[];
   cellSize: number;
   gapSize: number;
