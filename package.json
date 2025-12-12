@@ -19,8 +19,8 @@
     "@react-hook/resize-observer": "^2.0.2",
     "h5p-utils": "^4.0.0",
     "lodash.intersectionby": "^4.7.0",
-    "react": "^19.2.1",
-    "react-dom": "^19.2.1",
+    "react": "^19.2.3",
+    "react-dom": "^19.2.3",
     "react-use": "^17.6.0"
   },
   "devDependencies": {
