@@ -40,7 +40,7 @@ export const TopicMapItemForm: FC<TopicMapItemFormProps> = ({
 
   const onUpdate = useCallback(
     (newParams: Params) => {
-      if (!newParams.topicMapItems) {
+      if (!newParams.topicMapItems?.length) {
         return;
       }
 

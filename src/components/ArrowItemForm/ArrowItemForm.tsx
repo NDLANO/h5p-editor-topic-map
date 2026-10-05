@@ -39,7 +39,7 @@ export const ArrowItemForm: FC<ArrowItemFormProps> = ({
 
   const onUpdate = useCallback(
     (newParams: Params) => {
-      if (!newParams.arrowItems) {
+      if (!newParams.arrowItems?.length) {
         return;
       }
 
