@@ -23,7 +23,7 @@ export type DialogProps = {
 };
 
 const maxWidths: Record<DialogSize, number> = {
-  medium: 450,
+  medium: 560,
   large: 750,
 };
 
