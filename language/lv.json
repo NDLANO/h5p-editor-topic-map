@@ -24,6 +24,9 @@
     "global_theme-3": "Red",
     "global_theme-4": "Gray",
     "toolbar-button-type_cannot-create-arrow": "There must be at least two boxes before an arrow can be added",
-    "theme-picker_label": "Color theme"
+    "theme-picker_label": "Color theme",
+    "scale-handle_resize-height": "Resize height",
+    "scale-handle_resize-width": "Resize width",
+    "scale-handle_resize-width-and-height": "Resize width and height"
   }
 }

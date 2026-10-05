@@ -24,6 +24,9 @@
     "global_theme-4": "Gris",
     "theme-picker_label": "Tema de cor",
     "toolbar-button-type_cannot-create-arrow": "Debe haber polo menos dúas caixas para que se poida engadir unha frecha",
-    "toolbar-button-type_map-appearance": "Aspecto do mapa"
+    "toolbar-button-type_map-appearance": "Aspecto do mapa",
+    "scale-handle_resize-height": "Resize height",
+    "scale-handle_resize-width": "Resize width",
+    "scale-handle_resize-width-and-height": "Resize width and height"
   }
 }

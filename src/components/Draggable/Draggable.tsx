@@ -12,6 +12,7 @@ import {
   getPointerPositionFromEvent,
 } from '../../utils/draggable.utils';
 import { checkIfRightSideOfGrid, positionIsFree } from '../../utils/grid.utils';
+import { stripHtmlTags } from '../../utils/string.utils';
 import { ContextMenu, ContextMenuButtonType } from '../ContextMenu/ContextMenu';
 import { ScaleHandles } from '../ScaleHandles/ScaleHandles';
 import { ToolbarButtonType } from '../Toolbar/Toolbar';
@@ -24,9 +25,11 @@ const labelTextKeys: Record<string, TranslationKey> = {
 
 export type DraggableProps = {
   id: string;
+  label: string;
   initialXPosition: number;
   initialYPosition: number;
   updatePosition: (newPosition: Position) => void;
+  updateSize: (newSize: Size) => void;
   initialWidth: number;
   initialHeight: number;
   gapSize: number;
@@ -48,9 +51,11 @@ export type DraggableProps = {
 
 export const Draggable: FC<DraggableProps> = ({
   id,
+  label,
   initialXPosition,
   initialYPosition,
   updatePosition,
+  updateSize,
   initialWidth,
   initialHeight,
   gapSize,
@@ -256,8 +261,9 @@ export const Draggable: FC<DraggableProps> = ({
     );
   }, [isSelected]);
 
-  const horizontalScaleHandleLabelText = '';
-  const verticalScaleHandleLabelText = '';
+  const horizontalScaleHandleLabelText = t('scale-handle_resize-width');
+  const verticalScaleHandleLabelText = t('scale-handle_resize-height');
+  const cornerScaleHandleLabelText = t('scale-handle_resize-width-and-height');
 
   useEffect(() => {
     /* 
@@ -311,6 +317,70 @@ export const Draggable: FC<DraggableProps> = ({
       getNewPosition,
       checkIfPositionIsFree,
       updatePosition,
+    ],
+  );
+
+  // Grow or shrink the item by whole cells, resizing the bottom-right corner like the mouse handle
+  const resizeByCell = useCallback(
+    (dx: number, dy: number) => {
+      if (isResizing) {
+        return;
+      }
+
+      const stepSize = cellSize + gapSize;
+
+      const currentWidthCells = Math.round((width + gapSize) / stepSize);
+      const currentHeightCells = Math.round((height + gapSize) / stepSize);
+      const maxWidthCells = Math.floor(
+        (gridSize.width - position.x + gapSize) / stepSize,
+      );
+      const maxHeightCells = Math.floor(
+        (gridSize.height - position.y + gapSize) / stepSize,
+      );
+
+      const newWidth =
+        Math.min(Math.max(currentWidthCells + dx, 1), maxWidthCells) *
+        stepSize -
+        gapSize;
+      const newHeight =
+        Math.min(Math.max(currentHeightCells + dy, 1), maxHeightCells) *
+        stepSize -
+        gapSize;
+
+      if (newWidth === width && newHeight === height) {
+        return;
+      }
+
+      const newSize = { width: newWidth, height: newHeight };
+
+      if (
+        !positionIsFree(
+          position,
+          id,
+          newSize,
+          gridSize,
+          gapSize,
+          cellSize,
+          occupiedCells,
+        )
+      ) {
+        return;
+      }
+
+      setSize(newSize);
+      updateSize(newSize);
+    },
+    [
+      cellSize,
+      gapSize,
+      gridSize,
+      height,
+      id,
+      isResizing,
+      occupiedCells,
+      position,
+      updateSize,
+      width,
     ],
   );
 
@@ -403,6 +473,9 @@ export const Draggable: FC<DraggableProps> = ({
    */
   const offset = 2;
 
+  // The label is rich text, so strip its tags for the accessible name
+  const strippedLabel = stripHtmlTags(label).trim();
+
   return (
     <div
       id={id}
@@ -427,7 +500,8 @@ export const Draggable: FC<DraggableProps> = ({
         pointerEvents: isPreview || isResizing ? 'none' : undefined,
         transition: isPreview || isResizing ? 'none' : undefined,
       }}
-      aria-label={labelText}
+      aria-label={strippedLabel || labelText}
+      aria-description={strippedLabel ? labelText : undefined}
       onMouseUp={stopDrag}
       onTouchEnd={stopDrag}
       onKeyDown={handleKeyDown}
@@ -445,6 +519,8 @@ export const Draggable: FC<DraggableProps> = ({
           stopResize={stopResize}
           verticalScaleHandleLabelText={verticalScaleHandleLabelText}
           horizontalScaleHandleLabelText={horizontalScaleHandleLabelText}
+          cornerScaleHandleLabelText={cornerScaleHandleLabelText}
+          onResizeByCell={resizeByCell}
         />
       )}
       <ContextMenu

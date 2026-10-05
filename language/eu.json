@@ -24,6 +24,9 @@
     "global_theme-1": "Urdina",
     "global_theme-2": "Berdea",
     "global_theme-3": "Gorria",
-    "global_theme-4": "Grisa"
+    "global_theme-4": "Grisa",
+    "scale-handle_resize-height": "Resize height",
+    "scale-handle_resize-width": "Resize width",
+    "scale-handle_resize-width-and-height": "Resize width and height"
   }
 }

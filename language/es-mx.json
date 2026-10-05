@@ -24,6 +24,9 @@
     "global_theme-4": "Gris",
     "theme-picker_label": "Color del tema",
     "appearance-dialog_title": "Cambiar la apariencia del mapa del tópico",
-    "toolbar-button-type_cannot-create-arrow": "Debe haber al menos dos cajas antes de que se pueda añadir una flecha"
+    "toolbar-button-type_cannot-create-arrow": "Debe haber al menos dos cajas antes de que se pueda añadir una flecha",
+    "scale-handle_resize-height": "Resize height",
+    "scale-handle_resize-width": "Resize width",
+    "scale-handle_resize-width-and-height": "Resize width and height"
   }
 }

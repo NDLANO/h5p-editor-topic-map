@@ -21,9 +21,12 @@
     "global_theme-0": "Default",
     "global_theme-1": "Azul",
     "global_theme-2": "Verde",
-    "global_theme-3": "rojo",
+    "global_theme-3": "Rojo",
     "global_theme-4": "Gris",
     "theme-picker_label": "Color del tema",
-    "toolbar-button-type_cannot-create-arrow": "Debe haber al menos dos cajas antes de que se pueda añadir una flecha"
+    "toolbar-button-type_cannot-create-arrow": "Debe haber al menos dos cajas antes de que se pueda añadir una flecha",
+    "scale-handle_resize-height": "Resize height",
+    "scale-handle_resize-width": "Resize width",
+    "scale-handle_resize-width-and-height": "Resize width and height"
   }
 }
