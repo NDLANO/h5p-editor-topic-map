@@ -104,6 +104,8 @@ export const Grid: FC<GridProps> = ({
     useState<ResizeDirection>('none');
   const [mouseOutsideGrid, setMouseOutsideGrid] = useState(false);
   const [prevIndex, setPrevIndex] = useState<number | null>(null);
+  // Index of the grid indicator that currently owns the roving tabindex
+  const [focusedIndicatorIndex, setFocusedIndicatorIndex] = useState(0);
   const [arrowIndicators, setArrowIndicators] = useState<Array<Position>>([]);
   const [arrowStartId, setArrowStartId] = useState<string | null>(null);
   const [ahPreviewGridPosition, setAhPreviewGridPosition] =
@@ -129,6 +131,14 @@ export const Grid: FC<GridProps> = ({
     setArrowIndicators([]);
     setCurrentMousePosition(null);
   }, [activeTool]);
+
+  // Keep the roving tabindex within bounds if the grid shrinks
+  useEffect(() => {
+    const totalIndicators = numberOfColumns * numberOfRows;
+    if (focusedIndicatorIndex >= totalIndicators) {
+      setFocusedIndicatorIndex(totalIndicators - 1);
+    }
+  }, [focusedIndicatorIndex, numberOfColumns, numberOfRows]);
 
   const getCellSize = useCallback(() => {
     if (!elementRef.current) {
@@ -694,6 +704,115 @@ export const Grid: FC<GridProps> = ({
     ],
   );
 
+  // Move the roving tabindex (and DOM focus) to the indicator at the given index
+  const focusIndicator = useCallback(
+    (index: number) => {
+      if (!elementRef.current) {
+        return;
+      }
+
+      const indicators = elementRef.current.querySelectorAll<HTMLElement>(
+        '[data-grid-indicator="true"]',
+      );
+      const clampedIndex = Math.min(Math.max(index, 0), indicators.length - 1);
+      indicators[clampedIndex]?.focus();
+      setFocusedIndicatorIndex(clampedIndex);
+    },
+    [],
+  );
+
+  const handleGridKeyDown = useCallback(
+    (event: React.KeyboardEvent<HTMLDivElement>) => {
+      const target = event.target as HTMLElement;
+      if (!target.hasAttribute('data-grid-indicator')) {
+        return;
+      }
+
+      const isCreatingBox = activeTool === ToolbarButtonType.CreateBox;
+      const totalIndicators = numberOfColumns * numberOfRows;
+
+      const moveFocus = (index: number): void => {
+        if (index < 0 || index >= totalIndicators) {
+          return;
+        }
+        focusIndicator(index);
+
+        // While a box is being created with the keyboard, arrow keys expand it
+        if (isCreatingBox && isDragging) {
+          onGridIndicatorMouseEnter(index);
+        }
+      };
+
+      switch (event.key) {
+        case 'ArrowRight':
+          event.preventDefault();
+          moveFocus(focusedIndicatorIndex + 1);
+          return;
+        case 'ArrowLeft':
+          event.preventDefault();
+          moveFocus(focusedIndicatorIndex - 1);
+          return;
+        case 'ArrowDown':
+          event.preventDefault();
+          moveFocus(focusedIndicatorIndex + numberOfColumns);
+          return;
+        case 'ArrowUp':
+          event.preventDefault();
+          moveFocus(focusedIndicatorIndex - numberOfColumns);
+          return;
+        case 'Home':
+          event.preventDefault();
+          moveFocus(focusedIndicatorIndex - (focusedIndicatorIndex % numberOfColumns));
+          return;
+        case 'End':
+          event.preventDefault();
+          moveFocus(
+            focusedIndicatorIndex -
+              (focusedIndicatorIndex % numberOfColumns) +
+              numberOfColumns -
+              1,
+          );
+          return;
+        case 'Enter':
+        case ' ':
+          event.preventDefault();
+
+          if (isCreatingBox && isDragging) {
+            createBoxEnd();
+            return;
+          }
+
+          indicatorClicked(focusedIndicatorIndex);
+
+          // Materialize the initial 1x1 box, mirroring the mouse flow where
+          // the box is created on the first cell entered
+          if (isCreatingBox && !isDragging) {
+            onGridIndicatorMouseEnter(focusedIndicatorIndex);
+          }
+          return;
+        case 'Escape':
+          if (isCreatingBox && isDragging) {
+            event.preventDefault();
+            createBoxEnd();
+          }
+          return;
+        default:
+        // The grid only handles the keys listed above
+      }
+    },
+    [
+      activeTool,
+      createBoxEnd,
+      focusIndicator,
+      focusedIndicatorIndex,
+      indicatorClicked,
+      isDragging,
+      numberOfColumns,
+      numberOfRows,
+      onGridIndicatorMouseEnter,
+    ],
+  );
+
   const gridIndicators = useMemo(() => {
     const label = t('grid-indicator_label');
 
@@ -718,6 +837,7 @@ export const Grid: FC<GridProps> = ({
             y: Math.floor(index / numberOfColumns) + 1,
             x: (index % numberOfColumns) + 1,
           }}
+          tabIndex={index === focusedIndicatorIndex ? 0 : -1}
         />
       )),
     [
@@ -725,6 +845,7 @@ export const Grid: FC<GridProps> = ({
       numberOfColumns,
       indicatorClicked,
       onGridIndicatorMouseEnter,
+      focusedIndicatorIndex,
     ],
   );
   const deferredGridIndicatorElements = useDeferredValue(gridIndicatorElements);
@@ -1034,6 +1155,7 @@ export const Grid: FC<GridProps> = ({
         createBoxEnd();
         resizeBoxEnd();
       }}
+      onKeyDown={handleGridKeyDown}
       onMouseLeave={() => cancelActions()}
       onMouseEnter={() => {
         if (mouseOutsideGrid) {
