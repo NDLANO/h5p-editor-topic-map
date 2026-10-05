@@ -17,12 +17,13 @@
     "toolbar-button-type_create-arrow": "Crear frecha",
     "toolbar-button-type_create-box": "Crear caixa",
     "appearance-dialog_title": "Cambia a aparencia do mapa temático",
+    "global_theme-0": "Default",
+    "global_theme-1": "Azul",
     "global_theme-2": "Verde",
     "global_theme-3": "Vermello",
     "global_theme-4": "Gris",
     "theme-picker_label": "Tema de cor",
     "toolbar-button-type_cannot-create-arrow": "Debe haber polo menos dúas caixas para que se poida engadir unha frecha",
-    "toolbar-button-type_map-appearance": "Aspecto do mapa",
-    "global_theme-1": "Azul"
+    "toolbar-button-type_map-appearance": "Aspecto do mapa"
   }
 }

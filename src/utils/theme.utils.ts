@@ -7,4 +7,4 @@ export const themes: Array<{ value: ColorTheme; labelKey: TranslationKey }> =
     labelKey: `global_theme-${value}`,
   }));
 
-export const defaultTheme = ColorTheme.Blue;
+export const defaultTheme = ColorTheme.Default;

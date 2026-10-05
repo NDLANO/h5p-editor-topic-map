@@ -12,6 +12,7 @@
     "draggable_delete-positive": "Delete item",
     "draggable_not-selected": "Press enter to select",
     "draggable_selected": "Press arrow keys to move. Press escape to unselect.",
+    "global_theme-0": "Default",
     "global_theme-1": "Blue",
     "global_theme-2": "Green",
     "global_theme-3": "Red",
