@@ -279,6 +279,108 @@ export const Draggable: FC<DraggableProps> = ({
     setIsResizing(false);
   }, [stopDrag]);
 
+  // Move the item one grid cell in the given direction, mirroring the mouse drag snapping
+  const moveByCell = useCallback(
+    (dx: number, dy: number) => {
+      if (activeTool !== null || !isSelected) {
+        return;
+      }
+
+      const stepSize = cellSize + gapSize;
+      const targetX = getClosestValidXPosition(position.x + dx * stepSize);
+      const targetY = getClosestValidYPosition(position.y + dy * stepSize);
+      const newPosition = getNewPosition(targetX, targetY);
+
+      if (!checkIfPositionIsFree(newPosition)) {
+        return;
+      }
+
+      setPosition(newPosition);
+      updatePosition(newPosition);
+      setPreviousPosition(newPosition);
+    },
+    [
+      activeTool,
+      isSelected,
+      cellSize,
+      gapSize,
+      position.x,
+      position.y,
+      getClosestValidXPosition,
+      getClosestValidYPosition,
+      getNewPosition,
+      checkIfPositionIsFree,
+      updatePosition,
+    ],
+  );
+
+  const handleKeyDown = useCallback(
+    (event: React.KeyboardEvent<HTMLDivElement>) => {
+      // Let interactive descendants (e.g. context menu buttons) keep their own key handling
+      const target = event.target as HTMLElement;
+      if (target !== elementRef.current && target.closest('button, input')) {
+        return;
+      }
+
+      switch (event.key) {
+        case 'Enter':
+        case ' ':
+          event.preventDefault();
+
+          if (activeTool === ToolbarButtonType.CreateArrow) {
+            // Start an arrow from this item, mirroring the pointer-down on the item
+            const rect = elementRef.current?.getBoundingClientRect();
+            if (rect) {
+              onPointerDown({
+                x: rect.left + rect.width / 2,
+                y: rect.top + rect.height / 2,
+              });
+            }
+            return;
+          }
+
+          if (activeTool === null && !isSelected) {
+            setIsSelected(true);
+            setSelectedItem(id);
+          }
+          return;
+        case 'Escape':
+          if (isSelected) {
+            event.preventDefault();
+            setIsSelected(false);
+            setSelectedItem(null);
+          }
+          return;
+        case 'ArrowRight':
+          event.preventDefault();
+          moveByCell(1, 0);
+          return;
+        case 'ArrowLeft':
+          event.preventDefault();
+          moveByCell(-1, 0);
+          return;
+        case 'ArrowDown':
+          event.preventDefault();
+          moveByCell(0, 1);
+          return;
+        case 'ArrowUp':
+          event.preventDefault();
+          moveByCell(0, -1);
+          return;
+        default:
+        // The item only handles the keys listed above
+      }
+    },
+    [
+      activeTool,
+      isSelected,
+      id,
+      onPointerDown,
+      setSelectedItem,
+      moveByCell,
+    ],
+  );
+
   const contextMenuActions: Array<ContextMenuAction> = useMemo(() => {
     const editAction: ContextMenuAction = {
       icon: ContextMenuButtonType.Edit,
@@ -328,6 +430,7 @@ export const Draggable: FC<DraggableProps> = ({
       aria-label={labelText}
       onMouseUp={stopDrag}
       onTouchEnd={stopDrag}
+      onKeyDown={handleKeyDown}
       onDoubleClick={() => editItem(id)}
       data-draggable
     >

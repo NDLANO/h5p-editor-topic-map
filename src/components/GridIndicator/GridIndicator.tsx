@@ -7,10 +7,11 @@ export type GridIndicatorProps = {
   onMouseEnter: () => void;
   label: string;
   position: Position;
+  tabIndex: number;
 };
 
 export const GridIndicator: FC<GridIndicatorProps> = memo(
-  ({ onMouseDown, onMouseEnter, label, position }) => {
+  ({ onMouseDown, onMouseEnter, label, position, tabIndex }) => {
     return (
       <button
         type="button"
@@ -20,6 +21,7 @@ export const GridIndicator: FC<GridIndicatorProps> = memo(
         onTouchStart={onMouseDown}
         onTouchMove={onMouseEnter}
         aria-label={label}
+        tabIndex={tabIndex}
         data-grid-indicator="true"
         data-x={position.x}
         data-y={position.y}
@@ -28,5 +30,6 @@ export const GridIndicator: FC<GridIndicatorProps> = memo(
   },
   (prevProps, nextProps) =>
     prevProps.onMouseDown === nextProps.onMouseDown &&
-    prevProps.onMouseEnter === nextProps.onMouseEnter,
+    prevProps.onMouseEnter === nextProps.onMouseEnter &&
+    prevProps.tabIndex === nextProps.tabIndex,
 );
