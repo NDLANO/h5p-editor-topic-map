@@ -97,29 +97,29 @@ export const MapEditorView: FC<MapEditorViewProps> = ({
     setShowDeleteConfirmationDialog(true);
   }, []);
 
-  const deleteArrow = useCallback(
-    (id: string) => {
-      const newItems = arrowItems.filter((item) => item.id !== id);
-
-      updateArrows(newItems);
-      setArrowItems(newItems);
-    },
-    [arrowItems, updateArrows],
-  );
-
   const deleteItem = useCallback(() => {
     const newItems = gridItems.filter((item) => item.id !== deletedItem);
-
-    const connectedArrows = findConnectedArrows(deletedItem ?? '', arrowItems);
-    connectedArrows.forEach((item) => deleteArrow(item.id));
 
     updateItems(newItems);
     setGridItems(newItems);
     updateGrid.current(newItems);
+
+    // Remove connected arrows after updateItems, which re-syncs the pre-deletion arrow list
+    const connectedArrows = findConnectedArrows(deletedItem ?? '', arrowItems);
+    if (connectedArrows.length > 0) {
+      const connectedIds = new Set(connectedArrows.map((arrow) => arrow.id));
+      const newArrowItems = arrowItems.filter(
+        (item) => !connectedIds.has(item.id),
+      );
+
+      updateArrows(newArrowItems);
+      setArrowItems(newArrowItems);
+    }
+
     setShowDeleteConfirmationDialog(false);
     setSelectedItem(null);
     setCurrentItemsLength(newItems.length);
-  }, [arrowItems, deleteArrow, deletedItem, gridItems, updateItems]);
+  }, [arrowItems, deletedItem, gridItems, updateArrows, updateItems]);
 
   const denyDeletion = useCallback(() => {
     setShowDeleteConfirmationDialog(false);
