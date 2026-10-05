@@ -41,18 +41,21 @@ export const App: FC<AppProps> = ({
       ? fillInMissingParamsProperties(initialParams)
       : getEmptyParams(),
   );
+  // Track the latest params so updates batched in one render cycle merge against fresh state, not the stale closure
+  const paramsRef = useRef(params);
 
   const updateParams = useCallback(
     (updatedParams: Partial<Params>) => {
       const newParams: Params = {
-        ...params,
+        ...paramsRef.current,
         ...updatedParams,
       };
 
+      paramsRef.current = newParams;
       setParams(newParams);
       setValue(newParams);
     },
-    [params, setValue],
+    [setValue],
   );
 
   return (
