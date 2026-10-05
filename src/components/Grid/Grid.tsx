@@ -952,6 +952,7 @@ export const Grid: FC<GridProps> = ({
       <Draggable
         key={item.id}
         id={item.id}
+        label={item.label}
         initialXPosition={calculatePosition(
           item.xPercentagePosition,
           size.width,
@@ -961,6 +962,7 @@ export const Grid: FC<GridProps> = ({
           size.height,
         )}
         updatePosition={(newPosition) => updateItemPosition(item, newPosition)}
+        updateSize={(newSize) => updateItemSize(item, newSize)}
         initialWidth={Math.abs(
           calculatePosition(item.widthPercentage, size.width),
         )}
@@ -999,6 +1001,7 @@ export const Grid: FC<GridProps> = ({
     mouseOutsideGrid,
     activeTool,
     updateItemPosition,
+    updateItemSize,
     startResize,
     createArrow,
   ]);

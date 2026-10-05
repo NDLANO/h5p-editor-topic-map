@@ -15,6 +15,8 @@ export type ScaleHandleProps = {
   | 'top-left';
   onScaleStop: () => void;
   onScaleStart: () => void;
+  tabIndex: number;
+  onResizeByCell?: (dx: number, dy: number) => void;
 };
 
 export const ScaleHandle: FC<ScaleHandleProps> = ({
@@ -22,6 +24,8 @@ export const ScaleHandle: FC<ScaleHandleProps> = ({
   position,
   onScaleStop,
   onScaleStart,
+  tabIndex,
+  onResizeByCell,
 }) => {
   const [isDragging, setIsDragging] = useState(false);
   const elementRef = useRef<HTMLDivElement>(null);
@@ -47,6 +51,32 @@ export const ScaleHandle: FC<ScaleHandleProps> = ({
     onScaleStop();
   }, [isDragging, onScaleStop]);
 
+  const handleKeyDown = useCallback(
+    (event: React.KeyboardEvent<HTMLDivElement>) => {
+      if (!onResizeByCell) {
+        return;
+      }
+
+      const directionByArrowKey: Record<string, { dx: number; dy: number }> = {
+        ArrowRight: { dx: 1, dy: 0 },
+        ArrowLeft: { dx: -1, dy: 0 },
+        ArrowDown: { dx: 0, dy: 1 },
+        ArrowUp: { dx: 0, dy: -1 },
+      };
+
+      const direction = directionByArrowKey[event.key];
+      if (!direction) {
+        return;
+      }
+
+      // Stop the parent Draggable from moving the item instead of resizing it
+      event.preventDefault();
+      event.stopPropagation();
+      onResizeByCell(direction.dx, direction.dy);
+    },
+    [onResizeByCell],
+  );
+
   useEffect(() => {
     /* 
       These are tied to `window`, because the
@@ -66,11 +96,12 @@ export const ScaleHandle: FC<ScaleHandleProps> = ({
     <div
       ref={elementRef}
       role="button"
-      tabIndex={0}
+      tabIndex={tabIndex}
       className={`${styles.scaleHandle} ${className} scaleHandle`}
       aria-label={labelText}
       onMouseDown={startDrag}
       onTouchStart={startDrag}
+      onKeyDown={handleKeyDown}
     />
   );
 };

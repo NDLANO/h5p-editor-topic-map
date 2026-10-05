@@ -8,6 +8,8 @@ export type ScaleHandlesProps = {
   stopResize: () => void;
   verticalScaleHandleLabelText: string;
   horizontalScaleHandleLabelText: string;
+  cornerScaleHandleLabelText: string;
+  onResizeByCell: (dx: number, dy: number) => void;
 };
 
 export const ScaleHandles: FC<ScaleHandlesProps> = ({
@@ -16,6 +18,8 @@ export const ScaleHandles: FC<ScaleHandlesProps> = ({
   stopResize,
   verticalScaleHandleLabelText,
   horizontalScaleHandleLabelText,
+  cornerScaleHandleLabelText,
+  onResizeByCell,
 }) => {
   return (
     <>
@@ -27,6 +31,7 @@ export const ScaleHandles: FC<ScaleHandlesProps> = ({
         }}
         onScaleStop={() => stopResize()}
         labelText={verticalScaleHandleLabelText}
+        tabIndex={-1}
       />
 
       <ScaleHandle
@@ -37,6 +42,7 @@ export const ScaleHandles: FC<ScaleHandlesProps> = ({
         }}
         onScaleStop={() => stopResize()}
         labelText={verticalScaleHandleLabelText}
+        tabIndex={-1}
       />
       <ScaleHandle
         position="right"
@@ -46,6 +52,7 @@ export const ScaleHandles: FC<ScaleHandlesProps> = ({
         }}
         onScaleStop={() => stopResize()}
         labelText={horizontalScaleHandleLabelText}
+        tabIndex={-1}
       />
       <ScaleHandle
         position="bottom-right"
@@ -54,7 +61,9 @@ export const ScaleHandles: FC<ScaleHandlesProps> = ({
           startResize('none');
         }}
         onScaleStop={() => stopResize()}
-        labelText={horizontalScaleHandleLabelText}
+        labelText={cornerScaleHandleLabelText}
+        tabIndex={0}
+        onResizeByCell={onResizeByCell}
       />
 
       <ScaleHandle
@@ -65,6 +74,7 @@ export const ScaleHandles: FC<ScaleHandlesProps> = ({
         }}
         onScaleStop={() => stopResize()}
         labelText={verticalScaleHandleLabelText}
+        tabIndex={-1}
       />
 
       <ScaleHandle
@@ -75,6 +85,7 @@ export const ScaleHandles: FC<ScaleHandlesProps> = ({
         }}
         onScaleStop={() => stopResize()}
         labelText={verticalScaleHandleLabelText}
+        tabIndex={-1}
       />
 
       <ScaleHandle
@@ -85,6 +96,7 @@ export const ScaleHandles: FC<ScaleHandlesProps> = ({
         }}
         onScaleStop={() => stopResize()}
         labelText={horizontalScaleHandleLabelText}
+        tabIndex={-1}
       />
 
       <ScaleHandle
@@ -95,6 +107,7 @@ export const ScaleHandles: FC<ScaleHandlesProps> = ({
         }}
         onScaleStop={() => stopResize()}
         labelText={horizontalScaleHandleLabelText}
+        tabIndex={-1}
       />
     </>
   );
