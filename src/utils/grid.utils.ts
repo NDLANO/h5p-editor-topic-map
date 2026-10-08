@@ -245,14 +245,6 @@ export const coordinatePosToPx = (
   return coordinate * stepSize;
 };
 
-export const coordinateSizeToPx = (
-  coordinate: number,
-  gapSize: number,
-  cellSize: number,
-): number => {
-  return coordinate * cellSize + (coordinate - 1) * gapSize;
-};
-
 export const isDraggingLeft = (
   indicatorIndex: number,
   boxStartPosition: number,
@@ -395,35 +387,6 @@ export const findConnectedArrows = (
   return arrows.filter((arrow) =>
     [arrow.startElementId, arrow.endElementId].includes(itemId),
   );
-};
-
-export const asGridPosition = (
-  position: Position,
-  width: number,
-  height: number,
-): Position => {
-  const xPercentagePosition = calculateXPercentage(position.x, width);
-  const yPercentagePosition = calculateYPercentage(position.y, height);
-  return {
-    x: xPercentagePosition,
-    y: yPercentagePosition,
-  } as Position;
-};
-
-export const straightenArrowEnd = (
-  start: Position,
-  end: Position,
-): Position => {
-  if (Math.abs(start.x - end.x) >= Math.abs(start.y - end.y)) {
-    return {
-      x: end.x,
-      y: start.y,
-    } as Position;
-  }
-  return {
-    x: start.x,
-    y: end.y,
-  } as Position;
 };
 
 export const gridToPercentage = (
