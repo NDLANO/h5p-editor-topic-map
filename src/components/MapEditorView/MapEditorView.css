@@ -16,8 +16,8 @@
       width: 100%;
 
       &::before {
-        content: " ";
         background-color: var(--theme-color-1);
+        content: " ";
         display: block;
         height: 100%;
         left: 0;

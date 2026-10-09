@@ -19,14 +19,14 @@
     "global_theme-4": "Gray",
     "grid-indicator_label": "Click and drag to create a new element",
     "map-editor-view_item-dialog-title": "Item",
+    "scale-handle_resize-height": "Resize height",
+    "scale-handle_resize-width": "Resize width",
+    "scale-handle_resize-width-and-height": "Resize width and height",
     "semantics-form_save": "Save",
     "theme-picker_label": "Color theme",
     "toolbar-button-type_cannot-create-arrow": "There must be at least two boxes before an arrow can be added",
     "toolbar-button-type_create-arrow": "Create arrow",
     "toolbar-button-type_create-box": "Create box",
-    "toolbar-button-type_map-appearance": "Map appearance",
-    "scale-handle_resize-height": "Resize height",
-    "scale-handle_resize-width": "Resize width",
-    "scale-handle_resize-width-and-height": "Resize width and height"
+    "toolbar-button-type_map-appearance": "Map appearance"
   }
 }

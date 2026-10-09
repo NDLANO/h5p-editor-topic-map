@@ -1,13 +1,13 @@
 .h5p-editor-topic-map-arrow {
   cursor: pointer;
-  position: absolute;
   height: 100%;
-  width: 100%;
   pointer-events: none;
+  position: absolute;
+  width: 100%;
 
   .h5p-editor-topic-map-arrow-svg {
-    position: absolute;
     height: 100%;
+    position: absolute;
     width: 100%;
     z-index: 1;
   }

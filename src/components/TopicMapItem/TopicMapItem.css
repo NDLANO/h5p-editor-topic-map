@@ -46,10 +46,10 @@
   }
 
   .h5p-editor-topic-map-image {
-    width: 100%;
+    flex-grow: 2;
     height: 100%;
     object-fit: cover;
-    flex-grow: 2;
+    width: 100%;
   }
 
   .h5p-editor-topic-map-inner {
@@ -66,10 +66,10 @@
     }
 
     .h5p-editor-topic-map-label {
-      font-size: 1.125em;
-      font-weight: 500;
       -moz-hyphens: auto;
       -webkit-hyphens: auto;
+      font-size: 1.125em;
+      font-weight: 500;
       hyphens: auto;
       overflow-wrap: break-word;
       text-align: center;
