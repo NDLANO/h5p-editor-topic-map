@@ -1,4 +1,4 @@
-import './ContextMenuButton.scss';
+import './ContextMenuButton.css';
 import { Icon } from '../Icons/Icons';
 import { ContextMenuButtonType } from '../ContextMenu/ContextMenu';
 import { FC, MouseEventHandler } from 'react';

@@ -1,4 +1,4 @@
 /// <reference types="jquery" />
 /// <reference types="jest" />
 
-declare module '*.scss';
+declare module '*.css';

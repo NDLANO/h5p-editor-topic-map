@@ -3,7 +3,7 @@ import { FC, useMemo } from 'react';
 import { useAppWidth } from '../../hooks/useAppWidth';
 import { BreakpointSize } from '../../types/BreakpointSize';
 import { TopicMapItemType } from '../../types/TopicMapItemType';
-import './TopicMapItem.scss';
+import './TopicMapItem.css';
 
 type TopicMapItemTypeWithoutPositions = Omit<
   TopicMapItemType,

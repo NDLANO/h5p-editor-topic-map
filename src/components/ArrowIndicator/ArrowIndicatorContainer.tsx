@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { Position } from '../../types/Position';
-import './ArrowIndicator.scss';
+import './ArrowIndicator.css';
 
 export type ArrowIndicatorProps = {
   arrowIndicators: React.ReactElement[];

@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { Icon } from '../Icons/Icons';
 import { ToolbarButtonType } from '../Toolbar/Toolbar';
-import './ToolbarButton.scss';
+import './ToolbarButton.css';
 
 export type ToolbarButtonProps = {
   icon: ToolbarButtonType;

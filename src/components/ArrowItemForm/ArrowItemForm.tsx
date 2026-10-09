@@ -3,7 +3,7 @@ import { FC, useCallback, useEffect, useState } from 'react';
 import { Params } from '../../types/Params';
 import { getArrowItemsField } from '../../utils/H5P/form.utils';
 import { SemanticsForm } from '../SemanticsForm/SemanticsForm';
-import './ArrowItemForm.scss';
+import './ArrowItemForm.css';
 
 export type ArrowItemFormProps = {
   semantics: H5PFieldGroup;

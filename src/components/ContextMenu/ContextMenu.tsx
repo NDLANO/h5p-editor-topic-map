@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { ContextMenuAction } from '../../types/ContextMenuAction';
 import { ContextMenuButton } from '../ContextMenuButton/ContextMenuButton';
-import './ContextMenu.scss';
+import './ContextMenu.css';
 
 /*
   Name of svg icon should be similar to this,

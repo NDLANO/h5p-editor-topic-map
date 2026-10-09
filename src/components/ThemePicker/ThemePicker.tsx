@@ -2,7 +2,7 @@ import { FC, useCallback, useMemo } from 'react';
 import { t } from '../../H5P/H5P.util';
 import { ColorTheme } from '../../types/ColorTheme';
 import { themes } from '../../utils/theme.utils';
-import './ThemePicker.scss';
+import './ThemePicker.css';
 
 export type ThemePickerProps = {
   activeTheme: ColorTheme;

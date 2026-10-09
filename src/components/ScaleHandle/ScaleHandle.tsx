@@ -1,5 +1,5 @@
 import { FC, useCallback, useEffect, useRef, useState, MouseEvent, TouchEvent } from 'react';
-import './ScaleHandle.scss';
+import './ScaleHandle.css';
 
 export type ScaleHandleProps = {
   labelText: string;

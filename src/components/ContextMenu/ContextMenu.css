@@ -1,5 +1,5 @@
 .h5p-editor-topic-map-context-menu {
-  $border-width: 0.6em;
+  --h5p-editor-topic-map-context-menu-border-width: 0.6em;
 
   display: none;
   position: absolute;
@@ -21,7 +21,7 @@
     content: "";
     border-style: solid;
     border-color: #09f transparent transparent transparent;
-    bottom: -$border-width;
+    bottom: calc(var(--h5p-editor-topic-map-context-menu-border-width) * -1);
   }
 
   &::after {
@@ -30,7 +30,9 @@
     content: "";
     border-style: solid;
     border-color: #c4e3f7 transparent transparent transparent;
-    bottom: calc(-#{$border-width} + 2px);
+    bottom: calc(
+      var(--h5p-editor-topic-map-context-menu-border-width) * -1 + 2px
+    );
     z-index: 1;
   }
 
@@ -40,12 +42,16 @@
 
   &.right {
     &::before {
-      border-width: $border-width $border-width 0 0;
+      border-width:
+        var(--h5p-editor-topic-map-context-menu-border-width)
+        var(--h5p-editor-topic-map-context-menu-border-width) 0 0;
       left: -1px;
     }
 
     &::after {
-      border-width: $border-width $border-width 0 0;
+      border-width:
+        var(--h5p-editor-topic-map-context-menu-border-width)
+        var(--h5p-editor-topic-map-context-menu-border-width) 0 0;
       left: 0;
     }
   }
@@ -54,12 +60,16 @@
     right: 0;
 
     &::before {
-      border-width: $border-width 0 0 $border-width;
+      border-width:
+        var(--h5p-editor-topic-map-context-menu-border-width) 0 0
+        var(--h5p-editor-topic-map-context-menu-border-width);
       right: -1px;
     }
 
     &::after {
-      border-width: $border-width 0 0 $border-width;
+      border-width:
+        var(--h5p-editor-topic-map-context-menu-border-width) 0 0
+        var(--h5p-editor-topic-map-context-menu-border-width);
       right: 0;
     }
   }
