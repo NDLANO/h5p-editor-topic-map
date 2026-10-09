@@ -3,7 +3,7 @@ import { FC, useMemo } from 'react';
 import { useAppWidth } from '../../hooks/useAppWidth';
 import { BreakpointSize } from '../../types/BreakpointSize';
 import { TopicMapItemType } from '../../types/TopicMapItemType';
-import * as styles from './TopicMapItem.module.scss';
+import './TopicMapItem.scss';
 
 type TopicMapItemTypeWithoutPositions = Omit<
   TopicMapItemType,
@@ -14,9 +14,9 @@ type TopicMapItemTypeWithoutPositions = Omit<
 >;
 
 const sizeClassname = {
-  [BreakpointSize.Large]: styles.large,
-  [BreakpointSize.Medium]: styles.medium,
-  [BreakpointSize.Small]: styles.small,
+  [BreakpointSize.Large]: 'h5p-editor-topic-map-large',
+  [BreakpointSize.Medium]: 'h5p-editor-topic-map-medium',
+  [BreakpointSize.Small]: 'h5p-editor-topic-map-small',
 };
 
 export type TopicMapItemProps = {
@@ -28,7 +28,7 @@ export const TopicMapItem: FC<TopicMapItemProps> = ({ item }) => {
   const AppWidth = useAppWidth();
 
   const className = useMemo(
-    () => [styles.topicMapItem, sizeClassname[AppWidth]].join(' '),
+    () => `h5p-editor-topic-map-topic-map-item ${sizeClassname[AppWidth]}`,
     [AppWidth],
   );
 
@@ -36,7 +36,7 @@ export const TopicMapItem: FC<TopicMapItemProps> = ({ item }) => {
     <div className={className}>
       {item.topicImage && imageUrl && (
         <img
-          className={styles.image}
+          className="h5p-editor-topic-map-image"
           src={imageUrl}
           alt={item.topicImageAltText ?? ''}
           width={item.topicImage.width}
@@ -45,16 +45,17 @@ export const TopicMapItem: FC<TopicMapItemProps> = ({ item }) => {
       )}
 
       <div
-        className={`${styles.inner} ${item.topicImage?.path ? '' : styles.noImage
+        className={`h5p-editor-topic-map-inner ${
+          item.topicImage?.path ? '' : 'h5p-editor-topic-map-no-image'
         }`}
       >
         <div
-          className={styles.label}
+          className="h5p-editor-topic-map-label"
           dangerouslySetInnerHTML={{ __html: item.label }}
         />
         {item.description && (
           <div
-            className={styles.description}
+            className="h5p-editor-topic-map-description"
             dangerouslySetInnerHTML={{ __html: item.description }}
           />
         )}

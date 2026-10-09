@@ -13,7 +13,7 @@ import { Dialog } from '../Dialog/Dialog';
 import { Grid, GridDimensions } from '../Grid/Grid';
 import { Toolbar, ToolbarButtonType } from '../Toolbar/Toolbar';
 import { TopicMapItemForm } from '../TopicMapItemForm/TopicMapItemForm';
-import * as styles from './MapEditorView.module.scss';
+import './MapEditorView.scss';
 
 export type MapEditorViewProps = {
   gapSize?: number;
@@ -144,7 +144,7 @@ export const MapEditorView: FC<MapEditorViewProps> = ({
     : undefined;
 
   return (
-    <div className={styles.mapEditorView}>
+    <div className="h5p-editor-topic-map-map-editor-view">
       <Toolbar
         setActiveTool={setActive}
         activeTool={activeTool}
@@ -155,7 +155,8 @@ export const MapEditorView: FC<MapEditorViewProps> = ({
         backgroundImageField={backgroundImageField}
       />
       <div
-        className={`${styles.gridBorder} ${backgroundImage ? styles.backgroundImage : ''
+        className={`h5p-editor-topic-map-grid-border ${
+          backgroundImage ? 'backgroundImage' : ''
         }`}
         style={{ backgroundImage }}
       >
@@ -190,17 +191,17 @@ export const MapEditorView: FC<MapEditorViewProps> = ({
           }}
           size="medium"
         >
-          <div className={styles.deleteConfirmationButtons}>
+          <div className="h5p-editor-topic-map-delete-confirmation-buttons">
             <button
               type="button"
-              className={styles.deleteConfirmationPositive}
+              className="h5p-editor-topic-map-delete-confirmation-positive"
               onClick={deleteItem}
             >
               {t('draggable_delete-positive')}
             </button>
             <button
               type="button"
-              className={styles.deleteConfirmationNegative}
+              className="h5p-editor-topic-map-delete-confirmation-negative"
               onClick={denyDeletion}
             >
               {t('draggable_delete-negative')}

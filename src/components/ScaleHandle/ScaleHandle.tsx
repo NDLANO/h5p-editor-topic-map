@@ -1,6 +1,5 @@
 import { FC, useCallback, useEffect, useRef, useState, MouseEvent, TouchEvent } from 'react';
-import { capitalize } from '../../utils/string.utils';
-import * as styles from './ScaleHandle.module.scss';
+import './ScaleHandle.scss';
 
 export type ScaleHandleProps = {
   labelText: string;
@@ -29,8 +28,7 @@ export const ScaleHandle: FC<ScaleHandleProps> = ({
 }) => {
   const [isDragging, setIsDragging] = useState(false);
   const elementRef = useRef<HTMLDivElement>(null);
-  const className =
-    styles[`scaleHandle${position.split('-').map(capitalize).join('')}`];
+  const className = `h5p-editor-topic-map-scale-handle-${position}`;
 
   const startDrag = useCallback(
     (event: MouseEvent | TouchEvent) => {
@@ -97,7 +95,7 @@ export const ScaleHandle: FC<ScaleHandleProps> = ({
       ref={elementRef}
       role="button"
       tabIndex={tabIndex}
-      className={`${styles.scaleHandle} ${className} scaleHandle`}
+      className={`h5p-editor-topic-map-scale-handle ${className}`}
       aria-label={labelText}
       onMouseDown={startDrag}
       onTouchStart={startDrag}

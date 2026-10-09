@@ -5,7 +5,7 @@ import { Params } from '../../types/Params';
 import { TranslationKey } from '../../types/TranslationKey';
 import { AppearanceDialog } from '../AppearanceDialog/AppearanceDialog';
 import { ToolbarButton } from '../ToolbarButton/ToolbarButton';
-import * as styles from './Toolbar.module.scss';
+import './Toolbar.scss';
 
 const labelTextKeys: Record<string, TranslationKey> = {
   mapAppearance: 'toolbar-button-type_map-appearance',
@@ -69,7 +69,7 @@ export const Toolbar: FC<ToolBarProps> = ({
   );
 
   return (
-    <div className={styles.toolbar}>
+    <div className="h5p-editor-topic-map-toolbar">
       <ToolbarButton
         icon={ToolbarButtonType.MapAppearance}
         label={t(labelTextKeys.mapAppearance)}

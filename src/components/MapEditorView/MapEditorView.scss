@@ -1,0 +1,31 @@
+.h5p-editor-topic-map-map-editor-view {
+  background-color: var(--theme-color-1);
+  font-size: 1rem;
+  overflow: hidden;
+}
+
+.h5p-editor-topic-map-grid-border {
+  border-bottom: 1px solid #d1d1d1;
+  border-left: 1px solid #d1d1d1;
+  border-right: 1px solid #d1d1d1;
+  padding: 1em;
+  position: relative;
+
+  &.backgroundImage {
+    background-size: cover;
+    height: 100%;
+    width: 100%;
+  }
+
+  &.backgroundImage::before {
+    content: " ";
+    background-color: var(--theme-color-1);
+    display: block;
+    height: 100%;
+    left: 0;
+    opacity: 0.8;
+    position: absolute;
+    top: 0;
+    width: 100%;
+  }
+}

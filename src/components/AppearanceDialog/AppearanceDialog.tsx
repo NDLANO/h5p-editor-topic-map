@@ -7,7 +7,7 @@ import { defaultTheme } from '../../utils/theme.utils';
 import { Dialog } from '../Dialog/Dialog';
 import { SemanticsForm } from '../SemanticsForm/SemanticsForm';
 import { ThemePicker } from '../ThemePicker/ThemePicker';
-import * as styles from './AppearanceDialog.module.scss';
+import './AppearanceDialog.scss';
 
 export type AppearanceDialogProps = {
   isOpen: boolean;
@@ -42,7 +42,7 @@ export const AppearanceDialog: FC<AppearanceDialogProps> = ({
       size="medium"
       onOpenChange={setIsOpen}
     >
-      <div className={styles.dialogContent}>
+      <div className="h5p-editor-topic-map-dialog-content">
         <div>
           <ThemePicker
             setTheme={setTheme}

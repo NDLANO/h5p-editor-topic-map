@@ -1,4 +1,4 @@
-import * as styles from './ContextMenuButton.module.scss';
+import './ContextMenuButton.scss';
 import { Icon } from '../Icons/Icons';
 import { ContextMenuButtonType } from '../ContextMenu/ContextMenu';
 import { FC, MouseEventHandler } from 'react';
@@ -17,12 +17,12 @@ export const ContextMenuButton: FC<ContextMenuButtonProps> = ({
   return (
     <button
       type="button"
-      className={styles.contextMenuButton}
+      className="h5p-editor-topic-map-context-menu-button"
       onClick={onClick}
       aria-label={label}
     >
-      <Icon icon={icon} className={styles.icon} />
-      <div className={styles.tooltip}>{label}</div>
+      <Icon icon={icon} className="h5p-editor-topic-map-icon" />
+      <div className="h5p-editor-topic-map-tooltip">{label}</div>
     </button>
   );
 };

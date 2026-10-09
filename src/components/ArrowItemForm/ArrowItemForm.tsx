@@ -63,7 +63,7 @@ export const ArrowItemForm: FC<ArrowItemFormProps> = ({
       params={formParams}
       parent={parent}
       onSave={onUpdate}
-      formClassName="arrow-item-form"
+      formClassName="h5p-editor-topic-map-arrow-item-form"
     />
   ) : null;
 };

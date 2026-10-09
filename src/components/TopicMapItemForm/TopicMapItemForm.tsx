@@ -95,7 +95,7 @@ export const TopicMapItemForm: FC<TopicMapItemFormProps> = ({
       params={formParams}
       parent={parent}
       onSave={onUpdate}
-      formClassName="topic-map-item-form"
+      formClassName="h5p-editor-topic-map-topic-map-item-form"
     />
   ) : null;
 };

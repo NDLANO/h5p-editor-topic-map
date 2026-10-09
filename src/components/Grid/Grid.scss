@@ -1,11 +1,11 @@
-.grid {
+.h5p-editor-topic-map-grid {
   display: grid;
   gap: var(--gap-size);
   position: relative;
   touch-action: none;
 }
 
-.gridIndicatorsActive {
+.h5p-editor-topic-map-grid-indicators-active {
   [data-grid-indicator] {
     cursor: pointer;
     opacity: 0.8;
@@ -19,7 +19,7 @@
   }
 }
 
-.isCreatingArrow {
+.h5p-editor-topic-map-is-creating-arrow {
   [data-draggable] {
     cursor: pointer;
 

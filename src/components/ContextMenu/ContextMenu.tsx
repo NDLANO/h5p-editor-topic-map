@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { ContextMenuAction } from '../../types/ContextMenuAction';
 import { ContextMenuButton } from '../ContextMenuButton/ContextMenuButton';
-import * as styles from './ContextMenu.module.scss';
+import './ContextMenu.scss';
 
 /*
   Name of svg icon should be similar to this,
@@ -32,7 +32,7 @@ export const ContextMenu: FC<ContextMenuProps> = ({
   y,
   gridWidth,
 }) => {
-  const className = turnLeft ? styles.left : styles.right;
+  const className = turnLeft ? 'left' : 'right';
 
   let rightPosition: number | undefined;
   let leftPosition: number | undefined;
@@ -50,8 +50,9 @@ export const ContextMenu: FC<ContextMenuProps> = ({
 
   return (
     <div
-      className={`${styles.contextMenu} ${className} ${show && styles.show
-      } context-menu-button`}
+      className={`h5p-editor-topic-map-context-menu ${className} ${
+        show ? 'show' : ''
+      }`}
       style={
         x && y
           ? { left: leftPosition, right: rightPosition, top: y }

@@ -1,4 +1,4 @@
-.contextMenuButton {
+.h5p-editor-topic-map-context-menu-button {
   vertical-align: top;
   position: relative;
   font-size: 1.2em;
@@ -19,7 +19,7 @@
   &:focus {
     border-color: #0061a2;
 
-    .tooltip {
+    .h5p-editor-topic-map-tooltip {
       display: block;
       z-index: 2;
     }
@@ -29,12 +29,12 @@
     z-index: 2;
   }
 
-  .icon {
+  .h5p-editor-topic-map-icon {
     fill: #0061a2;
   }
 }
 
-.tooltip {
+.h5p-editor-topic-map-tooltip {
   display: none;
   background: black;
   color: white;

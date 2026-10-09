@@ -1,6 +1,6 @@
 import { FC, memo } from 'react';
 import { Position } from '../../types/Position';
-import * as styles from './GridIndicator.module.scss';
+import './GridIndicator.scss';
 
 export type GridIndicatorProps = {
   onMouseDown: () => void;
@@ -15,7 +15,7 @@ export const GridIndicator: FC<GridIndicatorProps> = memo(
     return (
       <button
         type="button"
-        className={`grid-indicator ${styles.gridIndicator}`}
+        className="h5p-editor-topic-map-grid-indicator"
         onMouseDown={onMouseDown}
         onMouseEnter={onMouseEnter}
         onTouchStart={onMouseDown}

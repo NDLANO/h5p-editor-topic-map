@@ -61,7 +61,7 @@ export const App: FC<AppProps> = ({
   return (
     <AppWidthContext.Provider value={width}>
       <div
-        className={`h5p-editor-topic-map theme-${
+        className={`h5p-editor-topic-map h5p-editor-topic-map-theme-${
           params.colorTheme ?? defaultTheme
         }`}
         ref={containerRef}

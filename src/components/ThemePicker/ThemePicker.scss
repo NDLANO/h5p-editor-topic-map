@@ -1,6 +1,8 @@
 @use "sass:math";
 
-.buttons {
+$h5p-editor-topic-map-color-circle-size: 1rem;
+
+.h5p-editor-topic-map-buttons {
   $margin: 0.5rem;
 
   display: flex;
@@ -12,7 +14,7 @@
   }
 }
 
-.button {
+.h5p-editor-topic-map-button {
   background-color: #f2f2f2;
   border: 1px solid transparent;
   border-radius: 0.25rem;
@@ -27,26 +29,24 @@
   &:focus {
     background-color: #dedede;
   }
+
+  &.buttonActive {
+    background-color: #dcdcdc;
+    border-color: #bbb;
+  }
 }
 
-.buttonActive {
-  background-color: #dcdcdc;
-  border-color: #bbb;
-}
-
-$color-circle-size: 1rem;
-
-.colorCircles {
+.h5p-editor-topic-map-color-circles {
   display: flex;
   margin-top: 1rem;
 }
 
-.colorCircle {
+.h5p-editor-topic-map-color-circle {
   border-radius: 50%;
-  height: $color-circle-size;
-  width: $color-circle-size;
+  height: $h5p-editor-topic-map-color-circle-size;
+  width: $h5p-editor-topic-map-color-circle-size;
 
-  + .colorCircle {
-    margin-left: math.div(-$color-circle-size, 4);
+  + .h5p-editor-topic-map-color-circle {
+    margin-left: math.div(-$h5p-editor-topic-map-color-circle-size, 4);
   }
 }
