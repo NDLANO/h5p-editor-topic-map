@@ -14,6 +14,25 @@
   color: #333;
   background: linear-gradient(to bottom, #fff 0, #f2f2f2 100%);
 
+  .h5p-editor-topic-map-icon {
+    fill: #333;
+  }
+
+  .h5p-editor-topic-map-tooltip {
+    display: none;
+    background: black;
+    color: white;
+    white-space: nowrap;
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    transform: translateY(100%);
+    z-index: 1;
+    padding: 0.2em 0.5em;
+    font-size: 0.8em;
+    border-radius: 4px;
+  }
+
   &:hover {
     .h5p-editor-topic-map-tooltip {
       z-index: 2;
@@ -35,10 +54,6 @@
     border-color: #999999;
     transition: 0.1s;
     background: #dddddd;
-  }
-
-  .h5p-editor-topic-map-icon {
-    fill: #333;
   }
 
   &.active {
@@ -67,19 +82,4 @@
       fill: #6c6d6d;
     }
   }
-}
-
-.h5p-editor-topic-map-tooltip {
-  display: none;
-  background: black;
-  color: white;
-  white-space: nowrap;
-  position: absolute;
-  left: 0;
-  bottom: -2px;
-  transform: translateY(100%);
-  z-index: 1;
-  padding: 0.2em 0.5em;
-  font-size: 0.8em;
-  border-radius: 4px;
 }

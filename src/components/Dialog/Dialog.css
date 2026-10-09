@@ -12,16 +12,6 @@
   }
 }
 
-.h5p-editor-topic-map-close-button {
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 0;
-  position: fixed;
-  right: 0.625rem;
-  top: 0.625rem;
-}
-
 /**
  * {1} Higher than .h5p-editor-topic-map-overlay's z-index
  */
@@ -43,24 +33,34 @@
   @media (prefers-reduced-motion: no-preference) {
     animation: h5p-editor-topic-map-show-dialog 150ms cubic-bezier(0.16, 1, 0.3, 1);
   }
-}
 
-.h5p-editor-topic-map-title {
-  color: black;
-  font-size: 1.0625rem;
-  font-weight: 500;
-  margin: 0;
-}
+  .h5p-editor-topic-map-close-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    position: fixed;
+    right: 0.625rem;
+    top: 0.625rem;
+  }
 
-.h5p-editor-topic-map-visually-hidden {
-  position: absolute;
-  overflow: hidden;
-  clip: rect(0 0 0 0);
-  height: 1px;
-  width: 1px;
-  margin: -1px;
-  padding: 0;
-  border: 0;
+  .h5p-editor-topic-map-title {
+    color: black;
+    font-size: 1.0625rem;
+    font-weight: 500;
+    margin: 0;
+  }
+
+  .h5p-editor-topic-map-visually-hidden {
+    position: absolute;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    width: 1px;
+    margin: -1px;
+    padding: 0;
+    border: 0;
+  }
 }
 
 @keyframes h5p-editor-topic-map-show-overlay {

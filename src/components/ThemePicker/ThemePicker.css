@@ -1,48 +1,50 @@
-.h5p-editor-topic-map-buttons {
-  display: flex;
-  flex-wrap: wrap;
-  margin: -0.5rem;
+.h5p-editor-topic-map-theme-picker {
+  .h5p-editor-topic-map-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    margin: -0.5rem;
 
-  > * {
-    margin: 0.5rem;
-  }
-}
+    > * {
+      margin: 0.5rem;
+    }
 
-.h5p-editor-topic-map-button {
-  background-color: #f2f2f2;
-  border: 1px solid transparent;
-  border-radius: 0.25rem;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
-  cursor: pointer;
-  font-family: inherit;
-  font-size: 1.25rem;
-  padding: 1rem;
-  transition: background-color 0.15s ease-in-out;
+    .h5p-editor-topic-map-button {
+      background-color: #f2f2f2;
+      border: 1px solid transparent;
+      border-radius: 0.25rem;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 1.25rem;
+      padding: 1rem;
+      transition: background-color 0.15s ease-in-out;
 
-  &:hover,
-  &:focus {
-    background-color: #dedede;
-  }
+      &:hover,
+      &:focus {
+        background-color: #dedede;
+      }
 
-  &.buttonActive {
-    background-color: #dcdcdc;
-    border-color: #bbb;
-  }
-}
+      &.buttonActive {
+        background-color: #dcdcdc;
+        border-color: #bbb;
+      }
 
-.h5p-editor-topic-map-color-circles {
-  display: flex;
-  margin-top: 1rem;
-}
+      .h5p-editor-topic-map-color-circles {
+        display: flex;
+        margin-top: 1rem;
 
-.h5p-editor-topic-map-color-circle {
-  --h5p-editor-topic-map-color-circle-size: 1rem;
+        .h5p-editor-topic-map-color-circle {
+          --h5p-editor-topic-map-color-circle-size: 1rem;
 
-  border-radius: 50%;
-  height: var(--h5p-editor-topic-map-color-circle-size);
-  width: var(--h5p-editor-topic-map-color-circle-size);
+          border-radius: 50%;
+          height: var(--h5p-editor-topic-map-color-circle-size);
+          width: var(--h5p-editor-topic-map-color-circle-size);
 
-  + .h5p-editor-topic-map-color-circle {
-    margin-left: calc(var(--h5p-editor-topic-map-color-circle-size) / -4);
+          + .h5p-editor-topic-map-color-circle {
+            margin-left: calc(var(--h5p-editor-topic-map-color-circle-size) / -4);
+          }
+        }
+      }
+    }
   }
 }
