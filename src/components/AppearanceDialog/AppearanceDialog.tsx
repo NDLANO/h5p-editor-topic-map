@@ -43,24 +43,20 @@ export const AppearanceDialog: FC<AppearanceDialogProps> = ({
       onOpenChange={setIsOpen}
     >
       <div className="h5p-editor-topic-map-dialog-content">
-        <div>
-          <ThemePicker
-            setTheme={setTheme}
-            activeTheme={params.colorTheme ?? defaultTheme}
-          />
-        </div>
+        <ThemePicker
+          setTheme={setTheme}
+          activeTheme={params.colorTheme ?? defaultTheme}
+        />
 
-        <div>
-          <SemanticsForm
-            fields={[backgroundImageField]}
-            params={params}
-            parent={parent}
-            onSave={(newParams) => {
-              onSave(newParams);
-              setIsOpen(false);
-            }}
-          />
-        </div>
+        <SemanticsForm
+          fields={[backgroundImageField]}
+          params={params}
+          parent={parent}
+          onSave={(newParams) => {
+            onSave(newParams);
+            setIsOpen(false);
+          }}
+        />
       </div>
     </Dialog>
   );

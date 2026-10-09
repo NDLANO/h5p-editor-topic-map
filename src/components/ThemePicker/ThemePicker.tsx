@@ -48,9 +48,9 @@ export const ThemePicker: FC<ThemePickerProps> = ({
   const themePickerLabel = t('theme-picker_label');
 
   return (
-    <>
+    <div className="h5p-editor-topic-map-theme-picker">
       <div className="h5peditor-label">{themePickerLabel}</div>
       <div className="h5p-editor-topic-map-buttons">{colorThemes}</div>
-    </>
+    </div>
   );
 };
