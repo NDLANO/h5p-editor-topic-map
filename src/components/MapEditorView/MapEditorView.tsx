@@ -13,7 +13,7 @@ import { Dialog } from '../Dialog/Dialog';
 import { Grid, GridDimensions } from '../Grid/Grid';
 import { Toolbar, ToolbarButtonType } from '../Toolbar/Toolbar';
 import { TopicMapItemForm } from '../TopicMapItemForm/TopicMapItemForm';
-import './MapEditorView.scss';
+import './MapEditorView.css';
 
 export type MapEditorViewProps = {
   gapSize?: number;

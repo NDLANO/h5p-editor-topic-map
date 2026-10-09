@@ -1,7 +1,7 @@
-.h5p-editor-topic-map-arrow-item-form {
+.h5p-editor-topic-map-topic-map-item-form {
   > div > .field {
     > .h5peditor-label {
-      // Topic map items heading
+      /* Topic map items heading */
       display: none;
     }
 
@@ -11,7 +11,7 @@
         padding: 0;
 
         + .h5peditor-button {
-          // Add Topic map item button
+          /* Add Topic map item button */
           display: none;
         }
       }

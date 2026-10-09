@@ -4,7 +4,7 @@ import { Params } from '../../types/Params';
 import { getTopicMapItemsField } from '../../utils/H5P/form.utils';
 import { getLabel } from '../../utils/arrow.utils';
 import { SemanticsForm } from '../SemanticsForm/SemanticsForm';
-import './TopicMapItemForm.scss';
+import './TopicMapItemForm.css';
 
 export type TopicMapItemFormProps = {
   semantics: H5PFieldGroup;

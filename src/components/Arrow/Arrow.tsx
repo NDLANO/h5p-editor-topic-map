@@ -15,7 +15,7 @@ import {
 import { checkIfRightSideOfGrid } from '../../utils/grid.utils';
 import { ContextMenu, ContextMenuButtonType } from '../ContextMenu/ContextMenu';
 import { Dialog } from '../Dialog/Dialog';
-import './Arrow.scss';
+import './Arrow.css';
 
 export type ArrowProps = {
   cellSize: number;

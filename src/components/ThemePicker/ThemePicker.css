@@ -1,16 +1,10 @@
-@use "sass:math";
-
-$h5p-editor-topic-map-color-circle-size: 1rem;
-
 .h5p-editor-topic-map-buttons {
-  $margin: 0.5rem;
-
   display: flex;
   flex-wrap: wrap;
-  margin: -$margin;
+  margin: -0.5rem;
 
   > * {
-    margin: $margin;
+    margin: 0.5rem;
   }
 }
 
@@ -42,11 +36,13 @@ $h5p-editor-topic-map-color-circle-size: 1rem;
 }
 
 .h5p-editor-topic-map-color-circle {
+  --h5p-editor-topic-map-color-circle-size: 1rem;
+
   border-radius: 50%;
-  height: $h5p-editor-topic-map-color-circle-size;
-  width: $h5p-editor-topic-map-color-circle-size;
+  height: var(--h5p-editor-topic-map-color-circle-size);
+  width: var(--h5p-editor-topic-map-color-circle-size);
 
   + .h5p-editor-topic-map-color-circle {
-    margin-left: math.div(-$h5p-editor-topic-map-color-circle-size, 4);
+    margin-left: calc(var(--h5p-editor-topic-map-color-circle-size) / -4);
   }
 }

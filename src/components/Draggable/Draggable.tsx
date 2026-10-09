@@ -16,7 +16,7 @@ import { stripHtmlTags } from '../../utils/string.utils';
 import { ContextMenu, ContextMenuButtonType } from '../ContextMenu/ContextMenu';
 import { ScaleHandles } from '../ScaleHandles/ScaleHandles';
 import { ToolbarButtonType } from '../Toolbar/Toolbar';
-import './Draggable.scss';
+import './Draggable.css';
 
 const labelTextKeys: Record<string, TranslationKey> = {
   selected: 'draggable_selected',

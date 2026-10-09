@@ -3,7 +3,7 @@ import { H5PEditor } from 'h5p-utils';
 import { FC, useEffect, useRef, useState } from 'react';
 import { t } from '../../H5P/H5P.util';
 import { Params } from '../../types/Params';
-import './SemanticsForm.scss';
+import './SemanticsForm.css';
 
 export type SemanticsFormProps = {
   fields: Array<H5PField>;

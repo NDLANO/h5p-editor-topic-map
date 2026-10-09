@@ -1,7 +1,6 @@
-@use "sass:math";
-
-$handle-size: 1rem;
 .h5p-editor-topic-map-scale-handle {
+  --h5p-editor-topic-map-handle-size: 1rem;
+
   position: absolute;
   pointer-events: all;
 }
@@ -9,25 +8,25 @@ $handle-size: 1rem;
 .h5p-editor-topic-map-scale-handle-left,
 .h5p-editor-topic-map-scale-handle-top-left,
 .h5p-editor-topic-map-scale-handle-bottom-left {
-  left: math.div($handle-size, -2);
+  left: calc(var(--h5p-editor-topic-map-handle-size) / -2);
 }
 
 .h5p-editor-topic-map-scale-handle-right,
 .h5p-editor-topic-map-scale-handle-top-right,
 .h5p-editor-topic-map-scale-handle-bottom-right {
-  right: math.div($handle-size, -2);
+  right: calc(var(--h5p-editor-topic-map-handle-size) / -2);
 }
 
 .h5p-editor-topic-map-scale-handle-top,
 .h5p-editor-topic-map-scale-handle-top-right,
 .h5p-editor-topic-map-scale-handle-top-left {
-  top: math.div($handle-size, -2);
+  top: calc(var(--h5p-editor-topic-map-handle-size) / -2);
 }
 
 .h5p-editor-topic-map-scale-handle-bottom,
 .h5p-editor-topic-map-scale-handle-bottom-right,
 .h5p-editor-topic-map-scale-handle-bottom-left {
-  bottom: math.div($handle-size, -2);
+  bottom: calc(var(--h5p-editor-topic-map-handle-size) / -2);
 }
 
 .h5p-editor-topic-map-scale-handle-left,
@@ -35,14 +34,14 @@ $handle-size: 1rem;
   cursor: col-resize;
   height: 100%;
   top: 0;
-  width: $handle-size;
+  width: var(--h5p-editor-topic-map-handle-size);
 }
 
 .h5p-editor-topic-map-scale-handle-top,
 .h5p-editor-topic-map-scale-handle-bottom {
   cursor: row-resize;
   left: 0;
-  height: $handle-size;
+  height: var(--h5p-editor-topic-map-handle-size);
   width: 100%;
 }
 
@@ -50,8 +49,8 @@ $handle-size: 1rem;
 .h5p-editor-topic-map-scale-handle-bottom-right,
 .h5p-editor-topic-map-scale-handle-bottom-left,
 .h5p-editor-topic-map-scale-handle-top-left {
-  height: $handle-size;
-  width: $handle-size;
+  height: var(--h5p-editor-topic-map-handle-size);
+  width: var(--h5p-editor-topic-map-handle-size);
   z-index: 1;
 }
 

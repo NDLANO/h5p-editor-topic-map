@@ -7,7 +7,7 @@ import { defaultTheme } from '../../utils/theme.utils';
 import { Dialog } from '../Dialog/Dialog';
 import { SemanticsForm } from '../SemanticsForm/SemanticsForm';
 import { ThemePicker } from '../ThemePicker/ThemePicker';
-import './AppearanceDialog.scss';
+import './AppearanceDialog.css';
 
 export type AppearanceDialogProps = {
   isOpen: boolean;
