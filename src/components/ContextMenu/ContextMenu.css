@@ -1,38 +1,38 @@
 .h5p-editor-topic-map-context-menu {
   --h5p-editor-topic-map-context-menu-border-width: 0.6em;
 
-  display: none;
-  position: absolute;
-  top: -0.5em;
-  transform: translateY(-100%);
-  white-space: nowrap;
-  user-select: none;
-  -webkit-user-select: none;
   -moz-user-select: none;
+  -webkit-user-select: none;
   background-color: #c4e3f7;
   border: 1px solid #09f;
   border-radius: 2px;
+  display: none;
   filter: drop-shadow(0 0 0.25em rgba(44, 44, 44, 0.5));
   pointer-events: visible;
+  position: absolute;
+  top: -0.5em;
+  transform: translateY(-100%);
+  user-select: none;
+  white-space: nowrap;
   z-index: 2;
   &::before {
-    position: absolute;
-    display: block;
-    content: "";
-    border-style: solid;
     border-color: #09f transparent transparent transparent;
+    border-style: solid;
     bottom: calc(var(--h5p-editor-topic-map-context-menu-border-width) * -1);
+    content: "";
+    display: block;
+    position: absolute;
   }
 
   &::after {
-    position: absolute;
-    display: block;
-    content: "";
-    border-style: solid;
     border-color: #c4e3f7 transparent transparent transparent;
+    border-style: solid;
     bottom: calc(
       var(--h5p-editor-topic-map-context-menu-border-width) * -1 + 2px
     );
+    content: "";
+    display: block;
+    position: absolute;
     z-index: 1;
   }
 

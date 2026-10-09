@@ -1,5 +1,6 @@
 {
   "libraryStrings": {
+    "appearance-dialog_title": "Cambia a aparencia do mapa temático",
     "context-menu_arrow-bi-directional": "Frecha con dúas puntas",
     "context-menu_arrow-directional": "Frecha cunha punta",
     "context-menu_arrow-non-directional": "Liña simple",
@@ -11,22 +12,21 @@
     "draggable_delete-positive": "Borrar elemento",
     "draggable_not-selected": "Premer enter para seleccionar",
     "draggable_selected": "Premer as teclas de dirección para mover. ESC para desfacer a selección.",
-    "grid-indicator_label": "Preme e arrastra para crear un novo elemento",
-    "map-editor-view_item-dialog-title": "Elemento",
-    "semantics-form_save": "Gardar",
-    "toolbar-button-type_create-arrow": "Crear frecha",
-    "toolbar-button-type_create-box": "Crear caixa",
-    "appearance-dialog_title": "Cambia a aparencia do mapa temático",
     "global_theme-0": "Default",
     "global_theme-1": "Azul",
     "global_theme-2": "Verde",
     "global_theme-3": "Vermello",
     "global_theme-4": "Gris",
-    "theme-picker_label": "Tema de cor",
-    "toolbar-button-type_cannot-create-arrow": "Debe haber polo menos dúas caixas para que se poida engadir unha frecha",
-    "toolbar-button-type_map-appearance": "Aspecto do mapa",
+    "grid-indicator_label": "Preme e arrastra para crear un novo elemento",
+    "map-editor-view_item-dialog-title": "Elemento",
     "scale-handle_resize-height": "Resize height",
     "scale-handle_resize-width": "Resize width",
-    "scale-handle_resize-width-and-height": "Resize width and height"
+    "scale-handle_resize-width-and-height": "Resize width and height",
+    "semantics-form_save": "Gardar",
+    "theme-picker_label": "Tema de cor",
+    "toolbar-button-type_cannot-create-arrow": "Debe haber polo menos dúas caixas para que se poida engadir unha frecha",
+    "toolbar-button-type_create-arrow": "Crear frecha",
+    "toolbar-button-type_create-box": "Crear caixa",
+    "toolbar-button-type_map-appearance": "Aspecto do mapa"
   }
 }

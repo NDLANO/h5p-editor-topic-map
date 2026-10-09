@@ -1,8 +1,8 @@
 .h5p-editor-topic-map-scale-handle {
   --h5p-editor-topic-map-handle-size: 1rem;
 
-  position: absolute;
   pointer-events: all;
+  position: absolute;
 
   &.h5p-editor-topic-map-scale-handle-left,
   &.h5p-editor-topic-map-scale-handle-top-left,
@@ -39,8 +39,8 @@
   &.h5p-editor-topic-map-scale-handle-top,
   &.h5p-editor-topic-map-scale-handle-bottom {
     cursor: row-resize;
-    left: 0;
     height: var(--h5p-editor-topic-map-handle-size);
+    left: 0;
     width: 100%;
   }
 

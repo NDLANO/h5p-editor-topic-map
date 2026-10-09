@@ -3,8 +3,8 @@
  */
 .h5p-editor-topic-map-grid-indicator {
   background-color: transparent;
-  border-radius: 20%;
   border: 0.125rem dashed var(--theme-color-3);
+  border-radius: 20%;
   display: block;
   height: 0;
   opacity: 0.6;
@@ -17,8 +17,8 @@
 
   &::before {
     content: "";
-    left: calc(-1 * var(--gap-size));
     height: calc(100% + 2 * var(--gap-size));
+    left: calc(-1 * var(--gap-size));
     position: absolute;
     top: calc(-1 * var(--gap-size));
     width: calc(100% + 2 * var(--gap-size));
