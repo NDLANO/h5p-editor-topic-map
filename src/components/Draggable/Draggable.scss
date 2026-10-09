@@ -3,7 +3,7 @@
  *     to counteract floating point errors. Moving the element
  *     1px to the side and up will re-center it.
  */
-.draggable {
+.h5p-editor-topic-map-draggable {
   background-position: 50% 50%;
   background-size: cover;
   cursor: move;
@@ -26,6 +26,6 @@
   }
 }
 
-.inner {
+.h5p-editor-topic-map-inner {
   height: 100%;
 }

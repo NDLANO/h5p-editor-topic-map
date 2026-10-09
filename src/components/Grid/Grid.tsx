@@ -42,7 +42,7 @@ import { Draggable } from '../Draggable/Draggable';
 import { GridIndicator } from '../GridIndicator/GridIndicator';
 import { ToolbarButtonType } from '../Toolbar/Toolbar';
 import { TopicMapItem } from '../TopicMapItem/TopicMapItem';
-import * as styles from './Grid.module.scss';
+import './Grid.scss';
 
 export type GridDimensions = {
   numberOfColumns: number;
@@ -145,7 +145,8 @@ export const Grid: FC<GridProps> = ({
       return 0;
     }
 
-    const gridIndicator = elementRef.current.querySelector('.grid-indicator');
+    const gridIndicator =
+      elementRef.current.querySelector('.h5p-editor-topic-map-grid-indicator');
     if (!gridIndicator) {
       throw new Error('No grid indicators were rendered.');
     }
@@ -206,7 +207,7 @@ export const Grid: FC<GridProps> = ({
         const gridIndicator = document
           .elementsFromPoint(pointerPosition.x, pointerPosition.y)
           .find((element) =>
-            element.classList.contains('grid-indicator'),
+            element.classList.contains('h5p-editor-topic-map-grid-indicator'),
           ) as HTMLElement;
 
         const gridPosition: Position = {
@@ -1085,7 +1086,7 @@ export const Grid: FC<GridProps> = ({
   useEffectOnce(() => {
     const windowClickListener = (event: MouseEvent | TouchEvent): void => {
       const draggableWasClicked = !!(event.target as HTMLElement).closest(
-        '.draggable, .arrow-item, .context-menu-button, .scaleHandle',
+        '.h5p-editor-topic-map-draggable, .h5p-editor-topic-map-context-menu, .h5p-editor-topic-map-scale-handle',
       );
 
       if (!draggableWasClicked) {
@@ -1124,15 +1125,15 @@ export const Grid: FC<GridProps> = ({
     );
   }, [gapSize, cellSize, items, size]);
 
-  let className = styles.grid;
+  let className = 'h5p-editor-topic-map-grid';
 
   if (activeHoverOnGrid) {
-    className += ` ${styles.gridIndicatorsActive}`;
+    className += ' h5p-editor-topic-map-grid-indicators-active';
   }
 
   const isCreatingArrow = activeTool === ToolbarButtonType.CreateArrow;
   if (isCreatingArrow) {
-    className += ` ${styles.isCreatingArrow}`;
+    className += ' h5p-editor-topic-map-is-creating-arrow';
   }
 
   useEffect(() => {

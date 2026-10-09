@@ -1,4 +1,4 @@
-.toolbarButton {
+.h5p-editor-topic-map-toolbar-button {
   vertical-align: top;
   position: relative;
   font-size: 1.2em;
@@ -15,7 +15,7 @@
   background: linear-gradient(to bottom, #fff 0, #f2f2f2 100%);
 
   &:hover {
-    .tooltip {
+    .h5p-editor-topic-map-tooltip {
       z-index: 2;
     }
   }
@@ -26,7 +26,7 @@
     transition: 0.1s;
     background: #f2f2f2;
 
-    .tooltip {
+    .h5p-editor-topic-map-tooltip {
       display: block;
     }
   }
@@ -37,7 +37,7 @@
     background: #dddddd;
   }
 
-  .icon {
+  .h5p-editor-topic-map-icon {
     fill: #333;
   }
 
@@ -53,7 +53,7 @@
       background: #0079d2;
     }
 
-    .icon {
+    .h5p-editor-topic-map-icon {
       fill: #fff;
     }
   }
@@ -69,7 +69,7 @@
   }
 }
 
-.tooltip {
+.h5p-editor-topic-map-tooltip {
   display: none;
   background: black;
   color: white;

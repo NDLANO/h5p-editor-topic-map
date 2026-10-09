@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { Position } from '../../types/Position';
-import * as styles from './ArrowIndicator.module.scss';
+import './ArrowIndicator.scss';
 
 export type ArrowIndicatorProps = {
   arrowIndicators: React.ReactElement[];
@@ -30,7 +30,7 @@ export const ArrowIndicatorContainer: FC<ArrowIndicatorProps> = ({
       }`
       : '';
   return (
-    <svg className={styles.arrowSvg}>
+    <svg className="h5p-editor-topic-map-arrow-indicator-svg">
       {arrowIndicators}
       <path
         d={pathDef}

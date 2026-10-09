@@ -3,7 +3,7 @@ import { H5PEditor } from 'h5p-utils';
 import { FC, useEffect, useRef, useState } from 'react';
 import { t } from '../../H5P/H5P.util';
 import { Params } from '../../types/Params';
-import * as styles from './SemanticsForm.module.scss';
+import './SemanticsForm.scss';
 
 export type SemanticsFormProps = {
   fields: Array<H5PField>;
@@ -45,7 +45,7 @@ export const SemanticsForm: FC<SemanticsFormProps> = ({
       <div ref={generatedFormRef} />
       <button
         type="button"
-        className={styles.saveButton}
+        className="h5p-editor-topic-map-save-button"
         onClick={() => onSave(params)}
       >
         {saveLabel}

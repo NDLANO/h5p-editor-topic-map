@@ -16,7 +16,7 @@ import { stripHtmlTags } from '../../utils/string.utils';
 import { ContextMenu, ContextMenuButtonType } from '../ContextMenu/ContextMenu';
 import { ScaleHandles } from '../ScaleHandles/ScaleHandles';
 import { ToolbarButtonType } from '../Toolbar/Toolbar';
-import * as styles from './Draggable.module.scss';
+import './Draggable.scss';
 
 const labelTextKeys: Record<string, TranslationKey> = {
   selected: 'draggable_selected',
@@ -487,8 +487,8 @@ export const Draggable: FC<DraggableProps> = ({
       /* Prevent default because we implement drag ourselves */
       onDragStart={preventDefault}
       aria-grabbed={isDragging}
-      className={`${styles.draggable} ${isPreview && styles.preview
-      } draggable ${activeTool === ToolbarButtonType.CreateArrow
+      className={`h5p-editor-topic-map-draggable ${isPreview
+      } ${activeTool === ToolbarButtonType.CreateArrow
       }`}
       onMouseDown={startDrag}
       onTouchStart={startDrag}
@@ -508,7 +508,7 @@ export const Draggable: FC<DraggableProps> = ({
       onDoubleClick={() => editItem(id)}
       data-draggable
     >
-      <div className={styles.inner} tabIndex={-1}>
+      <div className="h5p-editor-topic-map-inner" tabIndex={-1}>
         {children}
       </div>
 

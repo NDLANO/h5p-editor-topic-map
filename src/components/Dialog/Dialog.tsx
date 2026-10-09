@@ -9,7 +9,7 @@ import {
 import { Cross2Icon } from '@radix-ui/react-icons';
 import { FC, ReactElement } from 'react';
 import { t } from '../../H5P/H5P.util';
-import * as styles from './Dialog.module.scss';
+import './Dialog.scss';
 
 type DialogSize = 'medium' | 'large';
 
@@ -41,14 +41,14 @@ export const Dialog: FC<DialogProps> = ({
 
   return (
     <Root open={isOpen} onOpenChange={onOpenChange}>
-      <Overlay className={styles.overlay} />
-      <Content className={styles.content} style={{ maxWidth }}>
-        <Title className={styles.title}>{title}</Title>
+      <Overlay className="h5p-editor-topic-map-overlay" />
+      <Content className="h5p-editor-topic-map-content" style={{ maxWidth }}>
+        <Title className="h5p-editor-topic-map-title">{title}</Title>
         {description ?
           <Description>{description}</Description> :
-          <Description className={styles.visuallyHidden} aria-hidden="true" />
+          <Description className="h5p-editor-topic-map-visually-hidden" aria-hidden="true" />
         }
-        <Close className={styles.closeButton} aria-label={closeButtonLabel}>
+        <Close className="h5p-editor-topic-map-close-button" aria-label={closeButtonLabel}>
           <Cross2Icon />
         </Close>
         {children}

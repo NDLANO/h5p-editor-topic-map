@@ -15,7 +15,7 @@ import {
 import { checkIfRightSideOfGrid } from '../../utils/grid.utils';
 import { ContextMenu, ContextMenuButtonType } from '../ContextMenu/ContextMenu';
 import { Dialog } from '../Dialog/Dialog';
-import * as styles from './Arrow.module.scss';
+import './Arrow.scss';
 
 export type ArrowProps = {
   cellSize: number;
@@ -148,8 +148,8 @@ export const Arrow: FC<ArrowProps> = ({
   };
 
   return (
-    <div className={styles.arrow}>
-      <svg className={styles.arrowSvg}>
+    <div className="h5p-editor-topic-map-arrow">
+      <svg className="h5p-editor-topic-map-arrow-svg">
         <defs>
           <marker
             id={arrowHeadID}
@@ -162,7 +162,7 @@ export const Arrow: FC<ArrowProps> = ({
             <path
               d="M0,0 L0,2 L1.5,1 z"
               fill="var(--theme-color-4)"
-              className={styles.arrowPath}
+              className="h5p-editor-topic-map-arrow-path"
               onClick={() => setSelectedItemId(item.id)}
             />
           </marker>
@@ -177,14 +177,17 @@ export const Arrow: FC<ArrowProps> = ({
             <path
               d="M0,0 L0,2 L1.5,1 z"
               fill="var(--theme-color-4)"
-              className={styles.arrowPath}
+              className="h5p-editor-topic-map-arrow-path"
               onClick={() => setSelectedItemId(item.id)}
             />
           </marker>
         </defs>
         <path
-          className={`${selectedItemId === null ? styles.path : styles.pathSelected
-          } ${arrowStartId === null ? styles.selectable : ''}`}
+          className={`${selectedItemId === null
+            ? 'h5p-editor-topic-map-path'
+            : 'h5p-editor-topic-map-path-selected'} ${
+            arrowStartId === null ? 'h5p-editor-topic-map-selectable' : ''
+          }`}
           d={pathDef}
           fill="transparent"
           stroke="var(--theme-color-4)"
@@ -218,17 +221,17 @@ export const Arrow: FC<ArrowProps> = ({
         onOpenChange={setShowDeleteConfirmationDialog}
         size="medium"
       >
-        <div className={styles.deleteConfirmationButtons}>
+        <div className="h5p-editor-topic-map-delete-confirmation-buttons">
           <button
             type="button"
-            className={styles.deleteConfirmationPositive}
+            className="h5p-editor-topic-map-delete-confirmation-positive"
             onClick={confirmDeletion}
           >
             {t('draggable_delete-positive')}
           </button>
           <button
             type="button"
-            className={styles.deleteConfirmationNegative}
+            className="h5p-editor-topic-map-delete-confirmation-negative"
             onClick={denyDeletion}
           >
             {t('draggable_delete-negative')}

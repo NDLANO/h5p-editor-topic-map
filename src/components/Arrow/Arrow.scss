@@ -1,0 +1,42 @@
+.h5p-editor-topic-map-arrow {
+  cursor: pointer;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  pointer-events: none;
+
+  &:hover {
+    .h5p-editor-topic-map-arrow-path {
+      fill: var(--theme-color-5);
+    }
+
+    .h5p-editor-topic-map-path,
+    .h5p-editor-topic-map-path-selected {
+      stroke: var(--theme-color-5);
+    }
+  }
+}
+
+.h5p-editor-topic-map-arrow-svg {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  z-index: 1;
+}
+
+.h5p-editor-topic-map-path {
+  z-index: 1;
+}
+
+.h5p-editor-topic-map-selectable {
+  pointer-events: all;
+}
+
+.h5p-editor-topic-map-path-selected {
+  pointer-events: all;
+}
+
+.h5p-editor-topic-map-delete-confirmation-buttons {
+  pointer-events: all;
+  z-index: 10;
+}

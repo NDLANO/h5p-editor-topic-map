@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { Icon } from '../Icons/Icons';
 import { ToolbarButtonType } from '../Toolbar/Toolbar';
-import * as styles from './ToolbarButton.module.scss';
+import './ToolbarButton.scss';
 
 export type ToolbarButtonProps = {
   icon: ToolbarButtonType;
@@ -25,15 +25,15 @@ export const ToolbarButton: FC<ToolbarButtonProps> = ({
       type="button"
       className={
         active && showActive
-          ? `${styles.toolbarButton} ${styles.active}`
-          : styles.toolbarButton
+          ? 'h5p-editor-topic-map-toolbar-button active'
+          : 'h5p-editor-topic-map-toolbar-button'
       }
       disabled={isDisabled}
       onClick={onClick}
       aria-label={label}
     >
-      <Icon icon={icon} className={styles.icon} />
-      <div className={styles.tooltip}>{label}</div>
+      <Icon icon={icon} className="h5p-editor-topic-map-icon" />
+      <div className="h5p-editor-topic-map-tooltip">{label}</div>
     </button>
   );
 };
