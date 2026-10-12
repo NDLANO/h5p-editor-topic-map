@@ -23,9 +23,7 @@ export const ToolbarButton: FC<ToolbarButtonProps> = ({
     <button
       type="button"
       className={
-        active && showActive
-          ? `h5p-editor-topic-map-toolbar-button ${icon} active`
-          : `h5p-editor-topic-map-toolbar-button ${icon}`
+        `h5p-editor-topic-map-toolbar-button ${icon}${active && showActive ? " active" : ""}`
       }
       disabled={isDisabled}
       onClick={onClick}
