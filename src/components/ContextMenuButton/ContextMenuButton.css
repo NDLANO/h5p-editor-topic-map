@@ -1,18 +1,45 @@
 .h5p-editor-topic-map-context-menu-button {
+  aspect-ratio: 1;
   background: #c4e3f7;
   border: 1px solid #c4e3f7;
   border-radius: 0.25em;
   color: #09f;
   cursor: pointer;
   font-size: 1.2em;
-  height: 1.5em;
-  margin: 0.15em;
-  padding: 0.05em 0.2em;
+  padding: 0;
   pointer-events: all;
   position: relative;
   vertical-align: top;
-  width: 2em;
+  width: 2rem;
   z-index: 1;
+
+  &::before {
+    font-family: "H5PFontAwesome4", sans-serif;
+    left: 50%;
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  &.biDirectional::before {
+    content: var(--icon-fontawesome-arrows-left-right);
+  }
+
+  &.delete::before {
+    content: var(--icon-fontawesome-trash);
+  }
+
+  &.edit::before {
+    content: var(--icon-fontawesome-pen);
+  }
+
+  &.directional::before {
+    content: var(--icon-fontawesome-arrow-right);
+  }
+
+  &.nonDirectional::before {
+    content: var(--icon-fontawesome-minus);
+  }
 
   &:hover,
   &:focus {
