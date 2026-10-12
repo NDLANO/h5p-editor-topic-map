@@ -1,12 +1,12 @@
 import { FC } from 'react';
 import { Position } from '../../types/Position';
+import { DEFAULT_GAP_SIZE } from '../../utils/constants';
 import './ArrowIndicator.css';
 
 export type ArrowIndicatorProps = {
   arrowIndicators: React.ReactElement[];
   breakpoints: Position[];
   cellSize: number;
-  gapSize: number;
   currentMousePosition: Position | null;
 };
 
@@ -15,11 +15,10 @@ export const ArrowIndicatorContainer: FC<ArrowIndicatorProps> = ({
   arrowIndicators,
   breakpoints,
   cellSize,
-  gapSize,
   currentMousePosition,
 }) => {
   const toPathElement = (position: Position): string => {
-    return `${(position.x - 0.5) * (cellSize + gapSize)} ${(position.y - 0.5) * (cellSize + gapSize)
+    return `${(position.x - 0.5) * (cellSize + DEFAULT_GAP_SIZE)} ${(position.y - 0.5) * (cellSize + DEFAULT_GAP_SIZE)
     }`;
   };
   const pathDef =

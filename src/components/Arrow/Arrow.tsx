@@ -12,6 +12,7 @@ import {
   yAdjustmentEnd,
   yAdjustmentStart,
 } from '../../utils/arrow.utils';
+import { DEFAULT_GAP_SIZE } from '../../utils/constants';
 import { checkIfRightSideOfGrid } from '../../utils/grid.utils';
 import { ContextMenu, ContextMenuButtonType } from '../ContextMenu/ContextMenu';
 import { Dialog } from '../Dialog/Dialog';
@@ -19,7 +20,6 @@ import './Arrow.css';
 
 export type ArrowProps = {
   cellSize: number;
-  gapSize: number;
   item: ArrowItemType;
   editItem: (itemId: string) => void;
   deleteItem: (itemId: string) => void;
@@ -34,7 +34,6 @@ export type ArrowProps = {
 export const Arrow: FC<ArrowProps> = ({
   item,
   cellSize,
-  gapSize,
   editItem,
   deleteItem,
   selectedItemId,
@@ -103,13 +102,13 @@ export const Arrow: FC<ArrowProps> = ({
       : true;
 
   let startPos = {
-    x: 0.5 * (cellSize + gapSize),
-    y: 1.5 * (cellSize + gapSize),
+    x: 0.5 * (cellSize + DEFAULT_GAP_SIZE),
+    y: 1.5 * (cellSize + DEFAULT_GAP_SIZE),
   };
 
   let endPos = {
-    x: 6.5 * (cellSize + gapSize),
-    y: 1.5 * (cellSize + gapSize),
+    x: 6.5 * (cellSize + DEFAULT_GAP_SIZE),
+    y: 1.5 * (cellSize + DEFAULT_GAP_SIZE),
   };
 
   if (item.startGridPosition != null && item.endGridPosition != null) {
@@ -120,18 +119,18 @@ export const Arrow: FC<ArrowProps> = ({
     const yAdjust = yAdjustmentEnd(item);
 
     startPos = {
-      x: (item.startGridPosition.x + xAdjustStart) * (cellSize + gapSize),
-      y: (item.startGridPosition.y + yAdjustStart) * (cellSize + gapSize),
+      x: (item.startGridPosition.x + xAdjustStart) * (cellSize + DEFAULT_GAP_SIZE),
+      y: (item.startGridPosition.y + yAdjustStart) * (cellSize + DEFAULT_GAP_SIZE),
     };
 
     endPos = {
-      x: (item.endGridPosition.x + xAdjust) * (cellSize + gapSize),
-      y: (item.endGridPosition.y + yAdjust) * (cellSize + gapSize),
+      x: (item.endGridPosition.x + xAdjust) * (cellSize + DEFAULT_GAP_SIZE),
+      y: (item.endGridPosition.y + yAdjust) * (cellSize + DEFAULT_GAP_SIZE),
     };
   }
 
   const toPathElement = (position: Position): string => {
-    return `L ${(position.x - 0.5) * (cellSize + gapSize)} ${(position.y - 0.5) * (cellSize + gapSize)
+    return `L ${(position.x - 0.5) * (cellSize + DEFAULT_GAP_SIZE)} ${(position.y - 0.5) * (cellSize + DEFAULT_GAP_SIZE)
     }`;
   };
 
@@ -141,9 +140,9 @@ export const Arrow: FC<ArrowProps> = ({
   const contextMenuPosition: Position = {
     x: isHorizontal
       ? (startPos.x + endPos.x) / 2
-      : endPos.x - 2 * (cellSize + gapSize),
+      : endPos.x - 2 * (cellSize + DEFAULT_GAP_SIZE),
     y: isHorizontal
-      ? endPos.y - 1 * (cellSize + gapSize)
+      ? endPos.y - 1 * (cellSize + DEFAULT_GAP_SIZE)
       : (startPos.y + endPos.y) / 2,
   };
 
