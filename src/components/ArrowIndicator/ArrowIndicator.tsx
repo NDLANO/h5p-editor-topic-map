@@ -1,20 +1,19 @@
 import { FC } from 'react';
 import { Position } from '../../types/Position';
+import { DEFAULT_GAP_SIZE } from '../../utils/constants';
 
 export type ArrowIndicatorProps = {
   position: Position;
   cellSize: number;
-  gapSize: number;
 };
 
 export const ArrowIndicator: FC<ArrowIndicatorProps> = ({
   position,
   cellSize,
-  gapSize,
 }) => {
   const placement = {
-    x: (position.x - 0.5) * (cellSize + gapSize),
-    y: (position.y - 0.5) * (cellSize + gapSize),
+    x: (position.x - 0.5) * (cellSize + DEFAULT_GAP_SIZE),
+    y: (position.y - 0.5) * (cellSize + DEFAULT_GAP_SIZE),
   };
 
   return (

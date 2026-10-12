@@ -6,6 +6,7 @@ import { Position } from '../../types/Position';
 import { ResizeDirection } from '../../types/ResizeDirection';
 import { Size } from '../../types/Size';
 import { TranslationKey } from '../../types/TranslationKey';
+import { DEFAULT_GAP_SIZE } from '../../utils/constants';
 import {
   calculateClosestValidPositionComponent,
   calculateClosestValidSizeComponent,
@@ -32,7 +33,6 @@ export type DraggableProps = {
   updateSize: (newSize: Size) => void;
   initialWidth: number;
   initialHeight: number;
-  gapSize: number;
   cellSize: number;
   gridSize: Size;
   occupiedCells: Array<OccupiedCell>;
@@ -58,7 +58,6 @@ export const Draggable: FC<DraggableProps> = ({
   updateSize,
   initialWidth,
   initialHeight,
-  gapSize,
   cellSize,
   gridSize,
   occupiedCells,
@@ -80,12 +79,12 @@ export const Draggable: FC<DraggableProps> = ({
   const [pointerStartPosition, setPointerStartPosition] =
     useState<Position | null>(null);
   const [{ width, height }, setSize] = useState<Size>({
-    width: calculateClosestValidSizeComponent(initialWidth, gapSize, cellSize, gridSize.width),
-    height: calculateClosestValidSizeComponent(initialHeight, gapSize, cellSize, gridSize.height),
+    width: calculateClosestValidSizeComponent(initialWidth, DEFAULT_GAP_SIZE, cellSize, gridSize.width),
+    height: calculateClosestValidSizeComponent(initialHeight, DEFAULT_GAP_SIZE, cellSize, gridSize.height),
   });
   const [position, setPosition] = useState<Position>({
-    x: calculateClosestValidPositionComponent(initialXPosition, gapSize, cellSize, gridSize.width, width),
-    y: calculateClosestValidPositionComponent(initialYPosition, gapSize, cellSize, gridSize.height, height),
+    x: calculateClosestValidPositionComponent(initialXPosition, DEFAULT_GAP_SIZE, cellSize, gridSize.width, width),
+    y: calculateClosestValidPositionComponent(initialYPosition, DEFAULT_GAP_SIZE, cellSize, gridSize.height, height),
   });
   const [previousPosition, setPreviousPosition] = useState(position);
   const [isResizing, setIsResizing] = useState(false);
@@ -94,11 +93,10 @@ export const Draggable: FC<DraggableProps> = ({
   useEffect(
     () =>
       setSize({
-        width: calculateClosestValidSizeComponent(initialWidth, gapSize, cellSize, gridSize.width),
-        height: calculateClosestValidSizeComponent(initialHeight, gapSize, cellSize, gridSize.height),
+        width: calculateClosestValidSizeComponent(initialWidth, DEFAULT_GAP_SIZE, cellSize, gridSize.width),
+        height: calculateClosestValidSizeComponent(initialHeight, DEFAULT_GAP_SIZE, cellSize, gridSize.height),
       }),
     [
-      gapSize,
       cellSize,
       gridSize.height,
       gridSize.width,
@@ -109,11 +107,10 @@ export const Draggable: FC<DraggableProps> = ({
   // Update Draggable's position whenever the container's size changes
   useEffect(() => {
     setPosition({
-      x: calculateClosestValidPositionComponent(initialXPosition, gapSize, cellSize, gridSize.width, width),
-      y: calculateClosestValidPositionComponent(initialYPosition, gapSize, cellSize, gridSize.height, height),
+      x: calculateClosestValidPositionComponent(initialXPosition, DEFAULT_GAP_SIZE, cellSize, gridSize.width, width),
+      y: calculateClosestValidPositionComponent(initialYPosition, DEFAULT_GAP_SIZE, cellSize, gridSize.height, height),
     });
   }, [
-    gapSize,
     cellSize,
     gridSize.height,
     gridSize.width,
@@ -154,24 +151,24 @@ export const Draggable: FC<DraggableProps> = ({
     (pointerX: number) =>
       calculateClosestValidPositionComponent(
         pointerX,
-        gapSize,
+        DEFAULT_GAP_SIZE,
         cellSize,
         gridSize.width,
         width,
       ),
-    [gapSize, cellSize, gridSize.width, width],
+    [cellSize, gridSize.width, width],
   );
 
   const getClosestValidYPosition = useCallback(
     (pointerY: number) =>
       calculateClosestValidPositionComponent(
         pointerY,
-        gapSize,
+        DEFAULT_GAP_SIZE,
         cellSize,
         gridSize.height,
         height,
       ),
-    [gapSize, cellSize, gridSize.height, height],
+    [cellSize, gridSize.height, height],
   );
 
   const checkIfPositionIsFree = useCallback(
@@ -181,11 +178,11 @@ export const Draggable: FC<DraggableProps> = ({
         id,
         { width, height },
         gridSize,
-        gapSize,
+        DEFAULT_GAP_SIZE,
         cellSize,
         occupiedCells,
       ),
-    [gapSize, cellSize, gridSize, height, id, occupiedCells, width],
+    [cellSize, gridSize, height, id, occupiedCells, width],
   );
 
   const stopDrag = useCallback(() => {
@@ -292,7 +289,7 @@ export const Draggable: FC<DraggableProps> = ({
         return;
       }
 
-      const stepSize = cellSize + gapSize;
+      const stepSize = cellSize + DEFAULT_GAP_SIZE;
       const targetX = getClosestValidXPosition(position.x + dx * stepSize);
       const targetY = getClosestValidYPosition(position.y + dy * stepSize);
       const newPosition = getNewPosition(targetX, targetY);
@@ -309,7 +306,6 @@ export const Draggable: FC<DraggableProps> = ({
       activeTool,
       isSelected,
       cellSize,
-      gapSize,
       position.x,
       position.y,
       getClosestValidXPosition,
@@ -327,25 +323,25 @@ export const Draggable: FC<DraggableProps> = ({
         return;
       }
 
-      const stepSize = cellSize + gapSize;
+      const stepSize = cellSize + DEFAULT_GAP_SIZE;
 
-      const currentWidthCells = Math.round((width + gapSize) / stepSize);
-      const currentHeightCells = Math.round((height + gapSize) / stepSize);
+      const currentWidthCells = Math.round((width + DEFAULT_GAP_SIZE) / stepSize);
+      const currentHeightCells = Math.round((height + DEFAULT_GAP_SIZE) / stepSize);
       const maxWidthCells = Math.floor(
-        (gridSize.width - position.x + gapSize) / stepSize,
+        (gridSize.width - position.x + DEFAULT_GAP_SIZE) / stepSize,
       );
       const maxHeightCells = Math.floor(
-        (gridSize.height - position.y + gapSize) / stepSize,
+        (gridSize.height - position.y + DEFAULT_GAP_SIZE) / stepSize,
       );
 
       const newWidth =
         Math.min(Math.max(currentWidthCells + dx, 1), maxWidthCells) *
         stepSize -
-        gapSize;
+        DEFAULT_GAP_SIZE;
       const newHeight =
         Math.min(Math.max(currentHeightCells + dy, 1), maxHeightCells) *
         stepSize -
-        gapSize;
+        DEFAULT_GAP_SIZE;
 
       if (newWidth === width && newHeight === height) {
         return;
@@ -359,7 +355,7 @@ export const Draggable: FC<DraggableProps> = ({
           id,
           newSize,
           gridSize,
-          gapSize,
+          DEFAULT_GAP_SIZE,
           cellSize,
           occupiedCells,
         )
@@ -372,7 +368,6 @@ export const Draggable: FC<DraggableProps> = ({
     },
     [
       cellSize,
-      gapSize,
       gridSize,
       height,
       id,

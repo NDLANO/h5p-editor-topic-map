@@ -16,9 +16,6 @@ import { TopicMapItemForm } from '../TopicMapItemForm/TopicMapItemForm';
 import './MapEditorView.css';
 
 export type MapEditorViewProps = {
-  gapSize?: number;
-  numberOfColumns?: number;
-  numberOfRows?: number;
   params: Params;
   parent: H5PForm;
   semantics: H5PFieldGroup;
@@ -26,18 +23,11 @@ export type MapEditorViewProps = {
 };
 
 export const MapEditorView: FC<MapEditorViewProps> = ({
-  gapSize,
-  numberOfColumns,
-  numberOfRows,
   params,
   parent,
   semantics,
   setParams,
 }) => {
-  const columns = numberOfColumns ?? 31;
-  const rows = numberOfRows ?? 19;
-  const defaultGapSize = 4;
-
   const [activeTool, setActiveTool] = useState<ToolbarButtonType | null>(null);
   const [gridItems, setGridItems] = useState(params.topicMapItems ?? []);
   const [arrowItems, setArrowItems] = useState<Array<ArrowItemType>>(
@@ -161,14 +151,11 @@ export const MapEditorView: FC<MapEditorViewProps> = ({
         style={{ backgroundImage }}
       >
         <Grid
-          numberOfColumns={columns}
-          numberOfRows={rows}
           initialItems={gridItems}
           updateItems={updateItems}
           initialArrowItems={arrowItems}
           updateArrowItems={updateArrows}
           updateGridDimensions={updateGridDimensions}
-          gapSize={gapSize ?? defaultGapSize}
           setActiveTool={setActive}
           activeTool={activeTool}
           setEditedItem={setEditedItem}
