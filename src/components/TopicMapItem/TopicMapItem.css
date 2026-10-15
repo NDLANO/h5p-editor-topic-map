@@ -4,6 +4,7 @@
   border-radius: 0.5rem;
   color: white;
   display: grid;
+  font-size: 0.813rem;
   height: 100%;
   outline-offset: 4px;
   overflow: hidden;
@@ -21,30 +22,6 @@
     background-color: var(--theme-color-3);
   }
 
-  &.h5p-editor-topic-map-large {
-    font-size: 1.125rem;
-
-    .h5p-editor-topic-map-inner {
-      padding: 1em 1.25em;
-    }
-  }
-
-  &.h5p-editor-topic-map-medium {
-    font-size: 1rem;
-
-    .h5p-editor-topic-map-inner {
-      padding: 0.75em 1em;
-    }
-  }
-
-  &.h5p-editor-topic-map-small {
-    font-size: 0.813rem;
-
-    .h5p-editor-topic-map-inner {
-      padding: 0.75em;
-    }
-  }
-
   .h5p-editor-topic-map-image {
     flex-grow: 2;
     height: 100%;
@@ -59,6 +36,7 @@
     flex-direction: column;
     justify-content: center;
     overflow: auto;
+    padding: 0.75em;
     width: 100%;
 
     &.h5p-editor-topic-map-no-image {
@@ -81,6 +59,26 @@
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
+    }
+  }
+}
+
+@container h5p-editor-topic-map (width > 1024px) {
+  .h5p-editor-topic-map-topic-map-item {
+    font-size: 1rem;
+
+    .h5p-editor-topic-map-inner {
+      padding: 0.75em 1em;
+    }
+  }
+}
+
+@container h5p-editor-topic-map (width > 1440px) {
+  .h5p-editor-topic-map-topic-map-item {
+    font-size: 1.125rem;
+
+    .h5p-editor-topic-map-inner {
+      padding: 1em 1.25em;
     }
   }
 }

@@ -1,7 +1,5 @@
 import { getImageUrl } from 'h5p-utils';
-import { FC, useMemo } from 'react';
-import { useAppWidth } from '../../hooks/useAppWidth';
-import { BreakpointSize } from '../../types/BreakpointSize';
+import { FC } from 'react';
 import { TopicMapItemType } from '../../types/TopicMapItemType';
 import './TopicMapItem.css';
 
@@ -13,27 +11,15 @@ type TopicMapItemTypeWithoutPositions = Omit<
   | 'heightPercentage'
 >;
 
-const sizeClassname = {
-  [BreakpointSize.Large]: 'h5p-editor-topic-map-large',
-  [BreakpointSize.Medium]: 'h5p-editor-topic-map-medium',
-  [BreakpointSize.Small]: 'h5p-editor-topic-map-small',
-};
-
 export type TopicMapItemProps = {
   item: TopicMapItemTypeWithoutPositions;
 };
 
 export const TopicMapItem: FC<TopicMapItemProps> = ({ item }) => {
   const imageUrl = getImageUrl(item.topicImage?.path);
-  const AppWidth = useAppWidth();
-
-  const className = useMemo(
-    () => `h5p-editor-topic-map-topic-map-item ${sizeClassname[AppWidth]}`,
-    [AppWidth],
-  );
 
   return (
-    <div className={className}>
+    <div className="h5p-editor-topic-map-topic-map-item">
       {item.topicImage && imageUrl && (
         <img
           className="h5p-editor-topic-map-image"
