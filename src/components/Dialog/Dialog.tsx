@@ -22,9 +22,15 @@ export type DialogProps = {
   children: ReactElement | null | Array<ReactElement | null>;
 };
 
+/** @constant {number} mediumDialogMaxWidth Maximum width of a medium dialog in pixels. */
+const mediumDialogMaxWidth = 560;
+
+/** @constant {number} largeDialogMaxWidth Maximum width of a large dialog in pixels. */
+const largeDialogMaxWidth = 750;
+
 const maxWidths: Record<DialogSize, number> = {
-  medium: 560,
-  large: 750,
+  medium: mediumDialogMaxWidth,
+  large: largeDialogMaxWidth,
 };
 
 export const Dialog: FC<DialogProps> = ({

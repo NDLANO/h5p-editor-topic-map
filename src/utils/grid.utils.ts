@@ -98,6 +98,7 @@ export const getAllCells = (
   return cells;
 };
 
+/** @constant {number} marginOfErrorForPositioning Margin, in pixels, used when checking which grid cells an element occupies. */
 const marginOfErrorForPositioning = 5;
 
 export const cellIsOccupiedByElement = (

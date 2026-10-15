@@ -18,6 +18,7 @@ import {
   updateArrowType,
 } from '../../utils/arrow.utils';
 import {
+  CELL_CENTER_OFFSET,
   DEFAULT_GAP_SIZE,
   DEFAULT_NUMBER_OF_COLUMNS,
   DEFAULT_NUMBER_OF_ROWS,
@@ -155,10 +156,7 @@ export const Grid: FC<GridProps> = ({
 
     const { width } = gridIndicator.getBoundingClientRect();
 
-    /**
-     * This number might differ from browser to browser, but it's hopefully (😬) ok.
-     * We use it to counteract floating point number errors.
-     */
+    /** @constant {number} numberOfSignificantDigits Significant digits used to counteract floating point errors that differ between browsers. */
     const numberOfSignificantDigits = 4;
 
     return (
@@ -273,8 +271,8 @@ export const Grid: FC<GridProps> = ({
             arrowIndicators.slice(1).map((breakpointPosition) => {
               return gridToPercentage(
                 {
-                  x: breakpointPosition.x - 0.5,
-                  y: breakpointPosition.y - 0.5,
+                  x: breakpointPosition.x - CELL_CENTER_OFFSET,
+                  y: breakpointPosition.y - CELL_CENTER_OFFSET,
                 },
                 DEFAULT_NUMBER_OF_COLUMNS,
                 DEFAULT_NUMBER_OF_ROWS,

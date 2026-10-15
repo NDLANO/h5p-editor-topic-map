@@ -15,6 +15,9 @@ export enum ContextMenuButtonType {
   ArrowNonDirectional = 'nonDirectional',
 }
 
+/** @constant {number} contextMenuOffsetDivisor Divides the grid width to get the context menu's horizontal offset. */
+const contextMenuOffsetDivisor = 14;
+
 export type ContextMenuProps = {
   show: boolean;
   turnLeft: boolean;
@@ -40,7 +43,7 @@ export const ContextMenu: FC<ContextMenuProps> = ({
   const isDynamicallyPositioned = x && gridWidth;
   if (isDynamicallyPositioned) {
     if (turnLeft) {
-      const horizontalOffset = gridWidth / 14;
+      const horizontalOffset = gridWidth / contextMenuOffsetDivisor;
       rightPosition = gridWidth - x - horizontalOffset;
     }
     else {

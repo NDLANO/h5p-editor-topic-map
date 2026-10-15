@@ -24,6 +24,15 @@ const labelTextKeys: Record<string, TranslationKey> = {
   notSelected: 'draggable_not-selected',
 };
 
+/** @constant {number} offset Extra pixels added to an item's size to fix floating point errors that place items a few pixels off the grid. */
+const offset = 2;
+
+/** @constant {number} activeItemZIndex z-index of the item being dragged or selected. */
+const activeItemZIndex = 2;
+
+/** @constant {number} minimumSizeInCells Smallest size an item can be resized to, in cells. */
+const minimumSizeInCells = 1;
+
 export type DraggableProps = {
   id: string;
   label: string;
@@ -335,11 +344,17 @@ export const Draggable: FC<DraggableProps> = ({
       );
 
       const newWidth =
-        Math.min(Math.max(currentWidthCells + dx, 1), maxWidthCells) *
+        Math.min(
+          Math.max(currentWidthCells + dx, minimumSizeInCells),
+          maxWidthCells,
+        ) *
         stepSize -
         DEFAULT_GAP_SIZE;
       const newHeight =
-        Math.min(Math.max(currentHeightCells + dy, 1), maxHeightCells) *
+        Math.min(
+          Math.max(currentHeightCells + dy, minimumSizeInCells),
+          maxHeightCells,
+        ) *
         stepSize -
         DEFAULT_GAP_SIZE;
 
@@ -462,12 +477,6 @@ export const Draggable: FC<DraggableProps> = ({
     return [editAction, deleteAction];
   }, [editItem, id, openDeleteDialogue]);
 
-  /**
-   * This offset is used to fix some of the floating point errors
-   * that are placing items a few pixels off the grid.
-   */
-  const offset = 2;
-
   // The label is rich text, so strip its tags for the accessible name
   const strippedLabel = stripHtmlTags(label).trim();
 
@@ -491,7 +500,8 @@ export const Draggable: FC<DraggableProps> = ({
         transform: `translateX(${position.x}px) translateY(${position.y}px)`,
         width: width + offset,
         height: height + offset,
-        zIndex: isDragging || selectedItem === id ? 2 : undefined,
+        zIndex:
+          isDragging || selectedItem === id ? activeItemZIndex : undefined,
         pointerEvents: isPreview || isResizing ? 'none' : undefined,
         transition: isPreview || isResizing ? 'none' : undefined,
       }}
