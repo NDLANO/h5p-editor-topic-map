@@ -15,6 +15,9 @@ import { Toolbar, ToolbarButtonType } from '../Toolbar/Toolbar';
 import { TopicMapItemForm } from '../TopicMapItemForm/TopicMapItemForm';
 import './MapEditorView.css';
 
+/** @constant {number} minimumItemsForArrow Number of items needed before an arrow can be created between two of them. */
+const minimumItemsForArrow = 2;
+
 export type MapEditorViewProps = {
   params: Params;
   parent: H5PForm;
@@ -138,7 +141,7 @@ export const MapEditorView: FC<MapEditorViewProps> = ({
       <Toolbar
         setActiveTool={setActive}
         activeTool={activeTool}
-        isArrowButtonDisabled={gridItems.length < 2}
+        isArrowButtonDisabled={gridItems.length < minimumItemsForArrow}
         setParams={setParams}
         params={params}
         parent={parent}

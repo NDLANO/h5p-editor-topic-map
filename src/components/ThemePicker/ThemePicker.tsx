@@ -4,6 +4,9 @@ import { ColorTheme } from '../../types/ColorTheme';
 import { themes } from '../../utils/theme.utils';
 import './ThemePicker.css';
 
+/** @constant {number} numberOfThemeColors Number of colors in a theme, each rendered as a circle. */
+const numberOfThemeColors = 4;
+
 export type ThemePickerProps = {
   activeTheme: ColorTheme;
   setTheme: (theme: ColorTheme) => void;
@@ -15,7 +18,7 @@ export const ThemePicker: FC<ThemePickerProps> = ({
 }) => {
   const renderColorCircles = useCallback(
     () =>
-      Array.from({ length: 4 }).map((_, index) => (
+      Array.from({ length: numberOfThemeColors }).map((_, index) => (
         <span
           className="h5p-editor-topic-map-color-circle"
           key={index}

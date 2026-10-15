@@ -1,7 +1,14 @@
 import { FC } from 'react';
 import { Position } from '../../types/Position';
-import { DEFAULT_GAP_SIZE } from '../../utils/constants';
+import {
+  ARROW_STROKE_WIDTH_FACTOR,
+  CELL_CENTER_OFFSET,
+  DEFAULT_GAP_SIZE,
+} from '../../utils/constants';
 import './ArrowIndicator.css';
+
+/** @constant {number} arrowIndicatorOpacity Opacity of the arrow line that previews an arrow while it is being drawn. */
+const arrowIndicatorOpacity = 0.5;
 
 export type ArrowIndicatorProps = {
   arrowIndicators: React.ReactElement[];
@@ -18,7 +25,7 @@ export const ArrowIndicatorContainer: FC<ArrowIndicatorProps> = ({
   currentMousePosition,
 }) => {
   const toPathElement = (position: Position): string => {
-    return `${(position.x - 0.5) * (cellSize + DEFAULT_GAP_SIZE)} ${(position.y - 0.5) * (cellSize + DEFAULT_GAP_SIZE)
+    return `${(position.x - CELL_CENTER_OFFSET) * (cellSize + DEFAULT_GAP_SIZE)} ${(position.y - CELL_CENTER_OFFSET) * (cellSize + DEFAULT_GAP_SIZE)
     }`;
   };
   const pathDef =
@@ -35,8 +42,8 @@ export const ArrowIndicatorContainer: FC<ArrowIndicatorProps> = ({
         d={pathDef}
         fill="transparent"
         stroke="var(--theme-color-4)"
-        strokeOpacity={0.5}
-        strokeWidth={cellSize * 0.66}
+        strokeOpacity={arrowIndicatorOpacity}
+        strokeWidth={cellSize * ARROW_STROKE_WIDTH_FACTOR}
       />
     </svg>
   );

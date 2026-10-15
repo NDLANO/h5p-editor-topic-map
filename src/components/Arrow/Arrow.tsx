@@ -12,7 +12,11 @@ import {
   yAdjustmentEnd,
   yAdjustmentStart,
 } from '../../utils/arrow.utils';
-import { DEFAULT_GAP_SIZE } from '../../utils/constants';
+import {
+  ARROW_STROKE_WIDTH_FACTOR,
+  CELL_CENTER_OFFSET,
+  DEFAULT_GAP_SIZE,
+} from '../../utils/constants';
 import { checkIfRightSideOfGrid } from '../../utils/grid.utils';
 import { ContextMenu, ContextMenuButtonType } from '../ContextMenu/ContextMenu';
 import { Dialog } from '../Dialog/Dialog';
@@ -29,6 +33,27 @@ export type ArrowProps = {
   gridWidth: number;
   arrowStartId: string | null;
 };
+
+/** @constant {number} defaultArrowRowInCells Default row, in cells, of an arrow without a stored grid position. */
+const defaultArrowRowInCells = 1.5;
+
+/** @constant {number} defaultArrowEndColumnInCells Default column, in cells, of the end of an arrow without a stored grid position. */
+const defaultArrowEndColumnInCells = 6.5;
+
+/** @constant {number} verticalArrowContextMenuXOffset Cells between the end of a vertical arrow and its context menu. */
+const verticalArrowContextMenuXOffset = 2;
+
+/** @constant {number} horizontalArrowContextMenuYOffset Cells between the end of a horizontal arrow and its context menu. */
+const horizontalArrowContextMenuYOffset = 1;
+
+/** @constant {number} arrowHeadMarkerSize Width and height of the SVG marker box that contains an arrowhead. */
+const arrowHeadMarkerSize = 10;
+
+/** @constant {number} arrowHeadMarkerRefX x coordinate of the point of the arrowhead that the line's endpoint attaches to. */
+const arrowHeadMarkerRefX = 0.7;
+
+/** @constant {number} arrowHeadMarkerRefY y coordinate of the point of the arrowhead that the line's endpoint attaches to. */
+const arrowHeadMarkerRefY = 1;
 
 // TODO: Share code with h5p-topic-map instead of duplicating
 export const Arrow: FC<ArrowProps> = ({
@@ -102,13 +127,13 @@ export const Arrow: FC<ArrowProps> = ({
       : true;
 
   let startPos = {
-    x: 0.5 * (cellSize + DEFAULT_GAP_SIZE),
-    y: 1.5 * (cellSize + DEFAULT_GAP_SIZE),
+    x: CELL_CENTER_OFFSET * (cellSize + DEFAULT_GAP_SIZE),
+    y: defaultArrowRowInCells * (cellSize + DEFAULT_GAP_SIZE),
   };
 
   let endPos = {
-    x: 6.5 * (cellSize + DEFAULT_GAP_SIZE),
-    y: 1.5 * (cellSize + DEFAULT_GAP_SIZE),
+    x: defaultArrowEndColumnInCells * (cellSize + DEFAULT_GAP_SIZE),
+    y: defaultArrowRowInCells * (cellSize + DEFAULT_GAP_SIZE),
   };
 
   if (item.startGridPosition != null && item.endGridPosition != null) {
@@ -130,7 +155,7 @@ export const Arrow: FC<ArrowProps> = ({
   }
 
   const toPathElement = (position: Position): string => {
-    return `L ${(position.x - 0.5) * (cellSize + DEFAULT_GAP_SIZE)} ${(position.y - 0.5) * (cellSize + DEFAULT_GAP_SIZE)
+    return `L ${(position.x - CELL_CENTER_OFFSET) * (cellSize + DEFAULT_GAP_SIZE)} ${(position.y - CELL_CENTER_OFFSET) * (cellSize + DEFAULT_GAP_SIZE)
     }`;
   };
 
@@ -140,9 +165,11 @@ export const Arrow: FC<ArrowProps> = ({
   const contextMenuPosition: Position = {
     x: isHorizontal
       ? (startPos.x + endPos.x) / 2
-      : endPos.x - 2 * (cellSize + DEFAULT_GAP_SIZE),
+      : endPos.x
+        - verticalArrowContextMenuXOffset * (cellSize + DEFAULT_GAP_SIZE),
     y: isHorizontal
-      ? endPos.y - 1 * (cellSize + DEFAULT_GAP_SIZE)
+      ? endPos.y
+        - horizontalArrowContextMenuYOffset * (cellSize + DEFAULT_GAP_SIZE)
       : (startPos.y + endPos.y) / 2,
   };
 
@@ -152,10 +179,10 @@ export const Arrow: FC<ArrowProps> = ({
         <defs>
           <marker
             id={arrowHeadID}
-            markerWidth="10"
-            markerHeight="10"
-            refX="0.7"
-            refY="1"
+            markerWidth={arrowHeadMarkerSize}
+            markerHeight={arrowHeadMarkerSize}
+            refX={arrowHeadMarkerRefX}
+            refY={arrowHeadMarkerRefY}
             orient="auto"
           >
             <path
@@ -167,10 +194,10 @@ export const Arrow: FC<ArrowProps> = ({
           </marker>
           <marker
             id={arrowTailID}
-            markerWidth="10"
-            markerHeight="10"
-            refX="0.7"
-            refY="1"
+            markerWidth={arrowHeadMarkerSize}
+            markerHeight={arrowHeadMarkerSize}
+            refX={arrowHeadMarkerRefX}
+            refY={arrowHeadMarkerRefY}
             orient="auto-start-reverse"
           >
             <path
@@ -190,7 +217,7 @@ export const Arrow: FC<ArrowProps> = ({
           d={pathDef}
           fill="transparent"
           stroke="var(--theme-color-4)"
-          strokeWidth={cellSize * 0.66}
+          strokeWidth={cellSize * ARROW_STROKE_WIDTH_FACTOR}
           markerEnd={
             item.arrowType === ArrowType.BiDirectional ||
               item.arrowType === ArrowType.Directional
