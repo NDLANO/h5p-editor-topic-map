@@ -2,39 +2,41 @@
   .h5p-editor-topic-map-buttons {
     display: flex;
     flex-wrap: wrap;
-    margin: -0.5rem;
-
-    > * {
-      margin: 0.5rem;
-    }
+    gap: var(--h5p-theme-spacing-m);
 
     .h5p-editor-topic-map-button {
-      background-color: #f2f2f2;
+      background-color: var(--theme-color-5);
       border: 1px solid transparent;
-      border-radius: 0.25rem;
-      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+      border-radius: var(--h5p-theme-border-radius-small);
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+      color: var(--h5p-theme-text-primary);
       cursor: pointer;
+      display: flex;
+      flex-direction: column;
       font-family: inherit;
-      font-size: 1.25rem;
-      padding: 1rem;
+      font-size: var(--h5p-theme-font-size-l);
+      gap: var(--h5p-theme-spacing-m);
+      padding: var(--h5p-theme-spacing-m);
       transition: background-color 0.15s ease-in-out;
 
-      &:hover,
-      &:focus {
-        background-color: #dedede;
+      &:focus-visible {
+        outline: 2px ridge var(--theme-color-2);
+        outline-offset: 2px;
+      }
+
+      &:hover {
+        background-color: var(--theme-color-4);
       }
 
       &.buttonActive {
-        background-color: #dcdcdc;
-        border-color: #bbb;
+        border-color: var(--theme-color-2);
       }
 
       .h5p-editor-topic-map-color-circles {
         display: flex;
-        margin-top: 1rem;
 
         .h5p-editor-topic-map-color-circle {
-          --h5p-editor-topic-map-color-circle-size: 1rem;
+          --h5p-editor-topic-map-color-circle-size: var(--h5p-theme-spacing-m);
 
           border-radius: 50%;
           height: var(--h5p-editor-topic-map-color-circle-size);

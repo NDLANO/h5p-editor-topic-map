@@ -2,7 +2,7 @@
  * {1} Higher than topic map items' z-indeces
  */
 .h5p-editor-topic-map-overlay {
-  background-color: rgba(0, 0, 0, 0.3);
+  background-color: rgba(0, 0, 0, 0.4);
   inset: 0;
   position: fixed;
   z-index: 2; /* {1} */
@@ -16,39 +16,69 @@
  * {1} Higher than .h5p-editor-topic-map-overlay's z-index
  */
 .h5p-editor-topic-map-content {
-  background-color: white;
-  border-radius: 0.375rem;
-  box-shadow: hsl(206 22% 7% / 35%) 0 10px 38px -10px,
-    hsl(206 22% 7% / 20%) 0 10px 20px -15px;
+  display: flex;
+  background-color: var(--theme-color-base);
+  border-radius: var(--h5p-theme-border-radius-medium);
+  box-shadow: hsl(206 22% 7% / 35%) 0 10px 38px -10px,hsl(206 22% 7% / 20%) 0 10px 20px -15px;
+  color: var(--h5p-theme-text-primary);
+  flex-direction: column;
+  gap: var(--h5p-theme-spacing-s);
   left: 50%;
   max-height: 85vh;
   overflow: auto;
-  padding: 25px;
+  padding: var(--h5p-theme-spacing-m);
   position: fixed;
   top: 50%;
   transform: translate(-50%, -50%);
-  width: 90vw;
+  width: min(750px, 90vw);
   z-index: 3; /* {1} */
 
   @media (prefers-reduced-motion: no-preference) {
     animation: h5p-editor-topic-map-show-dialog 150ms cubic-bezier(0.16, 1, 0.3, 1);
   }
 
-  .h5p-editor-topic-map-close-button {
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 0;
-    position: fixed;
-    right: 0.625rem;
-    top: 0.625rem;
-  }
+  .h5p-editor-topic-map-title-container {
+    align-items: center;
+    display: grid;
+    font-weight: 600;
+    gap: var(--h5p-theme-spacing-xxs);
+    grid-template-columns: 1fr auto;
 
-  .h5p-editor-topic-map-title {
-    color: black;
-    font-size: 1.0625rem;
-    font-weight: 500;
-    margin: 0;
+    .h5p-editor-topic-map-title {
+      font-size: var(--h5p-theme-font-size-xl);
+    }
+
+    .h5p-editor-topic-map-close-button {
+      aspect-ratio: 1;
+      background: none;
+      border: none;
+      border-radius: 50%;
+      box-sizing: content-box;
+      color: var(--h5p-theme-text-primary);
+      cursor: pointer;
+      padding: var(--h5p-theme-spacing-s);
+      position: relative;
+      width: var(--h5p-theme-spacing-l);
+
+      &:focus-visible {
+        outline: 2px ridge var(--theme-color-2);
+        outline-offset: 2px;
+      }
+
+      &::before {
+        content: var(--icon-h5ptheme-x-close);
+        font-family: "h5p-theme";
+        font-size: var(--h5p-theme-font-size-m);
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        position: absolute;
+      }
+
+      &:hover {
+        background-color: var(--theme-color-alternative-base);
+      }
+    }
   }
 
   .h5p-editor-topic-map-visually-hidden {
@@ -60,6 +90,14 @@
     padding: 0;
     position: absolute;
     width: 1px;
+  }
+
+  .h5peditor-label {
+    color: var(--h5p-theme-text-primary);
+  }
+
+  .h5peditor-label-button {
+    color: var(--h5p-theme-text-primary);
   }
 }
 

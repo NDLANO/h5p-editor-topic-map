@@ -45,7 +45,7 @@ export const App: FC<AppProps> = ({
 
   return (
     <div
-      className={`h5p-editor-topic-map h5p-editor-topic-map-theme-${
+      className={`h5p-editor-topic-map h5p-theme h5p-editor-topic-map-theme-${
         params.colorTheme ?? defaultTheme
       }`}
     >

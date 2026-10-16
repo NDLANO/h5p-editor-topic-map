@@ -1,11 +1,12 @@
-import { FC } from 'react';
+import { H5P } from '../../H5P/H5P.util';
+import { FC, MouseEventHandler, useEffect, useRef } from 'react';
 import { ToolbarButtonType } from '../Toolbar/Toolbar';
 import './ToolbarButton.css';
 
 export type ToolbarButtonProps = {
   icon: ToolbarButtonType;
   label: string;
-  onClick: React.MouseEventHandler;
+  onClick: MouseEventHandler;
   showActive: boolean;
   active: boolean;
   isDisabled: boolean;
@@ -19,17 +20,31 @@ export const ToolbarButton: FC<ToolbarButtonProps> = ({
   active,
   isDisabled,
 }) => {
+  const buttonRef = useRef<HTMLButtonElement>(null);
+
+  // H5P.Tooltip is an imperative library, so it is attached to the button
+  // through a ref and removed on unmount. The tooltip text is read from the
+  // button's aria-label and kept in sync by the library's mutation observer.
+  useEffect(() => {
+    const button = buttonRef.current;
+    const createTooltip = H5P?.Tooltip;
+    if (!button || !createTooltip) {
+      return;
+    }
+
+    const tooltip = new createTooltip(button);
+
+    return () => tooltip.remove();
+  }, []);
+
   return (
     <button
+      ref={buttonRef}
       type="button"
-      className={
-        `h5p-editor-topic-map-toolbar-button ${icon}${active && showActive ? " active" : ""}`
-      }
+      className={`h5p-editor-topic-map-toolbar-button ${icon}${active && showActive ? " active" : ""}`}
       disabled={isDisabled}
       onClick={onClick}
       aria-label={label}
-    >
-      <div className="h5p-editor-topic-map-tooltip">{label}</div>
-    </button>
+    />
   );
 };

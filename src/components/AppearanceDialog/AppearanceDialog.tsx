@@ -39,7 +39,6 @@ export const AppearanceDialog: FC<AppearanceDialogProps> = ({
     <Dialog
       title={dialogTitle}
       isOpen={isOpen}
-      size="medium"
       onOpenChange={setIsOpen}
     >
       <div className="h5p-editor-topic-map-dialog-content">
@@ -56,6 +55,7 @@ export const AppearanceDialog: FC<AppearanceDialogProps> = ({
             onSave(newParams);
             setIsOpen(false);
           }}
+          formClassName="h5p-editor-topic-map-appearance-form"
         />
       </div>
     </Dialog>

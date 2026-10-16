@@ -1,16 +1,16 @@
 .h5p-editor-topic-map-context-menu-button {
   aspect-ratio: 1;
-  background: #c4e3f7;
-  border: 1px solid #c4e3f7;
-  border-radius: 0.25em;
-  color: #09f;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--h5p-theme-border-radius-small);
+  color: var(--h5p-context-menu-color-contrast);
   cursor: pointer;
-  font-size: 1.2em;
+  font-size: var(--h5p-theme-font-size-xxl);
   padding: 0;
   pointer-events: all;
   position: relative;
   vertical-align: top;
-  width: 2rem;
+  width: var(--h5p-theme-spacing-xl);
   z-index: 1;
 
   &::before {
@@ -43,34 +43,6 @@
 
   &:hover,
   &:focus {
-    border-color: #0061a2;
-
-    .h5p-editor-topic-map-tooltip {
-      display: block;
-      z-index: 2;
-    }
-  }
-
-  &:focus {
-    z-index: 2;
-  }
-
-  .h5p-editor-topic-map-icon {
-    fill: #0061a2;
-  }
-
-  .h5p-editor-topic-map-tooltip {
-    background: black;
-    border-radius: 4px;
-    bottom: -2px;
-    color: white;
-    display: none;
-    font-size: 0.8em;
-    left: 0;
-    padding: 0.2em 0.5em;
-    position: absolute;
-    transform: translateY(-29px);
-    white-space: nowrap;
-    z-index: 1;
+    border-color: var(--h5p-context-menu-color-contrast);
   }
 }

@@ -4,9 +4,9 @@
   overflow: hidden;
 
   .h5p-editor-topic-map-grid-border {
-    border-bottom: 1px solid #d1d1d1;
-    border-left: 1px solid #d1d1d1;
-    border-right: 1px solid #d1d1d1;
+    border-bottom: 1px solid transparent;
+    border-left: 1px solid transparent;
+    border-right: 1px solid transparent;
     padding: 1em;
     position: relative;
 

@@ -1,6 +1,6 @@
  
 import { H5P } from 'h5p-utils';
-import { FC, useCallback, useMemo, useState } from 'react';
+import { FC, useMemo } from 'react';
 import { t } from '../../H5P/H5P.util';
 import { ArrowItemType } from '../../types/ArrowItemType';
 import { ArrowType } from '../../types/ArrowType';
@@ -19,7 +19,6 @@ import {
 } from '../../utils/constants';
 import { checkIfRightSideOfGrid } from '../../utils/grid.utils';
 import { ContextMenu, ContextMenuButtonType } from '../ContextMenu/ContextMenu';
-import { Dialog } from '../Dialog/Dialog';
 import './Arrow.css';
 
 export type ArrowProps = {
@@ -55,6 +54,10 @@ const arrowHeadMarkerRefX = 0.7;
 /** @constant {number} arrowHeadMarkerRefY y coordinate of the point of the arrowhead that the line's endpoint attaches to. */
 const arrowHeadMarkerRefY = 1;
 
+// The H5P dialog falls back to a generic core body string whenever dialogText
+// is falsy, so a single space renders a blank body instead of that fallback.
+const BLANK_BODY = ' ';
+
 // TODO: Share code with h5p-topic-map instead of duplicating
 export const Arrow: FC<ArrowProps> = ({
   item,
@@ -70,17 +73,6 @@ export const Arrow: FC<ArrowProps> = ({
   const arrowHeadID = H5P.createUUID();
   const arrowTailID = H5P.createUUID();
 
-  const [showDeleteConfirmationDialog, setShowDeleteConfirmationDialog] = useState(false);
-
-  const confirmDeletion = useCallback(() => {
-    deleteItem(item.id);
-    setShowDeleteConfirmationDialog(false);
-  }, [deleteItem, item.id]);
-
-  const denyDeletion = useCallback(() => {
-    setShowDeleteConfirmationDialog(false);
-  }, []);
-
   const contextMenuActions: Array<ContextMenuAction> = useMemo(() => {
     const editAction: ContextMenuAction = {
       icon: ContextMenuButtonType.Edit,
@@ -90,7 +82,21 @@ export const Arrow: FC<ArrowProps> = ({
     const deleteAction: ContextMenuAction = {
       icon: ContextMenuButtonType.Delete,
       label: t('context-menu_delete'),
-      onClick: () => setShowDeleteConfirmationDialog(true),
+      onClick: () => {
+        const dialog = new H5P.ConfirmationDialog({
+          headerText: t('draggable_delete-confirmation'),
+          dialogText: BLANK_BODY,
+          confirmText: t('draggable_delete-positive'),
+          cancelText: t('draggable_delete-negative'),
+          theme: true,
+        }).appendTo(document.body);
+
+        dialog.on('confirmed', () => {
+          deleteItem(item.id);
+        });
+
+        dialog.show();
+      },
     };
 
     const changeToDirectionalArrowAction: ContextMenuAction = {
@@ -118,7 +124,7 @@ export const Arrow: FC<ArrowProps> = ({
       changeToNonDirectionalArrowAction,
       deleteAction,
     ];
-  }, [editItem, item.id, updateArrowType]);
+  }, [deleteItem, editItem, item.id, updateArrowType]);
 
   const isHorizontal =
     item.startPosition != null && item.endPosition != null
@@ -240,30 +246,6 @@ export const Arrow: FC<ArrowProps> = ({
         y={contextMenuPosition.y}
         gridWidth={gridWidth}
       />
-
-      <Dialog
-        isOpen={showDeleteConfirmationDialog}
-        title={t('draggable_delete-confirmation')}
-        onOpenChange={setShowDeleteConfirmationDialog}
-        size="medium"
-      >
-        <div className="h5p-editor-topic-map-delete-confirmation-buttons">
-          <button
-            type="button"
-            className="h5p-editor-topic-map-delete-confirmation-positive"
-            onClick={confirmDeletion}
-          >
-            {t('draggable_delete-positive')}
-          </button>
-          <button
-            type="button"
-            className="h5p-editor-topic-map-delete-confirmation-negative"
-            onClick={denyDeletion}
-          >
-            {t('draggable_delete-negative')}
-          </button>
-        </div>
-      </Dialog>
     </div>
   );
 };
