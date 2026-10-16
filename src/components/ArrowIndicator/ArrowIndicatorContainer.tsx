@@ -7,7 +7,7 @@ import {
 } from '../../utils/constants';
 import './ArrowIndicator.css';
 
-/** @constant {number} arrowIndicatorOpacity Opacity of the arrow line that previews an arrow while it is being drawn. */
+/** @constant {number} arrowIndicatorOpacity Opacity of arrow line that previews an arrow while it is being drawn. */
 const arrowIndicatorOpacity = 0.5;
 
 type ArrowIndicatorProps = {
@@ -25,6 +25,7 @@ export const ArrowIndicatorContainer: FC<ArrowIndicatorProps> = ({
   currentMousePosition,
 }) => {
   const toPathElement = (position: Position): string => {
+    // eslint-disable-next-line @stylistic/ts/max-len
     return `${(position.x - CELL_CENTER_OFFSET) * (cellSize + DEFAULT_GAP_SIZE)} ${(position.y - CELL_CENTER_OFFSET) * (cellSize + DEFAULT_GAP_SIZE)
     }`;
   };

@@ -36,22 +36,23 @@ type ArrowProps = {
 /** @constant {number} defaultArrowRowInCells Default row, in cells, of an arrow without a stored grid position. */
 const defaultArrowRowInCells = 1.5;
 
+// eslint-disable-next-line @stylistic/ts/max-len
 /** @constant {number} defaultArrowEndColumnInCells Default column, in cells, of the end of an arrow without a stored grid position. */
 const defaultArrowEndColumnInCells = 6.5;
 
-/** @constant {number} verticalArrowContextMenuXOffset Cells between the end of a vertical arrow and its context menu. */
+/** @constant {number} verticalArrowContextMenuXOffset Cells between end of vertical arrow and its context menu. */
 const verticalArrowContextMenuXOffset = 2;
 
-/** @constant {number} horizontalArrowContextMenuYOffset Cells between the end of a horizontal arrow and its context menu. */
+/** @constant {number} horizontalArrowContextMenuYOffset Cells between end of horizontal arrow and its context menu. */
 const horizontalArrowContextMenuYOffset = 1;
 
 /** @constant {number} arrowHeadMarkerSize Width and height of the SVG marker box that contains an arrowhead. */
 const arrowHeadMarkerSize = 10;
 
-/** @constant {number} arrowHeadMarkerRefX x coordinate of the point of the arrowhead that the line's endpoint attaches to. */
+/** @constant {number} arrowHeadMarkerRefX x coordinate of point of arrowhead that line's endpoint attaches to. */
 const arrowHeadMarkerRefX = 0.7;
 
-/** @constant {number} arrowHeadMarkerRefY y coordinate of the point of the arrowhead that the line's endpoint attaches to. */
+/** @constant {number} arrowHeadMarkerRefY y coordinate of point of arrowhead that line's endpoint attaches to. */
 const arrowHeadMarkerRefY = 1;
 
 // The H5P dialog falls back to a generic core body string whenever dialogText
@@ -161,6 +162,7 @@ export const Arrow: FC<ArrowProps> = ({
   }
 
   const toPathElement = (position: Position): string => {
+    // eslint-disable-next-line @stylistic/ts/max-len
     return `L ${(position.x - CELL_CENTER_OFFSET) * (cellSize + DEFAULT_GAP_SIZE)} ${(position.y - CELL_CENTER_OFFSET) * (cellSize + DEFAULT_GAP_SIZE)
     }`;
   };

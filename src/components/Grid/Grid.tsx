@@ -156,6 +156,7 @@ export const Grid: FC<GridProps> = ({
 
     const { width } = gridIndicator.getBoundingClientRect();
 
+    // eslint-disable-next-line @stylistic/ts/max-len
     /** @constant {number} numberOfSignificantDigits Significant digits used to counteract floating point errors that differ between browsers. */
     const numberOfSignificantDigits = 4;
 
