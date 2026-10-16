@@ -7,12 +7,15 @@ import { TopicMapItemType } from '../types/TopicMapItemType';
 import { CELL_CENTER_OFFSET } from './constants';
 import { findItem, gridToPercentage } from './grid.utils';
 
+// eslint-disable-next-line @stylistic/ts/max-len
 /** @constant {number} oneAndAHalfCells Offset, in cells, applied to the start of a bi-directional arrow to move its head to the edge of the connected item. */
 const oneAndAHalfCells = 1.5;
 
+// eslint-disable-next-line @stylistic/ts/max-len
 /** @constant {number} oneAndThreeQuartersCells Offset, in cells, applied to an arrow's endpoint to move its head to the edge of the connected item. */
 const oneAndThreeQuartersCells = 1.75;
 
+// eslint-disable-next-line @stylistic/ts/max-len
 /** @constant {number} minimumEndSegmentLength Minimum length, in cells, of an arrow's last segment so its head keeps the segment's direction. */
 const minimumEndSegmentLength = 0.1;
 

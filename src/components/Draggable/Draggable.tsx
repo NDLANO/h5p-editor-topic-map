@@ -24,6 +24,7 @@ const labelTextKeys: Record<string, TranslationKey> = {
   notSelected: 'draggable_not-selected',
 };
 
+// eslint-disable-next-line @stylistic/ts/max-len
 /** @constant {number} offset Extra pixels added to an item's size to fix floating point errors that place items a few pixels off the grid. */
 const offset = 2;
 
