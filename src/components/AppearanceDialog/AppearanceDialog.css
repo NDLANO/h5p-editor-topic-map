@@ -1,8 +1,5 @@
 .h5p-editor-topic-map-dialog-content {
   display: flex;
   flex-direction: column;
-
-  > * {
-    margin-top: 2rem;
-  }
+  gap: var(--h5p-theme-spacing-l);
 }

@@ -1,36 +1,42 @@
 .h5p-editor-topic-map-context-menu {
-  --h5p-editor-topic-map-context-menu-border-width: 0.6em;
+  --h5p-editor-topic-map-context-menu-box-pointer-size: 0.6rem;
+
+  /* It is likely that these colors may be replace by official custom css props. */
+  --h5p-context-menu-color: #c4e3f7;
+  --h5p-context-menu-color-contrast: #0061a2;
+  --h5p-context-menu-color-drop-shadow: rgba(44, 44, 44, 0.5);
 
   -moz-user-select: none;
   -webkit-user-select: none;
-  background-color: #c4e3f7;
-  border: 1px solid #09f;
-  border-radius: 2px;
-  display: none;
-  filter: drop-shadow(0 0 0.25em rgba(44, 44, 44, 0.5));
-  padding: 0.25rem;
+  background-color: var(--h5p-context-menu-color);
+  border: 1px solid var(--h5p-context-menu-color-contrast);
+  display: flex;
+  flex-direction: row;
+  filter: drop-shadow(0 0 0.25rem var(--h5p-context-menu-color-drop-shadow));
+  gap: calc(0.25 * var(--h5p-theme-spacing-s));
+  padding: calc(0.25 * var(--h5p-theme-spacing-s));
   pointer-events: visible;
   position: absolute;
-  top: -0.5em;
+  top: calc(-1 * var(--h5p-editor-topic-map-context-menu-box-pointer-size));
   transform: translateY(-100%);
   user-select: none;
   white-space: nowrap;
   z-index: 2;
 
   &::before {
-    border-color: #09f transparent transparent transparent;
+    border-color: var(--h5p-context-menu-color-contrast) transparent transparent transparent;
     border-style: solid;
-    bottom: calc(var(--h5p-editor-topic-map-context-menu-border-width) * -1);
+    bottom: calc(var(--h5p-editor-topic-map-context-menu-box-pointer-size) * -1);
     content: "";
     display: block;
     position: absolute;
   }
 
   &::after {
-    border-color: #c4e3f7 transparent transparent transparent;
+    border-color: var(--h5p-context-menu-color) transparent transparent transparent;
     border-style: solid;
     bottom: calc(
-      var(--h5p-editor-topic-map-context-menu-border-width) * -1 + 2px
+      var(--h5p-editor-topic-map-context-menu-box-pointer-size) * -1 + 2px
     );
     content: "";
     display: block;
@@ -38,24 +44,22 @@
     z-index: 1;
   }
 
-  &.show {
-    display: flex;
-    flex-direction: row;
-    gap: 0.25rem;
+  &:not(.show) {
+    display: none;
   }
 
   &.right {
     &::before {
       border-width:
-        var(--h5p-editor-topic-map-context-menu-border-width)
-        var(--h5p-editor-topic-map-context-menu-border-width) 0 0;
+        var(--h5p-editor-topic-map-context-menu-box-pointer-size)
+        var(--h5p-editor-topic-map-context-menu-box-pointer-size) 0 0;
       left: -1px;
     }
 
     &::after {
       border-width:
-        var(--h5p-editor-topic-map-context-menu-border-width)
-        var(--h5p-editor-topic-map-context-menu-border-width) 0 0;
+        var(--h5p-editor-topic-map-context-menu-box-pointer-size)
+        var(--h5p-editor-topic-map-context-menu-box-pointer-size) 0 0;
       left: 0;
     }
   }
@@ -65,15 +69,15 @@
 
     &::before {
       border-width:
-        var(--h5p-editor-topic-map-context-menu-border-width) 0 0
-        var(--h5p-editor-topic-map-context-menu-border-width);
+        var(--h5p-editor-topic-map-context-menu-box-pointer-size) 0 0
+        var(--h5p-editor-topic-map-context-menu-box-pointer-size);
       right: -1px;
     }
 
     &::after {
       border-width:
-        var(--h5p-editor-topic-map-context-menu-border-width) 0 0
-        var(--h5p-editor-topic-map-context-menu-border-width);
+        var(--h5p-editor-topic-map-context-menu-box-pointer-size) 0 0
+        var(--h5p-editor-topic-map-context-menu-box-pointer-size);
       right: 0;
     }
   }

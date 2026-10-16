@@ -8,7 +8,7 @@
   display: block;
   height: 0;
   opacity: 0.6;
-  padding: calc(100% - 0.3em) 0 0 0;
+  padding: calc(100% - 0.25rem) 0 0 0;
   position: relative;
   transition-duration: 0.4s; /* {1} */
   transition-property: background-color, border-color;

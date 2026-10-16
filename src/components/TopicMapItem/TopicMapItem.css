@@ -1,10 +1,9 @@
 .h5p-editor-topic-map-topic-map-item {
   background-color: var(--theme-color-2);
   border: 2px solid var(--theme-color-4);
-  border-radius: 0.5rem;
-  color: white;
+  border-radius: var(--h5p-theme-border-radius-small);
+  color: var(--theme-color-base);
   display: grid;
-  font-size: 0.813rem;
   height: 100%;
   outline-offset: 4px;
   overflow: hidden;
@@ -36,7 +35,7 @@
     flex-direction: column;
     justify-content: center;
     overflow: auto;
-    padding: 0.75em;
+    padding: var(--h5p-theme-spacing-xxs);
     width: 100%;
 
     &.h5p-editor-topic-map-no-image {
@@ -46,7 +45,7 @@
     .h5p-editor-topic-map-label {
       -moz-hyphens: auto;
       -webkit-hyphens: auto;
-      font-size: 1.125em;
+      font-size: var(--h5p-theme-font-size-l);
       font-weight: 500;
       hyphens: auto;
       overflow-wrap: break-word;
@@ -54,31 +53,11 @@
     }
 
     .h5p-editor-topic-map-description {
-      font-size: 0.625em;
-      margin-top: 0.5em;
+      font-size: var(--h5p-theme-font-size-s);
+      margin-top: var(--h5p-theme-spacing-s);
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
-    }
-  }
-}
-
-@container h5p-editor-topic-map (width > 1024px) {
-  .h5p-editor-topic-map-topic-map-item {
-    font-size: 1rem;
-
-    .h5p-editor-topic-map-inner {
-      padding: 0.75em 1em;
-    }
-  }
-}
-
-@container h5p-editor-topic-map (width > 1440px) {
-  .h5p-editor-topic-map-topic-map-item {
-    font-size: 1.125rem;
-
-    .h5p-editor-topic-map-inner {
-      padding: 1em 1.25em;
     }
   }
 }
