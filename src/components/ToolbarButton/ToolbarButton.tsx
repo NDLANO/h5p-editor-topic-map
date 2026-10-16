@@ -41,7 +41,7 @@ export const ToolbarButton: FC<ToolbarButtonProps> = ({
     <button
       ref={buttonRef}
       type="button"
-      className={`h5p-editor-topic-map-toolbar-button ${icon}${active && showActive ? " active" : ""}`}
+      className={`h5p-editor-topic-map-toolbar-button ${icon}${active && showActive ? ' active' : ''}`}
       disabled={isDisabled}
       onClick={onClick}
       aria-label={label}
