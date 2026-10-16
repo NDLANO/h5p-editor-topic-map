@@ -15,11 +15,10 @@ import { Toolbar, ToolbarButtonType } from '../Toolbar/Toolbar';
 import { TopicMapItemForm } from '../TopicMapItemForm/TopicMapItemForm';
 import './MapEditorView.css';
 
-/** @constant {number} minimumItemsForArrow Number of items needed before an arrow can be created between two of them. */
+/** @constant {number} minimumItemsForArrow Number of items needed before arrow can be created between two of them. */
 const minimumItemsForArrow = 2;
 
-// The H5P dialog falls back to a generic core body string whenever dialogText
-// is falsy, so a single space renders a blank body instead of that fallback.
+// H5P dialog falls back to generic body string whenever dialogText is falsy, single space renders blank body instead.
 const BLANK_BODY = ' ';
 
 type MapEditorViewProps = {

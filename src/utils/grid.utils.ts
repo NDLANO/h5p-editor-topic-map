@@ -98,7 +98,7 @@ export const getAllCells = (
   return cells;
 };
 
-/** @constant {number} marginOfErrorForPositioning Margin, in pixels, used when checking which grid cells an element occupies. */
+/** @constant {number} marginOfErrorForPositioning Margin (px) used when checking which grid cells element occupies. */
 const marginOfErrorForPositioning = 5;
 
 export const cellIsOccupiedByElement = (
@@ -142,7 +142,7 @@ export const findOccupiedCells = (
 ): Array<OccupiedCell> => {
   const occupiedCells: Array<OccupiedCell> = [];
 
-   
+
   for (const element of elements) {
     occupiedCells.push(
       ...findCellsElementOccupies(
@@ -317,8 +317,7 @@ export const findHeightPercentage = (
 export const createTopicMapItem = (): TopicMapItemType => {
   const id = H5P.createUUID();
 
-  // backgroundImage is intentionally set to undefined here
-  // to correctly make the image field empty on item creation
+  // backgroundImage is intentionally set to undefined here to correctly make the image field empty on item creation
   const item: TopicMapItemType = {
     id,
     xPercentagePosition: 0,

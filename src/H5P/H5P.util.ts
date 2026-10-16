@@ -1,9 +1,7 @@
 import { H5PEditor } from 'h5p-utils';
 import { TranslationKey } from '../types/TranslationKey';
 
-/**
- * H5P core runtime object. Global, so it can change.
- */
+/** H5P core runtime object. Global, so it can change. */
 export const H5P = window.H5P;
 
 export const t: (

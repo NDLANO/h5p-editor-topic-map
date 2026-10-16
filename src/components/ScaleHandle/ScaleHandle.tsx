@@ -76,11 +76,7 @@ export const ScaleHandle: FC<ScaleHandleProps> = ({
   );
 
   useEffect(() => {
-    /* 
-      These are tied to `window`, because the
-      cursor might not be on top of the element
-      when the drag action ends.
-    */
+    /* These are tied to `window`, because the cursor might not be on top of the element when the drag action ends. */
     window.addEventListener('mouseup', stopDrag);
     window.addEventListener('touchend', stopDrag);
 

@@ -3,10 +3,7 @@ import { ContextMenuAction } from '../../types/ContextMenuAction';
 import { ContextMenuButton } from '../ContextMenuButton/ContextMenuButton';
 import './ContextMenu.css';
 
-/*
-  Name of svg icon should be similar to this,
-  specify the svg icon in icons.tsx
-*/
+/* Name of svg icon should be similar to this, specify the svg icon in icons.tsx */
 export enum ContextMenuButtonType {
   Edit = 'edit',
   Delete = 'delete',

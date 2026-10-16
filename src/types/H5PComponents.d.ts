@@ -1,6 +1,5 @@
 /**
- * Params accepted by the H5P.Components.Button factory
- * (H5P.Components-1.0/src/components/h5p-button.js).
+ * Params accepted by the H5P.Components.Button factory (H5P.Components-1.0/src/components/h5p-button.js).
  */
 type H5PButtonParams = {
   label?: string;
