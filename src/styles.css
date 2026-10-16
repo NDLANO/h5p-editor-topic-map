@@ -42,10 +42,6 @@
   &:not(.h5p-theme) {
     --theme-color-base: hsl(0, 0%, 100%);
     --theme-color-alternative-base: hsl(0, 0%, 93%);
-
-    /* TODO: Remove */
-    --theme-color-base: var(--h5p-theme-ui-base);
-    --theme-color-alternative-base: var(--h5p-theme-alternative-base);
   }
 
   *,
