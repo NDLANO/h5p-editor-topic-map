@@ -24,7 +24,7 @@ export enum ToolbarButtonType {
   CreateArrow = 'createArrow',
 }
 
-export type ToolBarProps = {
+type ToolBarProps = {
   setActiveTool: (activeTool: ToolbarButtonType | null) => void;
   activeTool: ToolbarButtonType | null;
   isArrowButtonDisabled: boolean;

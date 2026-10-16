@@ -3,7 +3,7 @@ import './ContextMenuButton.css';
 import { ContextMenuButtonType } from '../ContextMenu/ContextMenu';
 import { FC, MouseEventHandler, useEffect, useRef } from 'react';
 
-export type ContextMenuButtonProps = {
+type ContextMenuButtonProps = {
   icon: ContextMenuButtonType;
   label: string;
   onClick: MouseEventHandler;

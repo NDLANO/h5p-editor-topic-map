@@ -3,7 +3,7 @@ import { FC, MouseEventHandler, useEffect, useRef } from 'react';
 import { ToolbarButtonType } from '../Toolbar/Toolbar';
 import './ToolbarButton.css';
 
-export type ToolbarButtonProps = {
+type ToolbarButtonProps = {
   icon: ToolbarButtonType;
   label: string;
   onClick: MouseEventHandler;

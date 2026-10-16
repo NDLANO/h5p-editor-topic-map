@@ -6,7 +6,7 @@ import { getLabel } from '../../utils/arrow.utils';
 import { SemanticsForm } from '../SemanticsForm/SemanticsForm';
 import './TopicMapItemForm.css';
 
-export type TopicMapItemFormProps = {
+type TopicMapItemFormProps = {
   semantics: H5PFieldGroup;
   params: Params;
   parent: H5PForm;

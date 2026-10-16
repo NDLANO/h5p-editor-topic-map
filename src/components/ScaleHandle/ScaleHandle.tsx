@@ -1,7 +1,7 @@
 import { FC, useCallback, useEffect, useRef, useState, MouseEvent, TouchEvent } from 'react';
 import './ScaleHandle.css';
 
-export type ScaleHandleProps = {
+type ScaleHandleProps = {
   labelText: string;
   position:
   | 'top'

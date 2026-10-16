@@ -6,7 +6,7 @@ import { Params } from '../../types/Params';
 import { H5PButton } from './H5PButton';
 import './SemanticsForm.css';
 
-export type SemanticsFormProps = {
+type SemanticsFormProps = {
   fields: Array<H5PField>;
   params: Params;
   parent: H5PForm;

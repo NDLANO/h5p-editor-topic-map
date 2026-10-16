@@ -8,7 +8,7 @@ const indicatorRadiusDivisor = 3;
 /** @constant {number} indicatorStrokeWidth Stroke width of an arrow indicator in pixels. */
 const indicatorStrokeWidth = 2;
 
-export type ArrowIndicatorProps = {
+type ArrowIndicatorProps = {
   position: Position;
   cellSize: number;
 };

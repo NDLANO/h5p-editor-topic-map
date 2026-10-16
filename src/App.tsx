@@ -8,7 +8,7 @@ import {
 } from './utils/H5P/form.utils';
 import { defaultTheme } from './utils/theme.utils';
 
-export type AppProps = {
+type AppProps = {
   setValue: (params: Params) => void;
   semantics: H5PFieldGroup;
   initialParams: Partial<Params> | undefined;

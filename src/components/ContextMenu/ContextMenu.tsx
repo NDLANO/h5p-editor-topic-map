@@ -18,7 +18,7 @@ export enum ContextMenuButtonType {
 /** @constant {number} contextMenuOffsetDivisor Divides the grid width to get the context menu's horizontal offset. */
 const contextMenuOffsetDivisor = 14;
 
-export type ContextMenuProps = {
+type ContextMenuProps = {
   show: boolean;
   turnLeft: boolean;
   actions: Array<ContextMenuAction>;

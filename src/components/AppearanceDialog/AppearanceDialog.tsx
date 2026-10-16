@@ -9,7 +9,7 @@ import { SemanticsForm } from '../SemanticsForm/SemanticsForm';
 import { ThemePicker } from '../ThemePicker/ThemePicker';
 import './AppearanceDialog.css';
 
-export type AppearanceDialogProps = {
+type AppearanceDialogProps = {
   isOpen: boolean;
   setIsOpen: (isOpen: boolean) => void;
   backgroundImageField: H5PFieldImage;
