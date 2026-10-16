@@ -164,8 +164,7 @@ export const Grid: FC<GridProps> = ({
       10 ** numberOfSignificantDigits
     );
 
-    // The grid's size is updated by external factors,
-    // but still affects the grid indicator size
+    // The grid's size is updated by external factors, but still affects the grid indicator size
   }, [size]);
 
   const cellSize = useMemo(getCellSize, [
@@ -774,8 +773,7 @@ export const Grid: FC<GridProps> = ({
 
           indicatorClicked(focusedIndicatorIndex);
 
-          // Materialize the initial 1x1 box, mirroring the mouse flow where
-          // the box is created on the first cell entered
+          // Materialize initial 1x1 box, mirroring the mouse flow where the box is created on the first cell entered
           if (isCreatingBox && !isDragging) {
             onGridIndicatorMouseEnter(focusedIndicatorIndex);
           }

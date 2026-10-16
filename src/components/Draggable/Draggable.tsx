@@ -272,11 +272,7 @@ export const Draggable: FC<DraggableProps> = ({
   const cornerScaleHandleLabelText = t('scale-handle_resize-width-and-height');
 
   useEffect(() => {
-    /* 
-      These are tied to `window`, because the
-      cursor might not be on top of the element
-      when the drag action ends.
-    */
+    /* These are tied to `window`, because the cursor might not be on top of the element when the drag action ends. */
     window.addEventListener('mousemove', drag);
     window.addEventListener('touchmove', drag);
 

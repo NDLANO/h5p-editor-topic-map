@@ -71,7 +71,7 @@ export const updateArrowLabels = (
   return newItems;
 };
 
-const calculateIsHorizontal = (
+export const calculateIsHorizontal = (
   startPosition: Position,
   endPosition: Position,
 ): boolean => {

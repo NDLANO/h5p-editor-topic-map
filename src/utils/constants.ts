@@ -7,7 +7,7 @@ export const DEFAULT_NUMBER_OF_ROWS = 19;
 /** @constant {number} DEFAULT_GAP_SIZE The gap between two grid cells in pixels. */
 export const DEFAULT_GAP_SIZE = 4;
 
-/** @constant {number} CELL_CENTER_OFFSET Offset of half a cell, used to convert the grid's 1-based cell positions into the center of the cell. */
+/** @constant {number} CELL_CENTER_OFFSET Half cell offset to convert grid's 1-based cell positions into cell center. */
 export const CELL_CENTER_OFFSET = 0.5;
 
 /** @constant {number} ARROW_STROKE_WIDTH_FACTOR Fraction of the cell size used as the width of arrow lines. */

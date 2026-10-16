@@ -14,10 +14,7 @@ const labelTextKeys: Record<string, TranslationKey> = {
   cannotCreateArrow: 'toolbar-button-type_cannot-create-arrow',
 };
 
-/*
-  Name of svg icon should be similar to this,
-  specify the svg icon in icons.tsx
-*/
+/* Name of svg icon should be similar to this, specify the svg icon in icons.tsx */
 export enum ToolbarButtonType {
   MapAppearance = 'mapAppearance',
   CreateBox = 'createBox',

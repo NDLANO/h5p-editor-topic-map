@@ -3,10 +3,7 @@ import { CommonItemType } from './CommonItemType';
 import { Position } from './Position';
 
 export type ArrowItemType = CommonItemType & {
-  /**
-   * This index is used for manually sort the items' tab order
-   * Arrow item indeces will only be set by the program - not the user
-   */
+  // This index is used for manually sort items' tab order. Arrow item indeces will only be set by program - not user
   index?: number;
 
   /** The arrow type */
