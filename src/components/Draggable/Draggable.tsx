@@ -491,7 +491,7 @@ export const Draggable: FC<DraggableProps> = ({
       /* Prevent default because we implement drag ourselves */
       onDragStart={preventDefault}
       aria-grabbed={isDragging}
-      className={`h5p-editor-topic-map-draggable${isPreview ? " preview" : ""}`}
+      className={`h5p-editor-topic-map-draggable${isPreview ? ' preview' : ''}`}
       onMouseDown={startDrag}
       onTouchStart={startDrag}
       style={{
