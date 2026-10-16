@@ -10,7 +10,7 @@ import './ArrowIndicator.css';
 /** @constant {number} arrowIndicatorOpacity Opacity of the arrow line that previews an arrow while it is being drawn. */
 const arrowIndicatorOpacity = 0.5;
 
-export type ArrowIndicatorProps = {
+type ArrowIndicatorProps = {
   arrowIndicators: React.ReactElement[];
   breakpoints: Position[];
   cellSize: number;

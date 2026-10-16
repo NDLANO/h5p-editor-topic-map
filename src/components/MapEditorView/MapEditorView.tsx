@@ -22,7 +22,7 @@ const minimumItemsForArrow = 2;
 // is falsy, so a single space renders a blank body instead of that fallback.
 const BLANK_BODY = ' ';
 
-export type MapEditorViewProps = {
+type MapEditorViewProps = {
   params: Params;
   parent: H5PForm;
   semantics: H5PFieldGroup;

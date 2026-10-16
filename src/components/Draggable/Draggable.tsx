@@ -33,7 +33,7 @@ const activeItemZIndex = 2;
 /** @constant {number} minimumSizeInCells Smallest size an item can be resized to, in cells. */
 const minimumSizeInCells = 1;
 
-export type DraggableProps = {
+type DraggableProps = {
   id: string;
   label: string;
   initialXPosition: number;
@@ -491,9 +491,7 @@ export const Draggable: FC<DraggableProps> = ({
       /* Prevent default because we implement drag ourselves */
       onDragStart={preventDefault}
       aria-grabbed={isDragging}
-      className={`h5p-editor-topic-map-draggable ${isPreview
-      } ${activeTool === ToolbarButtonType.CreateArrow
-      }`}
+      className={`h5p-editor-topic-map-draggable${isPreview ? " preview" : ""}`}
       onMouseDown={startDrag}
       onTouchStart={startDrag}
       style={{

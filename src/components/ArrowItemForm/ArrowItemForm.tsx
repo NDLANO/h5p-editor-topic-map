@@ -5,7 +5,7 @@ import { getArrowItemsField } from '../../utils/H5P/form.utils';
 import { SemanticsForm } from '../SemanticsForm/SemanticsForm';
 import './ArrowItemForm.css';
 
-export type ArrowItemFormProps = {
+type ArrowItemFormProps = {
   semantics: H5PFieldGroup;
   params: Params;
   parent: H5PForm;

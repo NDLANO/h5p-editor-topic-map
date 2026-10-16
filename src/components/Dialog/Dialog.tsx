@@ -8,7 +8,7 @@ import { FC, ReactElement } from 'react';
 import { t } from '../../H5P/H5P.util';
 import './Dialog.css';
 
-export type DialogProps = {
+type DialogProps = {
   isOpen: boolean;
   title: string;
   description?: string | undefined;

@@ -2,7 +2,7 @@ import { FC } from 'react';
 import { ResizeDirection } from '../../types/ResizeDirection';
 import { ScaleHandle } from '../ScaleHandle/ScaleHandle';
 
-export type ScaleHandlesProps = {
+type ScaleHandlesProps = {
   setIsResizing: (isResizing: boolean) => void;
   startResize: (handlePosition: ResizeDirection) => void;
   stopResize: () => void;

@@ -55,7 +55,7 @@ export type GridDimensions = {
   numberOfRows: number;
 };
 
-export type GridProps = {
+type GridProps = {
   initialItems: Array<TopicMapItemType>;
   updateItems: (items: Array<TopicMapItemType>) => void;
   initialArrowItems?: Array<ArrowItemType>;

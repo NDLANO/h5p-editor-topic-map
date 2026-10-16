@@ -11,7 +11,7 @@ type TopicMapItemTypeWithoutPositions = Omit<
   | 'heightPercentage'
 >;
 
-export type TopicMapItemProps = {
+type TopicMapItemProps = {
   item: TopicMapItemTypeWithoutPositions;
 };
 

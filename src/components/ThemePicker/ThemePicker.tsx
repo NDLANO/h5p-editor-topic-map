@@ -7,7 +7,7 @@ import './ThemePicker.css';
 /** @constant {number} numberOfThemeColors Number of colors in a theme, each rendered as a circle. */
 const numberOfThemeColors = 4;
 
-export type ThemePickerProps = {
+type ThemePickerProps = {
   activeTheme: ColorTheme;
   setTheme: (theme: ColorTheme) => void;
 };

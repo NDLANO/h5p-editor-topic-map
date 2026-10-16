@@ -21,7 +21,7 @@ import { checkIfRightSideOfGrid } from '../../utils/grid.utils';
 import { ContextMenu, ContextMenuButtonType } from '../ContextMenu/ContextMenu';
 import './Arrow.css';
 
-export type ArrowProps = {
+type ArrowProps = {
   cellSize: number;
   item: ArrowItemType;
   editItem: (itemId: string) => void;

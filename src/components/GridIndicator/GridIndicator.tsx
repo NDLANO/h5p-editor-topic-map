@@ -2,7 +2,7 @@ import { FC, memo } from 'react';
 import { Position } from '../../types/Position';
 import './GridIndicator.css';
 
-export type GridIndicatorProps = {
+type GridIndicatorProps = {
   onMouseDown: () => void;
   onMouseEnter: () => void;
   label: string;
