@@ -11,6 +11,7 @@ describe('Array utils', () => {
 
       expect(actualClosest).toBe(expectedClosest);
     });
+    // eslint-disable-next-line @stylistic/ts/max-len
     it('should return the closest number in the array if the value is smaller than the array\'s smallest number', () => {
       const value = -1;
       const arr = [1, 10];

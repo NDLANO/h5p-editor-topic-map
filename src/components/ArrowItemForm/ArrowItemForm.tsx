@@ -3,9 +3,9 @@ import { FC, useCallback, useEffect, useState } from 'react';
 import { Params } from '../../types/Params';
 import { getArrowItemsField } from '../../utils/H5P/form.utils';
 import { SemanticsForm } from '../SemanticsForm/SemanticsForm';
-import './ArrowItemForm.scss';
+import './ArrowItemForm.css';
 
-export type ArrowItemFormProps = {
+type ArrowItemFormProps = {
   semantics: H5PFieldGroup;
   params: Params;
   parent: H5PForm;
@@ -39,7 +39,7 @@ export const ArrowItemForm: FC<ArrowItemFormProps> = ({
 
   const onUpdate = useCallback(
     (newParams: Params) => {
-      if (!newParams.arrowItems) {
+      if (!newParams.arrowItems?.length) {
         return;
       }
 
@@ -63,7 +63,7 @@ export const ArrowItemForm: FC<ArrowItemFormProps> = ({
       params={formParams}
       parent={parent}
       onSave={onUpdate}
-      formClassName="arrow-item-form"
+      formClassName="h5p-editor-topic-map-arrow-item-form"
     />
   ) : null;
 };

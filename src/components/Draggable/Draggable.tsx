@@ -6,30 +6,43 @@ import { Position } from '../../types/Position';
 import { ResizeDirection } from '../../types/ResizeDirection';
 import { Size } from '../../types/Size';
 import { TranslationKey } from '../../types/TranslationKey';
+import { DEFAULT_GAP_SIZE } from '../../utils/constants';
 import {
   calculateClosestValidPositionComponent,
   calculateClosestValidSizeComponent,
   getPointerPositionFromEvent,
 } from '../../utils/draggable.utils';
 import { checkIfRightSideOfGrid, positionIsFree } from '../../utils/grid.utils';
+import { stripHtmlTags } from '../../utils/string.utils';
 import { ContextMenu, ContextMenuButtonType } from '../ContextMenu/ContextMenu';
 import { ScaleHandles } from '../ScaleHandles/ScaleHandles';
 import { ToolbarButtonType } from '../Toolbar/Toolbar';
-import * as styles from './Draggable.module.scss';
+import './Draggable.css';
 
 const labelTextKeys: Record<string, TranslationKey> = {
   selected: 'draggable_selected',
   notSelected: 'draggable_not-selected',
 };
 
-export type DraggableProps = {
+// eslint-disable-next-line @stylistic/ts/max-len
+/** @constant {number} offset Extra pixels added to an item's size to fix floating point errors that place items a few pixels off the grid. */
+const offset = 2;
+
+/** @constant {number} activeItemZIndex z-index of the item being dragged or selected. */
+const activeItemZIndex = 2;
+
+/** @constant {number} minimumSizeInCells Smallest size an item can be resized to, in cells. */
+const minimumSizeInCells = 1;
+
+type DraggableProps = {
   id: string;
+  label: string;
   initialXPosition: number;
   initialYPosition: number;
   updatePosition: (newPosition: Position) => void;
+  updateSize: (newSize: Size) => void;
   initialWidth: number;
   initialHeight: number;
-  gapSize: number;
   cellSize: number;
   gridSize: Size;
   occupiedCells: Array<OccupiedCell>;
@@ -48,12 +61,13 @@ export type DraggableProps = {
 
 export const Draggable: FC<DraggableProps> = ({
   id,
+  label,
   initialXPosition,
   initialYPosition,
   updatePosition,
+  updateSize,
   initialWidth,
   initialHeight,
-  gapSize,
   cellSize,
   gridSize,
   occupiedCells,
@@ -75,12 +89,12 @@ export const Draggable: FC<DraggableProps> = ({
   const [pointerStartPosition, setPointerStartPosition] =
     useState<Position | null>(null);
   const [{ width, height }, setSize] = useState<Size>({
-    width: calculateClosestValidSizeComponent(initialWidth, gapSize, cellSize, gridSize.width),
-    height: calculateClosestValidSizeComponent(initialHeight, gapSize, cellSize, gridSize.height),
+    width: calculateClosestValidSizeComponent(initialWidth, DEFAULT_GAP_SIZE, cellSize, gridSize.width),
+    height: calculateClosestValidSizeComponent(initialHeight, DEFAULT_GAP_SIZE, cellSize, gridSize.height),
   });
   const [position, setPosition] = useState<Position>({
-    x: calculateClosestValidPositionComponent(initialXPosition, gapSize, cellSize, gridSize.width, width),
-    y: calculateClosestValidPositionComponent(initialYPosition, gapSize, cellSize, gridSize.height, height),
+    x: calculateClosestValidPositionComponent(initialXPosition, DEFAULT_GAP_SIZE, cellSize, gridSize.width, width),
+    y: calculateClosestValidPositionComponent(initialYPosition, DEFAULT_GAP_SIZE, cellSize, gridSize.height, height),
   });
   const [previousPosition, setPreviousPosition] = useState(position);
   const [isResizing, setIsResizing] = useState(false);
@@ -89,11 +103,10 @@ export const Draggable: FC<DraggableProps> = ({
   useEffect(
     () =>
       setSize({
-        width: calculateClosestValidSizeComponent(initialWidth, gapSize, cellSize, gridSize.width),
-        height: calculateClosestValidSizeComponent(initialHeight, gapSize, cellSize, gridSize.height),
+        width: calculateClosestValidSizeComponent(initialWidth, DEFAULT_GAP_SIZE, cellSize, gridSize.width),
+        height: calculateClosestValidSizeComponent(initialHeight, DEFAULT_GAP_SIZE, cellSize, gridSize.height),
       }),
     [
-      gapSize,
       cellSize,
       gridSize.height,
       gridSize.width,
@@ -104,11 +117,10 @@ export const Draggable: FC<DraggableProps> = ({
   // Update Draggable's position whenever the container's size changes
   useEffect(() => {
     setPosition({
-      x: calculateClosestValidPositionComponent(initialXPosition, gapSize, cellSize, gridSize.width, width),
-      y: calculateClosestValidPositionComponent(initialYPosition, gapSize, cellSize, gridSize.height, height),
+      x: calculateClosestValidPositionComponent(initialXPosition, DEFAULT_GAP_SIZE, cellSize, gridSize.width, width),
+      y: calculateClosestValidPositionComponent(initialYPosition, DEFAULT_GAP_SIZE, cellSize, gridSize.height, height),
     });
   }, [
-    gapSize,
     cellSize,
     gridSize.height,
     gridSize.width,
@@ -149,24 +161,24 @@ export const Draggable: FC<DraggableProps> = ({
     (pointerX: number) =>
       calculateClosestValidPositionComponent(
         pointerX,
-        gapSize,
+        DEFAULT_GAP_SIZE,
         cellSize,
         gridSize.width,
         width,
       ),
-    [gapSize, cellSize, gridSize.width, width],
+    [cellSize, gridSize.width, width],
   );
 
   const getClosestValidYPosition = useCallback(
     (pointerY: number) =>
       calculateClosestValidPositionComponent(
         pointerY,
-        gapSize,
+        DEFAULT_GAP_SIZE,
         cellSize,
         gridSize.height,
         height,
       ),
-    [gapSize, cellSize, gridSize.height, height],
+    [cellSize, gridSize.height, height],
   );
 
   const checkIfPositionIsFree = useCallback(
@@ -176,11 +188,11 @@ export const Draggable: FC<DraggableProps> = ({
         id,
         { width, height },
         gridSize,
-        gapSize,
+        DEFAULT_GAP_SIZE,
         cellSize,
         occupiedCells,
       ),
-    [gapSize, cellSize, gridSize, height, id, occupiedCells, width],
+    [cellSize, gridSize, height, id, occupiedCells, width],
   );
 
   const stopDrag = useCallback(() => {
@@ -256,15 +268,12 @@ export const Draggable: FC<DraggableProps> = ({
     );
   }, [isSelected]);
 
-  const horizontalScaleHandleLabelText = '';
-  const verticalScaleHandleLabelText = '';
+  const horizontalScaleHandleLabelText = t('scale-handle_resize-width');
+  const verticalScaleHandleLabelText = t('scale-handle_resize-height');
+  const cornerScaleHandleLabelText = t('scale-handle_resize-width-and-height');
 
   useEffect(() => {
-    /* 
-      These are tied to `window`, because the
-      cursor might not be on top of the element
-      when the drag action ends.
-    */
+    /* These are tied to `window`, because the cursor might not be on top of the element when the drag action ends. */
     window.addEventListener('mousemove', drag);
     window.addEventListener('touchmove', drag);
 
@@ -278,6 +287,176 @@ export const Draggable: FC<DraggableProps> = ({
     stopDrag();
     setIsResizing(false);
   }, [stopDrag]);
+
+  // Move the item one grid cell in the given direction, mirroring the mouse drag snapping
+  const moveByCell = useCallback(
+    (dx: number, dy: number) => {
+      if (activeTool !== null || !isSelected) {
+        return;
+      }
+
+      const stepSize = cellSize + DEFAULT_GAP_SIZE;
+      const targetX = getClosestValidXPosition(position.x + dx * stepSize);
+      const targetY = getClosestValidYPosition(position.y + dy * stepSize);
+      const newPosition = getNewPosition(targetX, targetY);
+
+      if (!checkIfPositionIsFree(newPosition)) {
+        return;
+      }
+
+      setPosition(newPosition);
+      updatePosition(newPosition);
+      setPreviousPosition(newPosition);
+    },
+    [
+      activeTool,
+      isSelected,
+      cellSize,
+      position.x,
+      position.y,
+      getClosestValidXPosition,
+      getClosestValidYPosition,
+      getNewPosition,
+      checkIfPositionIsFree,
+      updatePosition,
+    ],
+  );
+
+  // Grow or shrink the item by whole cells, resizing the bottom-right corner like the mouse handle
+  const resizeByCell = useCallback(
+    (dx: number, dy: number) => {
+      if (isResizing) {
+        return;
+      }
+
+      const stepSize = cellSize + DEFAULT_GAP_SIZE;
+
+      const currentWidthCells = Math.round((width + DEFAULT_GAP_SIZE) / stepSize);
+      const currentHeightCells = Math.round((height + DEFAULT_GAP_SIZE) / stepSize);
+      const maxWidthCells = Math.floor(
+        (gridSize.width - position.x + DEFAULT_GAP_SIZE) / stepSize,
+      );
+      const maxHeightCells = Math.floor(
+        (gridSize.height - position.y + DEFAULT_GAP_SIZE) / stepSize,
+      );
+
+      const newWidth =
+        Math.min(
+          Math.max(currentWidthCells + dx, minimumSizeInCells),
+          maxWidthCells,
+        ) *
+        stepSize -
+        DEFAULT_GAP_SIZE;
+      const newHeight =
+        Math.min(
+          Math.max(currentHeightCells + dy, minimumSizeInCells),
+          maxHeightCells,
+        ) *
+        stepSize -
+        DEFAULT_GAP_SIZE;
+
+      if (newWidth === width && newHeight === height) {
+        return;
+      }
+
+      const newSize = { width: newWidth, height: newHeight };
+
+      if (
+        !positionIsFree(
+          position,
+          id,
+          newSize,
+          gridSize,
+          DEFAULT_GAP_SIZE,
+          cellSize,
+          occupiedCells,
+        )
+      ) {
+        return;
+      }
+
+      setSize(newSize);
+      updateSize(newSize);
+    },
+    [
+      cellSize,
+      gridSize,
+      height,
+      id,
+      isResizing,
+      occupiedCells,
+      position,
+      updateSize,
+      width,
+    ],
+  );
+
+  const handleKeyDown = useCallback(
+    (event: React.KeyboardEvent<HTMLDivElement>) => {
+      // Let interactive descendants (e.g. context menu buttons) keep their own key handling
+      const target = event.target as HTMLElement;
+      if (target !== elementRef.current && target.closest('button, input')) {
+        return;
+      }
+
+      switch (event.key) {
+        case 'Enter':
+        case ' ':
+          event.preventDefault();
+
+          if (activeTool === ToolbarButtonType.CreateArrow) {
+            // Start an arrow from this item, mirroring the pointer-down on the item
+            const rect = elementRef.current?.getBoundingClientRect();
+            if (rect) {
+              onPointerDown({
+                x: rect.left + rect.width / 2,
+                y: rect.top + rect.height / 2,
+              });
+            }
+            return;
+          }
+
+          if (activeTool === null && !isSelected) {
+            setIsSelected(true);
+            setSelectedItem(id);
+          }
+          return;
+        case 'Escape':
+          if (isSelected) {
+            event.preventDefault();
+            setIsSelected(false);
+            setSelectedItem(null);
+          }
+          return;
+        case 'ArrowRight':
+          event.preventDefault();
+          moveByCell(1, 0);
+          return;
+        case 'ArrowLeft':
+          event.preventDefault();
+          moveByCell(-1, 0);
+          return;
+        case 'ArrowDown':
+          event.preventDefault();
+          moveByCell(0, 1);
+          return;
+        case 'ArrowUp':
+          event.preventDefault();
+          moveByCell(0, -1);
+          return;
+        default:
+        // The item only handles the keys listed above
+      }
+    },
+    [
+      activeTool,
+      isSelected,
+      id,
+      onPointerDown,
+      setSelectedItem,
+      moveByCell,
+    ],
+  );
 
   const contextMenuActions: Array<ContextMenuAction> = useMemo(() => {
     const editAction: ContextMenuAction = {
@@ -295,11 +474,8 @@ export const Draggable: FC<DraggableProps> = ({
     return [editAction, deleteAction];
   }, [editItem, id, openDeleteDialogue]);
 
-  /**
-   * This offset is used to fix some of the floating point errors
-   * that are placing items a few pixels off the grid.
-   */
-  const offset = 2;
+  // The label is rich text, so strip its tags for the accessible name
+  const strippedLabel = stripHtmlTags(label).trim();
 
   return (
     <div
@@ -312,26 +488,27 @@ export const Draggable: FC<DraggableProps> = ({
       /* Prevent default because we implement drag ourselves */
       onDragStart={preventDefault}
       aria-grabbed={isDragging}
-      className={`${styles.draggable} ${isPreview && styles.preview
-      } draggable ${activeTool === ToolbarButtonType.CreateArrow
-      }`}
+      className={`h5p-editor-topic-map-draggable${isPreview ? ' preview' : ''}`}
       onMouseDown={startDrag}
       onTouchStart={startDrag}
       style={{
         transform: `translateX(${position.x}px) translateY(${position.y}px)`,
         width: width + offset,
         height: height + offset,
-        zIndex: isDragging || selectedItem === id ? 2 : undefined,
+        zIndex:
+          isDragging || selectedItem === id ? activeItemZIndex : undefined,
         pointerEvents: isPreview || isResizing ? 'none' : undefined,
         transition: isPreview || isResizing ? 'none' : undefined,
       }}
-      aria-label={labelText}
+      aria-label={strippedLabel || labelText}
+      aria-description={strippedLabel ? labelText : undefined}
       onMouseUp={stopDrag}
       onTouchEnd={stopDrag}
+      onKeyDown={handleKeyDown}
       onDoubleClick={() => editItem(id)}
       data-draggable
     >
-      <div className={styles.inner} tabIndex={-1}>
+      <div className="h5p-editor-topic-map-inner" tabIndex={-1}>
         {children}
       </div>
 
@@ -342,6 +519,8 @@ export const Draggable: FC<DraggableProps> = ({
           stopResize={stopResize}
           verticalScaleHandleLabelText={verticalScaleHandleLabelText}
           horizontalScaleHandleLabelText={horizontalScaleHandleLabelText}
+          cornerScaleHandleLabelText={cornerScaleHandleLabelText}
+          onResizeByCell={resizeByCell}
         />
       )}
       <ContextMenu

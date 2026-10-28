@@ -1,8 +1,6 @@
-import useResizeObserver from '@react-hook/resize-observer';
 import type { H5PFieldGroup, H5PForm } from 'h5p-types';
-import { FC, useCallback, useLayoutEffect, useRef, useState } from 'react';
+import { FC, useCallback, useRef, useState } from 'react';
 import { MapEditorView } from './components/MapEditorView/MapEditorView';
-import { AppWidthContext } from './contexts/AppWidthContext';
 import { Params } from './types/Params';
 import {
   fillInMissingParamsProperties,
@@ -10,7 +8,7 @@ import {
 } from './utils/H5P/form.utils';
 import { defaultTheme } from './utils/theme.utils';
 
-export type AppProps = {
+type AppProps = {
   setValue: (params: Params) => void;
   semantics: H5PFieldGroup;
   initialParams: Partial<Params> | undefined;
@@ -23,53 +21,40 @@ export const App: FC<AppProps> = ({
   initialParams,
   parent,
 }) => {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [width, setWidth] = useState(0);
-
-  useLayoutEffect(() => {
-    const initialWidth =
-      containerRef.current?.getBoundingClientRect().width ?? 0;
-    setWidth(initialWidth);
-  }, []);
-
-  useResizeObserver(containerRef, ({ contentRect }) => {
-    setWidth(contentRect.width);
-  });
-
   const [params, setParams] = useState<Params>(
     initialParams
       ? fillInMissingParamsProperties(initialParams)
       : getEmptyParams(),
   );
+  // Track the latest params so updates batched in one render cycle merge against fresh state, not the stale closure
+  const paramsRef = useRef(params);
 
   const updateParams = useCallback(
     (updatedParams: Partial<Params>) => {
       const newParams: Params = {
-        ...params,
+        ...paramsRef.current,
         ...updatedParams,
       };
 
+      paramsRef.current = newParams;
       setParams(newParams);
       setValue(newParams);
     },
-    [params, setValue],
+    [setValue],
   );
 
   return (
-    <AppWidthContext.Provider value={width}>
-      <div
-        className={`h5p-editor-topic-map theme-${
-          params.colorTheme ?? defaultTheme
-        }`}
-        ref={containerRef}
-      >
-        <MapEditorView
-          setParams={updateParams}
-          semantics={semantics}
-          params={params}
-          parent={parent}
-        />
-      </div>
-    </AppWidthContext.Provider>
+    <div
+      className={`h5p-editor-topic-map h5p-theme h5p-editor-topic-map-theme-${
+        params.colorTheme ?? defaultTheme
+      }`}
+    >
+      <MapEditorView
+        setParams={updateParams}
+        semantics={semantics}
+        params={params}
+        parent={parent}
+      />
+    </div>
   );
 };

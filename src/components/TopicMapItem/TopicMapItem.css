@@ -1,0 +1,63 @@
+.h5p-editor-topic-map-topic-map-item {
+  background-color: var(--theme-color-2);
+  border: 2px solid var(--theme-color-4);
+  border-radius: var(--h5p-theme-border-radius-small);
+  color: var(--theme-color-base);
+  display: grid;
+  height: 100%;
+  outline-offset: 4px;
+  overflow: hidden;
+  width: 100%;
+
+  &:has(.h5p-editor-topic-map-image) {
+    grid-template-rows: minmax(0, 3fr) minmax(min-content, 1fr);
+  }
+
+  &:not(:has(.h5p-editor-topic-map-image)) {
+    grid-template-rows: 100%;
+  }
+
+  &:hover {
+    background-color: var(--theme-color-3);
+  }
+
+  .h5p-editor-topic-map-image {
+    flex-grow: 2;
+    height: 100%;
+    object-fit: cover;
+    width: 100%;
+  }
+
+  .h5p-editor-topic-map-inner {
+    background-color: inherit;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    overflow: auto;
+    padding: var(--h5p-theme-spacing-xxs);
+    width: 100%;
+
+    &.h5p-editor-topic-map-no-image {
+      flex-grow: 1;
+    }
+
+    .h5p-editor-topic-map-label {
+      -moz-hyphens: auto;
+      -webkit-hyphens: auto;
+      font-size: var(--h5p-theme-font-size-l);
+      font-weight: 500;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-align: center;
+    }
+
+    .h5p-editor-topic-map-description {
+      font-size: var(--h5p-theme-font-size-s);
+      margin-top: var(--h5p-theme-spacing-s);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  }
+}

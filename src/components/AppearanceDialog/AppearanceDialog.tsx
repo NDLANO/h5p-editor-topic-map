@@ -7,9 +7,9 @@ import { defaultTheme } from '../../utils/theme.utils';
 import { Dialog } from '../Dialog/Dialog';
 import { SemanticsForm } from '../SemanticsForm/SemanticsForm';
 import { ThemePicker } from '../ThemePicker/ThemePicker';
-import * as styles from './AppearanceDialog.module.scss';
+import './AppearanceDialog.css';
 
-export type AppearanceDialogProps = {
+type AppearanceDialogProps = {
   isOpen: boolean;
   setIsOpen: (isOpen: boolean) => void;
   backgroundImageField: H5PFieldImage;
@@ -39,28 +39,24 @@ export const AppearanceDialog: FC<AppearanceDialogProps> = ({
     <Dialog
       title={dialogTitle}
       isOpen={isOpen}
-      size="medium"
       onOpenChange={setIsOpen}
     >
-      <div className={styles.dialogContent}>
-        <div>
-          <ThemePicker
-            setTheme={setTheme}
-            activeTheme={params.colorTheme ?? defaultTheme}
-          />
-        </div>
+      <div className="h5p-editor-topic-map-dialog-content">
+        <ThemePicker
+          setTheme={setTheme}
+          activeTheme={params.colorTheme ?? defaultTheme}
+        />
 
-        <div>
-          <SemanticsForm
-            fields={[backgroundImageField]}
-            params={params}
-            parent={parent}
-            onSave={(newParams) => {
-              onSave(newParams);
-              setIsOpen(false);
-            }}
-          />
-        </div>
+        <SemanticsForm
+          fields={[backgroundImageField]}
+          params={params}
+          parent={parent}
+          onSave={(newParams) => {
+            onSave(newParams);
+            setIsOpen(false);
+          }}
+          formClassName="h5p-editor-topic-map-appearance-form"
+        />
       </div>
     </Dialog>
   );

@@ -5,7 +5,7 @@ import { Params } from '../../types/Params';
 import { TranslationKey } from '../../types/TranslationKey';
 import { AppearanceDialog } from '../AppearanceDialog/AppearanceDialog';
 import { ToolbarButton } from '../ToolbarButton/ToolbarButton';
-import * as styles from './Toolbar.module.scss';
+import './Toolbar.css';
 
 const labelTextKeys: Record<string, TranslationKey> = {
   mapAppearance: 'toolbar-button-type_map-appearance',
@@ -14,17 +14,14 @@ const labelTextKeys: Record<string, TranslationKey> = {
   cannotCreateArrow: 'toolbar-button-type_cannot-create-arrow',
 };
 
-/*
-  Name of svg icon should be similar to this,
-  specify the svg icon in icons.tsx
-*/
+/* Name of svg icon should be similar to this, specify the svg icon in icons.tsx */
 export enum ToolbarButtonType {
   MapAppearance = 'mapAppearance',
   CreateBox = 'createBox',
   CreateArrow = 'createArrow',
 }
 
-export type ToolBarProps = {
+type ToolBarProps = {
   setActiveTool: (activeTool: ToolbarButtonType | null) => void;
   activeTool: ToolbarButtonType | null;
   isArrowButtonDisabled: boolean;
@@ -69,7 +66,7 @@ export const Toolbar: FC<ToolBarProps> = ({
   );
 
   return (
-    <div className={styles.toolbar}>
+    <div className="h5p-editor-topic-map-toolbar">
       <ToolbarButton
         icon={ToolbarButtonType.MapAppearance}
         label={t(labelTextKeys.mapAppearance)}

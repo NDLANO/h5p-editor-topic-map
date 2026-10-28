@@ -1,6 +1,6 @@
  
 import { H5P } from 'h5p-utils';
-import { FC, useCallback, useMemo, useState } from 'react';
+import { FC, useMemo } from 'react';
 import { t } from '../../H5P/H5P.util';
 import { ArrowItemType } from '../../types/ArrowItemType';
 import { ArrowType } from '../../types/ArrowType';
@@ -12,14 +12,17 @@ import {
   yAdjustmentEnd,
   yAdjustmentStart,
 } from '../../utils/arrow.utils';
+import {
+  ARROW_STROKE_WIDTH_FACTOR,
+  CELL_CENTER_OFFSET,
+  DEFAULT_GAP_SIZE,
+} from '../../utils/constants';
 import { checkIfRightSideOfGrid } from '../../utils/grid.utils';
 import { ContextMenu, ContextMenuButtonType } from '../ContextMenu/ContextMenu';
-import { Dialog } from '../Dialog/Dialog';
-import * as styles from './Arrow.module.scss';
+import './Arrow.css';
 
-export type ArrowProps = {
+type ArrowProps = {
   cellSize: number;
-  gapSize: number;
   item: ArrowItemType;
   editItem: (itemId: string) => void;
   deleteItem: (itemId: string) => void;
@@ -30,11 +33,36 @@ export type ArrowProps = {
   arrowStartId: string | null;
 };
 
+/** @constant {number} defaultArrowRowInCells Default row, in cells, of an arrow without a stored grid position. */
+const defaultArrowRowInCells = 1.5;
+
+// eslint-disable-next-line @stylistic/ts/max-len
+/** @constant {number} defaultArrowEndColumnInCells Default column, in cells, of the end of an arrow without a stored grid position. */
+const defaultArrowEndColumnInCells = 6.5;
+
+/** @constant {number} verticalArrowContextMenuXOffset Cells between end of vertical arrow and its context menu. */
+const verticalArrowContextMenuXOffset = 2;
+
+/** @constant {number} horizontalArrowContextMenuYOffset Cells between end of horizontal arrow and its context menu. */
+const horizontalArrowContextMenuYOffset = 1;
+
+/** @constant {number} arrowHeadMarkerSize Width and height of the SVG marker box that contains an arrowhead. */
+const arrowHeadMarkerSize = 10;
+
+/** @constant {number} arrowHeadMarkerRefX x coordinate of point of arrowhead that line's endpoint attaches to. */
+const arrowHeadMarkerRefX = 0.7;
+
+/** @constant {number} arrowHeadMarkerRefY y coordinate of point of arrowhead that line's endpoint attaches to. */
+const arrowHeadMarkerRefY = 1;
+
+// The H5P dialog falls back to a generic core body string whenever dialogText
+// is falsy, so a single space renders a blank body instead of that fallback.
+const BLANK_BODY = ' ';
+
 // TODO: Share code with h5p-topic-map instead of duplicating
 export const Arrow: FC<ArrowProps> = ({
   item,
   cellSize,
-  gapSize,
   editItem,
   deleteItem,
   selectedItemId,
@@ -46,17 +74,6 @@ export const Arrow: FC<ArrowProps> = ({
   const arrowHeadID = H5P.createUUID();
   const arrowTailID = H5P.createUUID();
 
-  const [showDeleteConfirmationDialog, setShowDeleteConfirmationDialog] = useState(false);
-
-  const confirmDeletion = useCallback(() => {
-    deleteItem(item.id);
-    setShowDeleteConfirmationDialog(false);
-  }, [deleteItem, item.id]);
-
-  const denyDeletion = useCallback(() => {
-    setShowDeleteConfirmationDialog(false);
-  }, []);
-
   const contextMenuActions: Array<ContextMenuAction> = useMemo(() => {
     const editAction: ContextMenuAction = {
       icon: ContextMenuButtonType.Edit,
@@ -66,7 +83,21 @@ export const Arrow: FC<ArrowProps> = ({
     const deleteAction: ContextMenuAction = {
       icon: ContextMenuButtonType.Delete,
       label: t('context-menu_delete'),
-      onClick: () => setShowDeleteConfirmationDialog(true),
+      onClick: () => {
+        const dialog = new H5P.ConfirmationDialog({
+          headerText: t('draggable_delete-confirmation'),
+          dialogText: BLANK_BODY,
+          confirmText: t('draggable_delete-positive'),
+          cancelText: t('draggable_delete-negative'),
+          theme: true,
+        }).appendTo(document.body);
+
+        dialog.on('confirmed', () => {
+          deleteItem(item.id);
+        });
+
+        dialog.show();
+      },
     };
 
     const changeToDirectionalArrowAction: ContextMenuAction = {
@@ -94,7 +125,7 @@ export const Arrow: FC<ArrowProps> = ({
       changeToNonDirectionalArrowAction,
       deleteAction,
     ];
-  }, [editItem, item.id, updateArrowType]);
+  }, [deleteItem, editItem, item.id, updateArrowType]);
 
   const isHorizontal =
     item.startPosition != null && item.endPosition != null
@@ -103,13 +134,13 @@ export const Arrow: FC<ArrowProps> = ({
       : true;
 
   let startPos = {
-    x: 0.5 * (cellSize + gapSize),
-    y: 1.5 * (cellSize + gapSize),
+    x: CELL_CENTER_OFFSET * (cellSize + DEFAULT_GAP_SIZE),
+    y: defaultArrowRowInCells * (cellSize + DEFAULT_GAP_SIZE),
   };
 
   let endPos = {
-    x: 6.5 * (cellSize + gapSize),
-    y: 1.5 * (cellSize + gapSize),
+    x: defaultArrowEndColumnInCells * (cellSize + DEFAULT_GAP_SIZE),
+    y: defaultArrowRowInCells * (cellSize + DEFAULT_GAP_SIZE),
   };
 
   if (item.startGridPosition != null && item.endGridPosition != null) {
@@ -120,18 +151,19 @@ export const Arrow: FC<ArrowProps> = ({
     const yAdjust = yAdjustmentEnd(item);
 
     startPos = {
-      x: (item.startGridPosition.x + xAdjustStart) * (cellSize + gapSize),
-      y: (item.startGridPosition.y + yAdjustStart) * (cellSize + gapSize),
+      x: (item.startGridPosition.x + xAdjustStart) * (cellSize + DEFAULT_GAP_SIZE),
+      y: (item.startGridPosition.y + yAdjustStart) * (cellSize + DEFAULT_GAP_SIZE),
     };
 
     endPos = {
-      x: (item.endGridPosition.x + xAdjust) * (cellSize + gapSize),
-      y: (item.endGridPosition.y + yAdjust) * (cellSize + gapSize),
+      x: (item.endGridPosition.x + xAdjust) * (cellSize + DEFAULT_GAP_SIZE),
+      y: (item.endGridPosition.y + yAdjust) * (cellSize + DEFAULT_GAP_SIZE),
     };
   }
 
   const toPathElement = (position: Position): string => {
-    return `L ${(position.x - 0.5) * (cellSize + gapSize)} ${(position.y - 0.5) * (cellSize + gapSize)
+    // eslint-disable-next-line @stylistic/ts/max-len
+    return `L ${(position.x - CELL_CENTER_OFFSET) * (cellSize + DEFAULT_GAP_SIZE)} ${(position.y - CELL_CENTER_OFFSET) * (cellSize + DEFAULT_GAP_SIZE)
     }`;
   };
 
@@ -141,54 +173,59 @@ export const Arrow: FC<ArrowProps> = ({
   const contextMenuPosition: Position = {
     x: isHorizontal
       ? (startPos.x + endPos.x) / 2
-      : endPos.x - 2 * (cellSize + gapSize),
+      : endPos.x
+        - verticalArrowContextMenuXOffset * (cellSize + DEFAULT_GAP_SIZE),
     y: isHorizontal
-      ? endPos.y - 1 * (cellSize + gapSize)
+      ? endPos.y
+        - horizontalArrowContextMenuYOffset * (cellSize + DEFAULT_GAP_SIZE)
       : (startPos.y + endPos.y) / 2,
   };
 
   return (
-    <div className={styles.arrow}>
-      <svg className={styles.arrowSvg}>
+    <div className="h5p-editor-topic-map-arrow">
+      <svg className="h5p-editor-topic-map-arrow-svg">
         <defs>
           <marker
             id={arrowHeadID}
-            markerWidth="10"
-            markerHeight="10"
-            refX="0.7"
-            refY="1"
+            markerWidth={arrowHeadMarkerSize}
+            markerHeight={arrowHeadMarkerSize}
+            refX={arrowHeadMarkerRefX}
+            refY={arrowHeadMarkerRefY}
             orient="auto"
           >
             <path
               d="M0,0 L0,2 L1.5,1 z"
               fill="var(--theme-color-4)"
-              className={styles.arrowPath}
+              className="h5p-editor-topic-map-arrow-path"
               onClick={() => setSelectedItemId(item.id)}
             />
           </marker>
           <marker
             id={arrowTailID}
-            markerWidth="10"
-            markerHeight="10"
-            refX="0.7"
-            refY="1"
+            markerWidth={arrowHeadMarkerSize}
+            markerHeight={arrowHeadMarkerSize}
+            refX={arrowHeadMarkerRefX}
+            refY={arrowHeadMarkerRefY}
             orient="auto-start-reverse"
           >
             <path
               d="M0,0 L0,2 L1.5,1 z"
               fill="var(--theme-color-4)"
-              className={styles.arrowPath}
+              className="h5p-editor-topic-map-arrow-path"
               onClick={() => setSelectedItemId(item.id)}
             />
           </marker>
         </defs>
         <path
-          className={`${selectedItemId === null ? styles.path : styles.pathSelected
-          } ${arrowStartId === null ? styles.selectable : ''}`}
+          className={`${selectedItemId === null
+            ? 'h5p-editor-topic-map-path'
+            : 'h5p-editor-topic-map-path-selected'} ${
+            arrowStartId === null ? 'h5p-editor-topic-map-selectable' : ''
+          }`}
           d={pathDef}
           fill="transparent"
           stroke="var(--theme-color-4)"
-          strokeWidth={cellSize * 0.66}
+          strokeWidth={cellSize * ARROW_STROKE_WIDTH_FACTOR}
           markerEnd={
             item.arrowType === ArrowType.BiDirectional ||
               item.arrowType === ArrowType.Directional
@@ -211,30 +248,6 @@ export const Arrow: FC<ArrowProps> = ({
         y={contextMenuPosition.y}
         gridWidth={gridWidth}
       />
-
-      <Dialog
-        isOpen={showDeleteConfirmationDialog}
-        title={t('draggable_delete-confirmation')}
-        onOpenChange={setShowDeleteConfirmationDialog}
-        size="medium"
-      >
-        <div className={styles.deleteConfirmationButtons}>
-          <button
-            type="button"
-            className={styles.deleteConfirmationPositive}
-            onClick={confirmDeletion}
-          >
-            {t('draggable_delete-positive')}
-          </button>
-          <button
-            type="button"
-            className={styles.deleteConfirmationNegative}
-            onClick={denyDeletion}
-          >
-            {t('draggable_delete-negative')}
-          </button>
-        </div>
-      </Dialog>
     </div>
   );
 };

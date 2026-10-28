@@ -4,9 +4,9 @@ import { Params } from '../../types/Params';
 import { getTopicMapItemsField } from '../../utils/H5P/form.utils';
 import { getLabel } from '../../utils/arrow.utils';
 import { SemanticsForm } from '../SemanticsForm/SemanticsForm';
-import './TopicMapItemForm.scss';
+import './TopicMapItemForm.css';
 
-export type TopicMapItemFormProps = {
+type TopicMapItemFormProps = {
   semantics: H5PFieldGroup;
   params: Params;
   parent: H5PForm;
@@ -40,7 +40,7 @@ export const TopicMapItemForm: FC<TopicMapItemFormProps> = ({
 
   const onUpdate = useCallback(
     (newParams: Params) => {
-      if (!newParams.topicMapItems) {
+      if (!newParams.topicMapItems?.length) {
         return;
       }
 
@@ -95,7 +95,7 @@ export const TopicMapItemForm: FC<TopicMapItemFormProps> = ({
       params={formParams}
       parent={parent}
       onSave={onUpdate}
-      formClassName="topic-map-item-form"
+      formClassName="h5p-editor-topic-map-topic-map-item-form"
     />
   ) : null;
 };

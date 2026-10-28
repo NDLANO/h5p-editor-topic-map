@@ -1,0 +1,26 @@
+/**
+ * {1} Fast transition in, slow transition out to leave a trail
+ */
+.h5p-editor-topic-map-grid-indicator {
+  background-color: transparent;
+  border: 0.125rem dashed var(--theme-color-3);
+  border-radius: 20%;
+  display: block;
+  height: 0;
+  opacity: 0.6;
+  padding: calc(100% - 0.25rem) 0 0 0;
+  position: relative;
+  transition-duration: 0.4s; /* {1} */
+  transition-property: background-color, border-color;
+  transition-timing-function: ease-in-out;
+  width: 100%;
+
+  &::before {
+    content: "";
+    height: calc(100% + 2 * var(--gap-size));
+    left: calc(-1 * var(--gap-size));
+    position: absolute;
+    top: calc(-1 * var(--gap-size));
+    width: calc(100% + 2 * var(--gap-size));
+  }
+}

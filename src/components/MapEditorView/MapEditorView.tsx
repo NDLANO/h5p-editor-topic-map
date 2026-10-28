@@ -1,5 +1,5 @@
 import type { H5PFieldGroup, H5PForm } from 'h5p-types';
-import { getImageUrl } from 'h5p-utils';
+import { H5P, getImageUrl } from 'h5p-utils';
 import { FC, useCallback, useMemo, useRef, useState } from 'react';
 import { t } from '../../H5P/H5P.util';
 import { ArrowItemType } from '../../types/ArrowItemType';
@@ -13,12 +13,15 @@ import { Dialog } from '../Dialog/Dialog';
 import { Grid, GridDimensions } from '../Grid/Grid';
 import { Toolbar, ToolbarButtonType } from '../Toolbar/Toolbar';
 import { TopicMapItemForm } from '../TopicMapItemForm/TopicMapItemForm';
-import * as styles from './MapEditorView.module.scss';
+import './MapEditorView.css';
 
-export type MapEditorViewProps = {
-  gapSize?: number;
-  numberOfColumns?: number;
-  numberOfRows?: number;
+/** @constant {number} minimumItemsForArrow Number of items needed before arrow can be created between two of them. */
+const minimumItemsForArrow = 2;
+
+// H5P dialog falls back to generic body string whenever dialogText is falsy, single space renders blank body instead.
+const BLANK_BODY = ' ';
+
+type MapEditorViewProps = {
   params: Params;
   parent: H5PForm;
   semantics: H5PFieldGroup;
@@ -26,18 +29,11 @@ export type MapEditorViewProps = {
 };
 
 export const MapEditorView: FC<MapEditorViewProps> = ({
-  gapSize,
-  numberOfColumns,
-  numberOfRows,
   params,
   parent,
   semantics,
   setParams,
 }) => {
-  const columns = numberOfColumns ?? 31;
-  const rows = numberOfRows ?? 19;
-  const defaultGapSize = 4;
-
   const [activeTool, setActiveTool] = useState<ToolbarButtonType | null>(null);
   const [gridItems, setGridItems] = useState(params.topicMapItems ?? []);
   const [arrowItems, setArrowItems] = useState<Array<ArrowItemType>>(
@@ -45,14 +41,11 @@ export const MapEditorView: FC<MapEditorViewProps> = ({
   );
 
   const [editedItem, setEditedItem] = useState<string | null>(null);
-  const [deletedItem, setDeletedItem] = useState<string | null>(null);
   const [selectedItem, setSelectedItem] = useState<string | null>(null);
   const [currentItemsLength, setCurrentItemsLength] = useState(
     gridItems.length,
   );
   const [editedArrow, setEditedArrow] = useState<string | null>(null);
-  const [showDeleteConfirmationDialog, setShowDeleteConfirmationDialog] =
-    useState(false);
   const updateGrid = useRef((newItems: TopicMapItemType[]): void =>
     updateGrid.current(newItems),
   );
@@ -92,39 +85,54 @@ export const MapEditorView: FC<MapEditorViewProps> = ({
     [arrowItems, setParams, updateArrows],
   );
 
-  const openDeleteDialogue = useCallback((itemId: string) => {
-    setDeletedItem(itemId);
-    setShowDeleteConfirmationDialog(true);
-  }, []);
+  const deleteItem = useCallback(
+    (itemId: string) => {
+      const newItems = gridItems.filter((item) => item.id !== itemId);
 
-  const deleteArrow = useCallback(
-    (id: string) => {
-      const newItems = arrowItems.filter((item) => item.id !== id);
+      updateItems(newItems);
+      setGridItems(newItems);
+      updateGrid.current(newItems);
 
-      updateArrows(newItems);
-      setArrowItems(newItems);
+      // Remove connected arrows after updateItems, which re-syncs the pre-deletion arrow list
+      const connectedArrows = findConnectedArrows(itemId, arrowItems);
+      if (connectedArrows.length > 0) {
+        const connectedIds = new Set(connectedArrows.map((arrow) => arrow.id));
+        const newArrowItems = arrowItems.filter(
+          (item) => !connectedIds.has(item.id),
+        );
+
+        updateArrows(newArrowItems);
+        setArrowItems(newArrowItems);
+      }
+
+      setSelectedItem(null);
+      setCurrentItemsLength(newItems.length);
     },
-    [arrowItems, updateArrows],
+    [arrowItems, gridItems, updateArrows, updateItems],
   );
 
-  const deleteItem = useCallback(() => {
-    const newItems = gridItems.filter((item) => item.id !== deletedItem);
+  const openDeleteDialogue = useCallback(
+    (itemId: string) => {
+      const dialog = new H5P.ConfirmationDialog({
+        headerText: t('draggable_delete-confirmation'),
+        dialogText: BLANK_BODY,
+        confirmText: t('draggable_delete-positive'),
+        cancelText: t('draggable_delete-negative'),
+        theme: true,
+      }).appendTo(document.body);
 
-    const connectedArrows = findConnectedArrows(deletedItem ?? '', arrowItems);
-    connectedArrows.forEach((item) => deleteArrow(item.id));
+      dialog.on('confirmed', () => {
+        deleteItem(itemId);
+      });
 
-    updateItems(newItems);
-    setGridItems(newItems);
-    updateGrid.current(newItems);
-    setShowDeleteConfirmationDialog(false);
-    setSelectedItem(null);
-    setCurrentItemsLength(newItems.length);
-  }, [arrowItems, deleteArrow, deletedItem, gridItems, updateItems]);
+      dialog.on('canceled', () => {
+        setSelectedItem(null);
+      });
 
-  const denyDeletion = useCallback(() => {
-    setShowDeleteConfirmationDialog(false);
-    setSelectedItem(null);
-  }, []);
+      dialog.show();
+    },
+    [deleteItem],
+  );
 
   const topicMapItemFormDialogTitle = t('map-editor-view_item-dialog-title');
   const backgroundImageField = useMemo(() => {
@@ -144,30 +152,28 @@ export const MapEditorView: FC<MapEditorViewProps> = ({
     : undefined;
 
   return (
-    <div className={styles.mapEditorView}>
+    <div className="h5p-editor-topic-map-map-editor-view">
       <Toolbar
         setActiveTool={setActive}
         activeTool={activeTool}
-        isArrowButtonDisabled={gridItems.length < 2}
+        isArrowButtonDisabled={gridItems.length < minimumItemsForArrow}
         setParams={setParams}
         params={params}
         parent={parent}
         backgroundImageField={backgroundImageField}
       />
       <div
-        className={`${styles.gridBorder} ${backgroundImage ? styles.backgroundImage : ''
+        className={`h5p-editor-topic-map-grid-border ${
+          backgroundImage ? 'backgroundImage' : ''
         }`}
         style={{ backgroundImage }}
       >
         <Grid
-          numberOfColumns={columns}
-          numberOfRows={rows}
           initialItems={gridItems}
           updateItems={updateItems}
           initialArrowItems={arrowItems}
           updateArrowItems={updateArrows}
           updateGridDimensions={updateGridDimensions}
-          gapSize={gapSize ?? defaultGapSize}
           setActiveTool={setActive}
           activeTool={activeTool}
           setEditedItem={setEditedItem}
@@ -180,37 +186,8 @@ export const MapEditorView: FC<MapEditorViewProps> = ({
           setCurrentItemsLength={setCurrentItemsLength}
         />
         <Dialog
-          isOpen={showDeleteConfirmationDialog}
-          title={t('draggable_delete-confirmation')}
-          onOpenChange={(isOpen) => {
-            if (!isOpen) {
-              setDeletedItem(null);
-              denyDeletion();
-            }
-          }}
-          size="medium"
-        >
-          <div className={styles.deleteConfirmationButtons}>
-            <button
-              type="button"
-              className={styles.deleteConfirmationPositive}
-              onClick={deleteItem}
-            >
-              {t('draggable_delete-positive')}
-            </button>
-            <button
-              type="button"
-              className={styles.deleteConfirmationNegative}
-              onClick={denyDeletion}
-            >
-              {t('draggable_delete-negative')}
-            </button>
-          </div>
-        </Dialog>
-        <Dialog
           isOpen={Boolean(semantics && (editedItem || editedArrow))}
           title={topicMapItemFormDialogTitle}
-          size="large"
           onOpenChange={(isOpen) => {
             if (!isOpen) {
               setEditedItem(null);

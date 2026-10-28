@@ -174,6 +174,7 @@ describe(calculateYPercentage.name, () => {
 });
 
 describe(updateItem.name, () => {
+  // eslint-disable-next-line @stylistic/ts/max-len
   it('should find the item in the items list and update the position and size based on the grid\'s width and height', () => {
     const item: TopicMapItemType = {
       id: '1',

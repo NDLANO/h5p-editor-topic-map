@@ -1,0 +1,52 @@
+.h5p-editor-topic-map-theme-picker {
+  .h5p-editor-topic-map-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--h5p-theme-spacing-m);
+
+    .h5p-editor-topic-map-button {
+      background-color: var(--theme-color-5);
+      border: 1px solid transparent;
+      border-radius: var(--h5p-theme-border-radius-small);
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+      color: var(--h5p-theme-text-primary);
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      font-family: inherit;
+      font-size: var(--h5p-theme-font-size-l);
+      gap: var(--h5p-theme-spacing-m);
+      padding: var(--h5p-theme-spacing-m);
+      transition: background-color 0.15s ease-in-out;
+
+      &:focus-visible {
+        outline: 2px ridge var(--theme-color-2);
+        outline-offset: 2px;
+      }
+
+      &:hover {
+        background-color: var(--theme-color-4);
+      }
+
+      &.buttonActive {
+        border-color: var(--theme-color-2);
+      }
+
+      .h5p-editor-topic-map-color-circles {
+        display: flex;
+
+        .h5p-editor-topic-map-color-circle {
+          --h5p-editor-topic-map-color-circle-size: var(--h5p-theme-spacing-m);
+
+          border-radius: 50%;
+          height: var(--h5p-editor-topic-map-color-circle-size);
+          width: var(--h5p-editor-topic-map-color-circle-size);
+
+          + .h5p-editor-topic-map-color-circle {
+            margin-left: calc(var(--h5p-editor-topic-map-color-circle-size) / -4);
+          }
+        }
+      }
+    }
+  }
+}

@@ -4,7 +4,20 @@ import { ArrowType } from '../types/ArrowType';
 import { OccupiedCell } from '../types/OccupiedCell';
 import { Position } from '../types/Position';
 import { TopicMapItemType } from '../types/TopicMapItemType';
+import { CELL_CENTER_OFFSET } from './constants';
 import { findItem, gridToPercentage } from './grid.utils';
+
+// eslint-disable-next-line @stylistic/ts/max-len
+/** @constant {number} oneAndAHalfCells Offset, in cells, applied to the start of a bi-directional arrow to move its head to the edge of the connected item. */
+const oneAndAHalfCells = 1.5;
+
+// eslint-disable-next-line @stylistic/ts/max-len
+/** @constant {number} oneAndThreeQuartersCells Offset, in cells, applied to an arrow's endpoint to move its head to the edge of the connected item. */
+const oneAndThreeQuartersCells = 1.75;
+
+// eslint-disable-next-line @stylistic/ts/max-len
+/** @constant {number} minimumEndSegmentLength Minimum length, in cells, of an arrow's last segment so its head keeps the segment's direction. */
+const minimumEndSegmentLength = 0.1;
 
 const arrowLabelJoins: Record<ArrowType, string> = {
   [ArrowType.BiDirectional]: '↔',
@@ -81,14 +94,14 @@ export const xAdjustmentStart = (
 ): number => {
   if (item.arrowType === ArrowType.BiDirectional) {
     if (isHorizontal && item.startGridPosition.x <= item.endGridPosition.x) {
-      return 0.5;
+      return CELL_CENTER_OFFSET;
     }
 
     if (isHorizontal) {
-      return -1.5;
+      return -oneAndAHalfCells;
     }
   }
-  return -0.5;
+  return -CELL_CENTER_OFFSET;
 };
 
 export const yAdjustmentStart = (
@@ -101,13 +114,41 @@ export const yAdjustmentStart = (
 ): number => {
   if (item.arrowType === ArrowType.BiDirectional) {
     if (!isHorizontal && item.startGridPosition.y <= item.endGridPosition.y) {
-      return 0.5;
+      return CELL_CENTER_OFFSET;
     }
     if (!isHorizontal) {
-      return -1.75;
+      return -oneAndThreeQuartersCells;
     }
   }
-  return -0.5;
+  return -CELL_CENTER_OFFSET;
+};
+
+/**
+ * Limit an endpoint adjustment along the direction of the arrow's last segment,
+ * so that a short segment does not end up pointing backwards.
+ * @param {number} adjustment Adjustment of the endpoint in cells.
+ * @param {number} sourceCoordinate Coordinate of the segment's source cell.
+ * @param {number} endCoordinate Coordinate of the segment's end cell.
+ * @returns {number} Adjustment that keeps the segment pointing towards the end.
+ */
+const clampEndAdjustment = (
+  adjustment: number,
+  sourceCoordinate: number,
+  endCoordinate: number,
+): number => {
+  const direction = Math.sign(endCoordinate - sourceCoordinate);
+  if (direction === 0) {
+    return adjustment;
+  }
+
+  const renderedSource = sourceCoordinate - CELL_CENTER_OFFSET;
+  const minimumEnd = renderedSource + direction * minimumEndSegmentLength;
+
+  if ((endCoordinate + adjustment - minimumEnd) * direction < 0) {
+    return minimumEnd - endCoordinate;
+  }
+
+  return adjustment;
 };
 
 export const xAdjustmentEnd = (item: {
@@ -126,27 +167,31 @@ export const xAdjustmentEnd = (item: {
     item.arrowType === ArrowType.Directional ||
     item.arrowType === ArrowType.BiDirectional
   ) {
-    if (isHorizontal && sourcePosition.x <= item.endGridPosition.x) {
-      return -1.75;
+    if (!isHorizontal) {
+      return -CELL_CENTER_OFFSET;
     }
 
-    if (isHorizontal) {
-      return 0.5;
-    }
+    const adjustment = sourcePosition.x <= item.endGridPosition.x
+      ? -oneAndThreeQuartersCells
+      : CELL_CENTER_OFFSET;
 
-    return -0.5;
+    return clampEndAdjustment(
+      adjustment,
+      sourcePosition.x,
+      item.endGridPosition.x,
+    );
   }
 
   if (item.arrowType === ArrowType.NonDirectional) {
     if (isHorizontal && sourcePosition.x <= item.endGridPosition.x) {
-      return -0.5;
+      return -CELL_CENTER_OFFSET;
     }
 
     if (isHorizontal) {
-      return -0.5;
+      return -CELL_CENTER_OFFSET;
     }
 
-    return -0.5;
+    return -CELL_CENTER_OFFSET;
   }
   return 0;
 };
@@ -168,24 +213,30 @@ export const yAdjustmentEnd = (item: {
     item.arrowType === ArrowType.BiDirectional
   ) {
     if (isHorizontal) {
-      return -0.5;
+      return -CELL_CENTER_OFFSET;
     }
-    if (sourcePosition.y <= item.endGridPosition.y) {
-      return -1.75;
-    }
-    return 0.5;
+
+    const adjustment = sourcePosition.y <= item.endGridPosition.y
+      ? -oneAndThreeQuartersCells
+      : CELL_CENTER_OFFSET;
+
+    return clampEndAdjustment(
+      adjustment,
+      sourcePosition.y,
+      item.endGridPosition.y,
+    );
   }
 
   if (item.arrowType === ArrowType.NonDirectional) {
     if (!isHorizontal && sourcePosition.y <= item.endGridPosition.y) {
-      return -0.5;
+      return -CELL_CENTER_OFFSET;
     }
 
     if (!isHorizontal) {
-      return -0.5;
+      return -CELL_CENTER_OFFSET;
     }
 
-    return -0.5;
+    return -CELL_CENTER_OFFSET;
   }
   return 0;
 };

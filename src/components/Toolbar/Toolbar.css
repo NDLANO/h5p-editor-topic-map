@@ -1,0 +1,16 @@
+.h5p-editor-topic-map-toolbar {
+  --topic-map-toolbar-color-base: #ffffff;
+  --topic-map-toolbar-color: #f5f5f5; /* Current H5P editor color, likely to be put in a custom css prop */
+  --topic-map-toolbar-color-contrast: #d1d1d1; /* Current H5P editor color, likely to be put in a custom css prop */
+  --topic-map-toolbar-color-selected: #f2f2f2;
+  --topic-map-toolbar-color-selected-contrast: #999999;
+  --topic-map-toolbar-color-text: #101729;
+
+  background: var(--topic-map-toolbar-color);
+  border: 1px solid var(--topic-map-toolbar-color-contrast);
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: var(--h5p-theme-spacing-xxs);
+  padding: var(--h5p-theme-spacing-xxs);
+}

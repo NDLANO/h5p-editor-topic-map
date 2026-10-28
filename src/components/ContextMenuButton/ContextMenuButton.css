@@ -1,0 +1,48 @@
+.h5p-editor-topic-map-context-menu-button {
+  aspect-ratio: 1;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--h5p-theme-border-radius-small);
+  color: var(--h5p-context-menu-color-contrast);
+  cursor: pointer;
+  font-size: var(--h5p-theme-font-size-xxl);
+  padding: 0;
+  pointer-events: all;
+  position: relative;
+  vertical-align: top;
+  width: var(--h5p-theme-spacing-xl);
+  z-index: 1;
+
+  &::before {
+    font-family: "H5PFontAwesome4", sans-serif;
+    left: 50%;
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  &.biDirectional::before {
+    content: var(--icon-fontawesome-arrows-left-right);
+  }
+
+  &.delete::before {
+    content: var(--icon-fontawesome-trash);
+  }
+
+  &.edit::before {
+    content: var(--icon-fontawesome-pen);
+  }
+
+  &.directional::before {
+    content: var(--icon-fontawesome-arrow-right);
+  }
+
+  &.nonDirectional::before {
+    content: var(--icon-fontawesome-minus);
+  }
+
+  &:hover,
+  &:focus {
+    border-color: var(--h5p-context-menu-color-contrast);
+  }
+}

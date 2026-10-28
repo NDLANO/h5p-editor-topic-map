@@ -1,0 +1,71 @@
+.h5p-editor-topic-map-scale-handle {
+  --h5p-editor-topic-map-handle-size: 1rem;
+
+  border-radius: var(--h5p-theme-border-radius-small);
+  pointer-events: all;
+  position: absolute;
+
+  &:focus-visible {
+    outline: 2px ridge var(--theme-color-4);
+    outline-offset: 2px;
+  }
+
+  &.h5p-editor-topic-map-scale-handle-left,
+  &.h5p-editor-topic-map-scale-handle-top-left,
+  &.h5p-editor-topic-map-scale-handle-bottom-left {
+    left: calc(var(--h5p-editor-topic-map-handle-size) / -2);
+  }
+
+  &.h5p-editor-topic-map-scale-handle-right,
+  &.h5p-editor-topic-map-scale-handle-top-right,
+  &.h5p-editor-topic-map-scale-handle-bottom-right {
+    right: calc(var(--h5p-editor-topic-map-handle-size) / -2);
+  }
+
+  &.h5p-editor-topic-map-scale-handle-top,
+  &.h5p-editor-topic-map-scale-handle-top-right,
+  &.h5p-editor-topic-map-scale-handle-top-left {
+    top: calc(var(--h5p-editor-topic-map-handle-size) / -2);
+  }
+
+  &.h5p-editor-topic-map-scale-handle-bottom,
+  &.h5p-editor-topic-map-scale-handle-bottom-right,
+  &.h5p-editor-topic-map-scale-handle-bottom-left {
+    bottom: calc(var(--h5p-editor-topic-map-handle-size) / -2);
+  }
+
+  &.h5p-editor-topic-map-scale-handle-left,
+  &.h5p-editor-topic-map-scale-handle-right {
+    cursor: col-resize;
+    height: 100%;
+    top: 0;
+    width: var(--h5p-editor-topic-map-handle-size);
+  }
+
+  &.h5p-editor-topic-map-scale-handle-top,
+  &.h5p-editor-topic-map-scale-handle-bottom {
+    cursor: row-resize;
+    height: var(--h5p-editor-topic-map-handle-size);
+    left: 0;
+    width: 100%;
+  }
+
+  &.h5p-editor-topic-map-scale-handle-top-right,
+  &.h5p-editor-topic-map-scale-handle-bottom-right,
+  &.h5p-editor-topic-map-scale-handle-bottom-left,
+  &.h5p-editor-topic-map-scale-handle-top-left {
+    height: var(--h5p-editor-topic-map-handle-size);
+    width: var(--h5p-editor-topic-map-handle-size);
+    z-index: 1;
+  }
+
+  &.h5p-editor-topic-map-scale-handle-top-right,
+  &.h5p-editor-topic-map-scale-handle-bottom-left {
+    cursor: nesw-resize;
+  }
+
+  &.h5p-editor-topic-map-scale-handle-bottom-right,
+  &.h5p-editor-topic-map-scale-handle-top-left {
+    cursor: nwse-resize;
+  }
+}

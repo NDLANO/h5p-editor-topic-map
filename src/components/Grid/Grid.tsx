@@ -18,6 +18,12 @@ import {
   updateArrowType,
 } from '../../utils/arrow.utils';
 import {
+  CELL_CENTER_OFFSET,
+  DEFAULT_GAP_SIZE,
+  DEFAULT_NUMBER_OF_COLUMNS,
+  DEFAULT_NUMBER_OF_ROWS,
+} from '../../utils/constants';
+import {
   calculatePosition,
   createArrowItem,
   createTopicMapItem,
@@ -42,22 +48,19 @@ import { Draggable } from '../Draggable/Draggable';
 import { GridIndicator } from '../GridIndicator/GridIndicator';
 import { ToolbarButtonType } from '../Toolbar/Toolbar';
 import { TopicMapItem } from '../TopicMapItem/TopicMapItem';
-import * as styles from './Grid.module.scss';
+import './Grid.css';
 
 export type GridDimensions = {
   numberOfColumns: number;
   numberOfRows: number;
 };
 
-export type GridProps = {
-  numberOfColumns: number;
-  numberOfRows: number;
+type GridProps = {
   initialItems: Array<TopicMapItemType>;
   updateItems: (items: Array<TopicMapItemType>) => void;
   initialArrowItems?: Array<ArrowItemType>;
   updateArrowItems: (items: Array<ArrowItemType>) => void;
   updateGridDimensions: (dimensions: GridDimensions) => void;
-  gapSize: number;
   children?: never;
   setActiveTool: (newValue: ToolbarButtonType | null) => void;
   activeTool: ToolbarButtonType | null;
@@ -72,14 +75,11 @@ export type GridProps = {
 };
 
 export const Grid: FC<GridProps> = ({
-  numberOfColumns,
-  numberOfRows,
   initialItems,
   updateItems,
   initialArrowItems,
   updateArrowItems,
   updateGridDimensions,
-  gapSize,
   setActiveTool,
   activeTool,
   setEditedItem,
@@ -104,6 +104,8 @@ export const Grid: FC<GridProps> = ({
     useState<ResizeDirection>('none');
   const [mouseOutsideGrid, setMouseOutsideGrid] = useState(false);
   const [prevIndex, setPrevIndex] = useState<number | null>(null);
+  // Index of the grid indicator that currently owns the roving tabindex
+  const [focusedIndicatorIndex, setFocusedIndicatorIndex] = useState(0);
   const [arrowIndicators, setArrowIndicators] = useState<Array<Position>>([]);
   const [arrowStartId, setArrowStartId] = useState<string | null>(null);
   const [ahPreviewGridPosition, setAhPreviewGridPosition] =
@@ -118,7 +120,10 @@ export const Grid: FC<GridProps> = ({
   useEffectOnce(() => {
      
     updateGrid.current = updateLocalGrid;
-    updateGridDimensions({ numberOfColumns, numberOfRows });
+    updateGridDimensions({
+      numberOfColumns: DEFAULT_NUMBER_OF_COLUMNS,
+      numberOfRows: DEFAULT_NUMBER_OF_ROWS,
+    });
   });
 
   const elementRef = useRef<HTMLDivElement>(null);
@@ -130,22 +135,29 @@ export const Grid: FC<GridProps> = ({
     setCurrentMousePosition(null);
   }, [activeTool]);
 
+  // Keep the roving tabindex within bounds if the grid shrinks
+  useEffect(() => {
+    const totalIndicators = DEFAULT_NUMBER_OF_COLUMNS * DEFAULT_NUMBER_OF_ROWS;
+    if (focusedIndicatorIndex >= totalIndicators) {
+      setFocusedIndicatorIndex(totalIndicators - 1);
+    }
+  }, [focusedIndicatorIndex]);
+
   const getCellSize = useCallback(() => {
     if (!elementRef.current) {
       return 0;
     }
 
-    const gridIndicator = elementRef.current.querySelector('.grid-indicator');
+    const gridIndicator =
+      elementRef.current.querySelector('.h5p-editor-topic-map-grid-indicator');
     if (!gridIndicator) {
       throw new Error('No grid indicators were rendered.');
     }
 
     const { width } = gridIndicator.getBoundingClientRect();
 
-    /**
-     * This number might differ from browser to browser, but it's hopefully (😬) ok.
-     * We use it to counteract floating point number errors.
-     */
+    // eslint-disable-next-line @stylistic/ts/max-len
+    /** @constant {number} numberOfSignificantDigits Significant digits used to counteract floating point errors that differ between browsers. */
     const numberOfSignificantDigits = 4;
 
     return (
@@ -153,12 +165,10 @@ export const Grid: FC<GridProps> = ({
       10 ** numberOfSignificantDigits
     );
 
-    // The grid's size is updated by external factors,
-    // but still affects the grid indicator size
+    // The grid's size is updated by external factors, but still affects the grid indicator size
   }, [size]);
 
   const cellSize = useMemo(getCellSize, [
-    gapSize,
     getCellSize,
     elementRef.current,
   ]);
@@ -181,12 +191,12 @@ export const Grid: FC<GridProps> = ({
           items.map((item) => mapTopicMapItemToElement(item, size, cellSize)),
           size.width,
           size.height,
-          gapSize,
+          DEFAULT_GAP_SIZE,
           cellSize,
         ),
       );
     },
-    [gapSize, cellSize, items, size, updateItems],
+    [cellSize, items, size, updateItems],
   );
 
   const createArrow = useCallback(
@@ -196,7 +206,7 @@ export const Grid: FC<GridProps> = ({
         const gridIndicator = document
           .elementsFromPoint(pointerPosition.x, pointerPosition.y)
           .find((element) =>
-            element.classList.contains('grid-indicator'),
+            element.classList.contains('h5p-editor-topic-map-grid-indicator'),
           ) as HTMLElement;
 
         const gridPosition: Position = {
@@ -232,7 +242,7 @@ export const Grid: FC<GridProps> = ({
             arrowIndicators.slice(-1)[0],
             gridPosition,
             cellsOfItem,
-            numberOfColumns,
+            DEFAULT_NUMBER_OF_COLUMNS,
           );
 
           const adjustedEndGridPosition = adjustArrowEndPosition(
@@ -247,13 +257,13 @@ export const Grid: FC<GridProps> = ({
             arrowType,
             gridToPercentage(
               adjustedStartGridPosition,
-              numberOfColumns,
-              numberOfRows,
+              DEFAULT_NUMBER_OF_COLUMNS,
+              DEFAULT_NUMBER_OF_ROWS,
             ),
             gridToPercentage(
               adjustedEndGridPosition,
-              numberOfColumns,
-              numberOfRows,
+              DEFAULT_NUMBER_OF_COLUMNS,
+              DEFAULT_NUMBER_OF_ROWS,
             ),
             ahPreviewGridPosition as Position,
             endPosition,
@@ -261,11 +271,11 @@ export const Grid: FC<GridProps> = ({
             arrowIndicators.slice(1).map((breakpointPosition) => {
               return gridToPercentage(
                 {
-                  x: breakpointPosition.x - 0.5,
-                  y: breakpointPosition.y - 0.5,
+                  x: breakpointPosition.x - CELL_CENTER_OFFSET,
+                  y: breakpointPosition.y - CELL_CENTER_OFFSET,
                 },
-                numberOfColumns,
-                numberOfRows,
+                DEFAULT_NUMBER_OF_COLUMNS,
+                DEFAULT_NUMBER_OF_ROWS,
               );
             }),
           );
@@ -290,9 +300,7 @@ export const Grid: FC<GridProps> = ({
       ahPreviewGridPosition,
       items,
       occupiedCells,
-      numberOfColumns,
       arrowIndicators,
-      numberOfRows,
       arrowItems,
       updateArrowItems,
     ],
@@ -328,8 +336,8 @@ export const Grid: FC<GridProps> = ({
         const newArrowIndicators = [
           ...arrowIndicators,
           {
-            y: Math.floor(index / numberOfColumns) + 1,
-            x: (index % numberOfColumns) + 1,
+            y: Math.floor(index / DEFAULT_NUMBER_OF_COLUMNS) + 1,
+            x: (index % DEFAULT_NUMBER_OF_COLUMNS) + 1,
           },
         ];
         setArrowIndicators(newArrowIndicators);
@@ -340,7 +348,6 @@ export const Grid: FC<GridProps> = ({
       arrowIndicators,
       arrowStartId,
       createBoxStart,
-      numberOfColumns,
     ],
   );
 
@@ -370,42 +377,42 @@ export const Grid: FC<GridProps> = ({
       const dragLeft = isDraggingLeft(
         indicatorIndex,
         boxStartIndex,
-        numberOfColumns,
+        DEFAULT_NUMBER_OF_COLUMNS,
       );
       const dragUp = isDraggingUp(
         indicatorIndex,
         boxStartIndex,
-        numberOfColumns,
-        numberOfRows,
+        DEFAULT_NUMBER_OF_COLUMNS,
+        DEFAULT_NUMBER_OF_ROWS,
       );
 
       // Get x and y percentage position
       const x = dragLeft
-        ? indicatorIndex % numberOfColumns
-        : boxStartIndex % numberOfColumns;
+        ? indicatorIndex % DEFAULT_NUMBER_OF_COLUMNS
+        : boxStartIndex % DEFAULT_NUMBER_OF_COLUMNS;
       const y = dragUp
-        ? Math.floor(indicatorIndex / numberOfColumns)
-        : Math.floor(boxStartIndex / numberOfColumns);
+        ? Math.floor(indicatorIndex / DEFAULT_NUMBER_OF_COLUMNS)
+        : Math.floor(boxStartIndex / DEFAULT_NUMBER_OF_COLUMNS);
 
-      const xPercentagePosition = (x / numberOfColumns) * 100;
-      const yPercentagePosition = (y / numberOfRows) * 100;
+      const xPercentagePosition = (x / DEFAULT_NUMBER_OF_COLUMNS) * 100;
+      const yPercentagePosition = (y / DEFAULT_NUMBER_OF_ROWS) * 100;
 
       // Get height percentage
       const yEnd = dragUp
-        ? Math.floor(boxStartIndex / numberOfColumns)
-        : Math.floor(indicatorIndex / numberOfColumns);
-      const yEndPercentagePosition = ((yEnd + 1) / numberOfRows) * 100;
+        ? Math.floor(boxStartIndex / DEFAULT_NUMBER_OF_COLUMNS)
+        : Math.floor(indicatorIndex / DEFAULT_NUMBER_OF_COLUMNS);
+      const yEndPercentagePosition = ((yEnd + 1) / DEFAULT_NUMBER_OF_ROWS) * 100;
 
       const heightPercentage = yEndPercentagePosition - yPercentagePosition;
 
       // Get width percentage
       const indicatorValue = dragLeft ? boxStartIndex + 1 : indicatorIndex + 1;
-      const lastIndexOnColumn = indicatorValue % numberOfColumns === 0;
+      const lastIndexOnColumn = indicatorValue % DEFAULT_NUMBER_OF_COLUMNS === 0;
 
-      const xEnd = indicatorValue % numberOfColumns;
+      const xEnd = indicatorValue % DEFAULT_NUMBER_OF_COLUMNS;
       const xEndPercentagePosition = lastIndexOnColumn
         ? 100
-        : (xEnd / numberOfColumns) * 100;
+        : (xEnd / DEFAULT_NUMBER_OF_COLUMNS) * 100;
 
       const widthPercentage = xEndPercentagePosition - xPercentagePosition;
 
@@ -435,7 +442,7 @@ export const Grid: FC<GridProps> = ({
         alreadyAdded ? lastItem.id : newItem.id,
         newSize,
         size,
-        gapSize,
+        DEFAULT_GAP_SIZE,
         cellSize,
         occupiedCells,
       );
@@ -470,11 +477,8 @@ export const Grid: FC<GridProps> = ({
       isDragging,
       boxStartIndex,
       size,
-      numberOfColumns,
-      numberOfRows,
       currentItemsLength,
       items,
-      gapSize,
       cellSize,
       occupiedCells,
       updateItems,
@@ -505,8 +509,8 @@ export const Grid: FC<GridProps> = ({
       }
 
       const dragLeft =
-        indicatorIndex % numberOfColumns <
-        (prevIndex ?? indicatorIndex) % numberOfColumns;
+        indicatorIndex % DEFAULT_NUMBER_OF_COLUMNS <
+        (prevIndex ?? indicatorIndex) % DEFAULT_NUMBER_OF_COLUMNS;
       const dragUp = (prevIndex ?? indicatorIndex) >= indicatorIndex;
 
       const onlyScaleVertically = resizeDirectionLock.includes('horizontal');
@@ -517,27 +521,27 @@ export const Grid: FC<GridProps> = ({
 
       // Get x and y percentage position
       const x = leftHandle
-        ? indicatorIndex % numberOfColumns
-        : boxStartIndex % numberOfColumns;
+        ? indicatorIndex % DEFAULT_NUMBER_OF_COLUMNS
+        : boxStartIndex % DEFAULT_NUMBER_OF_COLUMNS;
 
       const y = topHandle
-        ? Math.floor(indicatorIndex / numberOfColumns)
-        : Math.floor(boxStartIndex / numberOfColumns);
+        ? Math.floor(indicatorIndex / DEFAULT_NUMBER_OF_COLUMNS)
+        : Math.floor(boxStartIndex / DEFAULT_NUMBER_OF_COLUMNS);
 
       const xPercentagePosition = onlyScaleVertically
         ? existingItem.xPercentagePosition
-        : (x / numberOfColumns) * 100;
+        : (x / DEFAULT_NUMBER_OF_COLUMNS) * 100;
       const yPercentagePosition = onlyScaleHorizontally
         ? existingItem.yPercentagePosition
-        : (y / numberOfRows) * 100;
+        : (y / DEFAULT_NUMBER_OF_ROWS) * 100;
 
       // Get height percentage
       const yEnd = topHandle
         ? Math.floor(
-          (boxStartIndex + existingItem.widthPercentage) / numberOfColumns,
+          (boxStartIndex + existingItem.widthPercentage) / DEFAULT_NUMBER_OF_COLUMNS,
         )
-        : Math.floor(indicatorIndex / numberOfColumns);
-      const yEndPercentagePosition = ((yEnd + 1) / numberOfRows) * 100;
+        : Math.floor(indicatorIndex / DEFAULT_NUMBER_OF_COLUMNS);
+      const yEndPercentagePosition = ((yEnd + 1) / DEFAULT_NUMBER_OF_ROWS) * 100;
 
       const heightPercentage = findHeightPercentage(
         onlyScaleHorizontally,
@@ -550,12 +554,12 @@ export const Grid: FC<GridProps> = ({
 
       // Get width percentage
       const indicatorValue = indicatorIndex + 1;
-      const lastIndexOnColumn = indicatorValue % numberOfColumns === 0;
+      const lastIndexOnColumn = indicatorValue % DEFAULT_NUMBER_OF_COLUMNS === 0;
 
-      const xEnd = indicatorValue % numberOfColumns;
+      const xEnd = indicatorValue % DEFAULT_NUMBER_OF_COLUMNS;
       const xEndPercentagePosition = lastIndexOnColumn
         ? 100
-        : (xEnd / numberOfColumns) * 100;
+        : (xEnd / DEFAULT_NUMBER_OF_COLUMNS) * 100;
 
       const widthPercentage = findWidthPercentage(
         onlyScaleVertically,
@@ -596,7 +600,7 @@ export const Grid: FC<GridProps> = ({
         existingItem.id,
         newSize,
         size,
-        gapSize,
+        DEFAULT_GAP_SIZE,
         cellSize,
         occupiedCells,
       );
@@ -623,10 +627,7 @@ export const Grid: FC<GridProps> = ({
       resizedItemId,
       boxStartIndex,
       size,
-      numberOfColumns,
-      numberOfRows,
       items,
-      gapSize,
       cellSize,
       occupiedCells,
       updateItems,
@@ -679,8 +680,8 @@ export const Grid: FC<GridProps> = ({
         arrowStartId != null
       ) {
         setCurrentMousePosition({
-          y: Math.floor(indicatorIndex / numberOfColumns) + 1,
-          x: (indicatorIndex % numberOfColumns) + 1,
+          y: Math.floor(indicatorIndex / DEFAULT_NUMBER_OF_COLUMNS) + 1,
+          x: (indicatorIndex % DEFAULT_NUMBER_OF_COLUMNS) + 1,
         });
       }
     },
@@ -688,23 +689,128 @@ export const Grid: FC<GridProps> = ({
       activeTool,
       arrowStartId,
       createBoxEnter,
-      numberOfColumns,
       resizeBoxEnter,
       resizedItemId,
+    ],
+  );
+
+  // Move the roving tabindex (and DOM focus) to the indicator at the given index
+  const focusIndicator = useCallback(
+    (index: number) => {
+      if (!elementRef.current) {
+        return;
+      }
+
+      const indicators = elementRef.current.querySelectorAll<HTMLElement>(
+        '[data-grid-indicator="true"]',
+      );
+      const clampedIndex = Math.min(Math.max(index, 0), indicators.length - 1);
+      indicators[clampedIndex]?.focus();
+      setFocusedIndicatorIndex(clampedIndex);
+    },
+    [],
+  );
+
+  const handleGridKeyDown = useCallback(
+    (event: React.KeyboardEvent<HTMLDivElement>) => {
+      const target = event.target as HTMLElement;
+      if (!target.hasAttribute('data-grid-indicator')) {
+        return;
+      }
+
+      const isCreatingBox = activeTool === ToolbarButtonType.CreateBox;
+      const totalIndicators = DEFAULT_NUMBER_OF_COLUMNS * DEFAULT_NUMBER_OF_ROWS;
+
+      const moveFocus = (index: number): void => {
+        if (index < 0 || index >= totalIndicators) {
+          return;
+        }
+        focusIndicator(index);
+
+        // While a box is being created with the keyboard, arrow keys expand it
+        if (isCreatingBox && isDragging) {
+          onGridIndicatorMouseEnter(index);
+        }
+      };
+
+      switch (event.key) {
+        case 'ArrowRight':
+          event.preventDefault();
+          moveFocus(focusedIndicatorIndex + 1);
+          return;
+        case 'ArrowLeft':
+          event.preventDefault();
+          moveFocus(focusedIndicatorIndex - 1);
+          return;
+        case 'ArrowDown':
+          event.preventDefault();
+          moveFocus(focusedIndicatorIndex + DEFAULT_NUMBER_OF_COLUMNS);
+          return;
+        case 'ArrowUp':
+          event.preventDefault();
+          moveFocus(focusedIndicatorIndex - DEFAULT_NUMBER_OF_COLUMNS);
+          return;
+        case 'Home':
+          event.preventDefault();
+          moveFocus(focusedIndicatorIndex - (focusedIndicatorIndex % DEFAULT_NUMBER_OF_COLUMNS));
+          return;
+        case 'End':
+          event.preventDefault();
+          moveFocus(
+            focusedIndicatorIndex -
+              (focusedIndicatorIndex % DEFAULT_NUMBER_OF_COLUMNS) +
+              DEFAULT_NUMBER_OF_COLUMNS -
+              1,
+          );
+          return;
+        case 'Enter':
+        case ' ':
+          event.preventDefault();
+
+          if (isCreatingBox && isDragging) {
+            createBoxEnd();
+            return;
+          }
+
+          indicatorClicked(focusedIndicatorIndex);
+
+          // Materialize initial 1x1 box, mirroring the mouse flow where the box is created on the first cell entered
+          if (isCreatingBox && !isDragging) {
+            onGridIndicatorMouseEnter(focusedIndicatorIndex);
+          }
+          return;
+        case 'Escape':
+          if (isCreatingBox && isDragging) {
+            event.preventDefault();
+            createBoxEnd();
+          }
+          return;
+        default:
+        // The grid only handles the keys listed above
+      }
+    },
+    [
+      activeTool,
+      createBoxEnd,
+      focusIndicator,
+      focusedIndicatorIndex,
+      indicatorClicked,
+      isDragging,
+      onGridIndicatorMouseEnter,
     ],
   );
 
   const gridIndicators = useMemo(() => {
     const label = t('grid-indicator_label');
 
-    return Array(numberOfColumns * numberOfRows)
+    return Array(DEFAULT_NUMBER_OF_COLUMNS * DEFAULT_NUMBER_OF_ROWS)
       .fill(null)
       .map((_, index) => ({
         id: H5P.createUUID(),
         label,
         index,
       }));
-  }, [numberOfColumns, numberOfRows]);
+  }, []);
 
   const gridIndicatorElements = useMemo(
     () =>
@@ -715,16 +821,17 @@ export const Grid: FC<GridProps> = ({
           onMouseEnter={() => onGridIndicatorMouseEnter(index)}
           label={label}
           position={{
-            y: Math.floor(index / numberOfColumns) + 1,
-            x: (index % numberOfColumns) + 1,
+            y: Math.floor(index / DEFAULT_NUMBER_OF_COLUMNS) + 1,
+            x: (index % DEFAULT_NUMBER_OF_COLUMNS) + 1,
           }}
+          tabIndex={index === focusedIndicatorIndex ? 0 : -1}
         />
       )),
     [
       gridIndicators,
-      numberOfColumns,
       indicatorClicked,
       onGridIndicatorMouseEnter,
+      focusedIndicatorIndex,
     ],
   );
   const deferredGridIndicatorElements = useDeferredValue(gridIndicatorElements);
@@ -752,12 +859,12 @@ export const Grid: FC<GridProps> = ({
         elements,
         size.width,
         size.height,
-        gapSize,
+        DEFAULT_GAP_SIZE,
         cellSize,
       );
       setOccupiedCells(newOccupiedCells);
     },
-    [size, activeTool, items, updateItems, gapSize, cellSize],
+    [size, activeTool, items, updateItems, cellSize],
   );
 
   const editItem = useCallback(
@@ -791,16 +898,19 @@ export const Grid: FC<GridProps> = ({
 
   const startResize = useCallback(
     (item: TopicMapItemType, directionLock: ResizeDirection) => {
-      const x = Math.floor((item.xPercentagePosition / 100) * numberOfColumns);
-      const y = Math.floor((item.yPercentagePosition / 100) * numberOfRows);
-      const cellIndex = x + y * numberOfColumns;
+      const x = Math.floor((item.xPercentagePosition / 100) * DEFAULT_NUMBER_OF_COLUMNS);
+      const y = Math.floor((item.yPercentagePosition / 100) * DEFAULT_NUMBER_OF_ROWS);
+      const cellIndex = x + y * DEFAULT_NUMBER_OF_COLUMNS;
 
       setBoxStartIndex(cellIndex);
       setResizedItemId(item.id);
       setResizeDirectionLock(directionLock);
-      updateGridDimensions({ numberOfColumns, numberOfRows });
+      updateGridDimensions({
+        numberOfColumns: DEFAULT_NUMBER_OF_COLUMNS,
+        numberOfRows: DEFAULT_NUMBER_OF_ROWS,
+      });
     },
-    [numberOfColumns, numberOfRows, updateGridDimensions],
+    [updateGridDimensions],
   );
 
   const setArrowType = useCallback(
@@ -812,14 +922,14 @@ export const Grid: FC<GridProps> = ({
 
       if (updatedItem) {
         const newItem = updateArrowType(arrowItems, updatedItem, type, items, {
-          numberOfColumns,
-          numberOfRows,
+          numberOfColumns: DEFAULT_NUMBER_OF_COLUMNS,
+          numberOfRows: DEFAULT_NUMBER_OF_ROWS,
         });
         updateArrowItems(newItem);
         setArrowItems(newItem);
       }
     },
-    [arrowItems, items, updateArrowItems, numberOfColumns, numberOfRows],
+    [arrowItems, items, updateArrowItems],
   );
 
   const children = useMemo(() => {
@@ -831,6 +941,7 @@ export const Grid: FC<GridProps> = ({
       <Draggable
         key={item.id}
         id={item.id}
+        label={item.label}
         initialXPosition={calculatePosition(
           item.xPercentagePosition,
           size.width,
@@ -840,13 +951,13 @@ export const Grid: FC<GridProps> = ({
           size.height,
         )}
         updatePosition={(newPosition) => updateItemPosition(item, newPosition)}
+        updateSize={(newSize) => updateItemSize(item, newSize)}
         initialWidth={Math.abs(
           calculatePosition(item.widthPercentage, size.width),
         )}
         initialHeight={Math.abs(
           calculatePosition(item.heightPercentage, size.height),
         )}
-        gapSize={gapSize}
         cellSize={cellSize}
         gridSize={size}
         occupiedCells={occupiedCells}
@@ -867,7 +978,6 @@ export const Grid: FC<GridProps> = ({
   }, [
     size,
     items,
-    gapSize,
     cellSize,
     occupiedCells,
     isDragging,
@@ -878,6 +988,7 @@ export const Grid: FC<GridProps> = ({
     mouseOutsideGrid,
     activeTool,
     updateItemPosition,
+    updateItemSize,
     startResize,
     createArrow,
   ]);
@@ -892,7 +1003,6 @@ export const Grid: FC<GridProps> = ({
         <Arrow
           key={item.id}
           cellSize={cellSize}
-          gapSize={gapSize}
           item={item}
           editItem={editArrow}
           deleteItem={deleteArrow}
@@ -908,7 +1018,6 @@ export const Grid: FC<GridProps> = ({
       cellSize,
       deleteArrow,
       editArrow,
-      gapSize,
       selectedItem,
       setArrowType,
       setSelectedItem,
@@ -930,11 +1039,10 @@ export const Grid: FC<GridProps> = ({
             key={`${position.x}-${position.y}`}
             position={position}
             cellSize={cellSize}
-            gapSize={gapSize}
           />
         );
       }),
-    [arrowIndicators, cellSize, gapSize],
+    [arrowIndicators, cellSize],
   );
 
   const resize = useCallback(() => {
@@ -961,7 +1069,7 @@ export const Grid: FC<GridProps> = ({
   useEffectOnce(() => {
     const windowClickListener = (event: MouseEvent | TouchEvent): void => {
       const draggableWasClicked = !!(event.target as HTMLElement).closest(
-        '.draggable, .arrow-item, .context-menu-button, .scaleHandle',
+        '.h5p-editor-topic-map-draggable, .h5p-editor-topic-map-context-menu, .h5p-editor-topic-map-scale-handle',
       );
 
       if (!draggableWasClicked) {
@@ -978,13 +1086,6 @@ export const Grid: FC<GridProps> = ({
   });
 
   useEffect(() => {
-    resize();
-
-    // The grid's number of rows/columns might be updated by external factors,
-    // but still affects the cell size
-  }, [numberOfColumns, numberOfRows]);
-
-  useEffect(() => {
     if (!size) {
       return;
     }
@@ -994,21 +1095,21 @@ export const Grid: FC<GridProps> = ({
         items.map((item) => mapTopicMapItemToElement(item, size, cellSize)),
         size.width,
         size.height,
-        gapSize,
+        DEFAULT_GAP_SIZE,
         cellSize,
       ),
     );
-  }, [gapSize, cellSize, items, size]);
+  }, [cellSize, items, size]);
 
-  let className = styles.grid;
+  let className = 'h5p-editor-topic-map-grid';
 
   if (activeHoverOnGrid) {
-    className += ` ${styles.gridIndicatorsActive}`;
+    className += ' h5p-editor-topic-map-grid-indicators-active';
   }
 
   const isCreatingArrow = activeTool === ToolbarButtonType.CreateArrow;
   if (isCreatingArrow) {
-    className += ` ${styles.isCreatingArrow}`;
+    className += ' h5p-editor-topic-map-is-creating-arrow';
   }
 
   useEffect(() => {
@@ -1024,9 +1125,9 @@ export const Grid: FC<GridProps> = ({
       className={className}
       style={{
         // @ts-expect-error Custom properties should be allowed
-        '--gap-size': `${gapSize}px`,
-        gridTemplateColumns: `repeat(${numberOfColumns}, 1fr)`,
-        gridTemplateRows: `repeat(${numberOfRows}, 1fr)`,
+        '--gap-size': `${DEFAULT_GAP_SIZE}px`,
+        gridTemplateColumns: `repeat(${DEFAULT_NUMBER_OF_COLUMNS}, 1fr)`,
+        gridTemplateRows: `repeat(${DEFAULT_NUMBER_OF_ROWS}, 1fr)`,
         cursor: isDragging ? 'pointer' : 'auto',
         inset: 0
       }}
@@ -1034,6 +1135,7 @@ export const Grid: FC<GridProps> = ({
         createBoxEnd();
         resizeBoxEnd();
       }}
+      onKeyDown={handleGridKeyDown}
       onMouseLeave={() => cancelActions()}
       onMouseEnter={() => {
         if (mouseOutsideGrid) {
@@ -1047,7 +1149,6 @@ export const Grid: FC<GridProps> = ({
       <ArrowIndicatorContainer
         arrowIndicators={childrenArrowIndicators}
         cellSize={cellSize}
-        gapSize={gapSize}
         breakpoints={arrowIndicators}
         currentMousePosition={currentMousePosition}
       />

@@ -1,12 +1,9 @@
 import { FC } from 'react';
 import { ContextMenuAction } from '../../types/ContextMenuAction';
 import { ContextMenuButton } from '../ContextMenuButton/ContextMenuButton';
-import * as styles from './ContextMenu.module.scss';
+import './ContextMenu.css';
 
-/*
-  Name of svg icon should be similar to this,
-  specify the svg icon in icons.tsx
-*/
+/* Name of svg icon should be similar to this, specify the svg icon in icons.tsx */
 export enum ContextMenuButtonType {
   Edit = 'edit',
   Delete = 'delete',
@@ -15,7 +12,10 @@ export enum ContextMenuButtonType {
   ArrowNonDirectional = 'nonDirectional',
 }
 
-export type ContextMenuProps = {
+/** @constant {number} contextMenuOffsetDivisor Divides the grid width to get the context menu's horizontal offset. */
+const contextMenuOffsetDivisor = 14;
+
+type ContextMenuProps = {
   show: boolean;
   turnLeft: boolean;
   actions: Array<ContextMenuAction>;
@@ -32,7 +32,7 @@ export const ContextMenu: FC<ContextMenuProps> = ({
   y,
   gridWidth,
 }) => {
-  const className = turnLeft ? styles.left : styles.right;
+  const className = turnLeft ? 'left' : 'right';
 
   let rightPosition: number | undefined;
   let leftPosition: number | undefined;
@@ -40,7 +40,7 @@ export const ContextMenu: FC<ContextMenuProps> = ({
   const isDynamicallyPositioned = x && gridWidth;
   if (isDynamicallyPositioned) {
     if (turnLeft) {
-      const horizontalOffset = gridWidth / 14;
+      const horizontalOffset = gridWidth / contextMenuOffsetDivisor;
       rightPosition = gridWidth - x - horizontalOffset;
     }
     else {
@@ -50,8 +50,9 @@ export const ContextMenu: FC<ContextMenuProps> = ({
 
   return (
     <div
-      className={`${styles.contextMenu} ${className} ${show && styles.show
-      } context-menu-button`}
+      className={`h5p-editor-topic-map-context-menu ${className} ${
+        show ? 'show' : ''
+      }`}
       style={
         x && y
           ? { left: leftPosition, right: rightPosition, top: y }

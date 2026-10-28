@@ -1,8 +1,7 @@
 import { FC, useCallback, useEffect, useRef, useState, MouseEvent, TouchEvent } from 'react';
-import { capitalize } from '../../utils/string.utils';
-import * as styles from './ScaleHandle.module.scss';
+import './ScaleHandle.css';
 
-export type ScaleHandleProps = {
+type ScaleHandleProps = {
   labelText: string;
   position:
   | 'top'
@@ -15,6 +14,8 @@ export type ScaleHandleProps = {
   | 'top-left';
   onScaleStop: () => void;
   onScaleStart: () => void;
+  tabIndex: number;
+  onResizeByCell?: (dx: number, dy: number) => void;
 };
 
 export const ScaleHandle: FC<ScaleHandleProps> = ({
@@ -22,11 +23,12 @@ export const ScaleHandle: FC<ScaleHandleProps> = ({
   position,
   onScaleStop,
   onScaleStart,
+  tabIndex,
+  onResizeByCell,
 }) => {
   const [isDragging, setIsDragging] = useState(false);
   const elementRef = useRef<HTMLDivElement>(null);
-  const className =
-    styles[`scaleHandle${position.split('-').map(capitalize).join('')}`];
+  const className = `h5p-editor-topic-map-scale-handle-${position}`;
 
   const startDrag = useCallback(
     (event: MouseEvent | TouchEvent) => {
@@ -47,12 +49,34 @@ export const ScaleHandle: FC<ScaleHandleProps> = ({
     onScaleStop();
   }, [isDragging, onScaleStop]);
 
+  const handleKeyDown = useCallback(
+    (event: React.KeyboardEvent<HTMLDivElement>) => {
+      if (!onResizeByCell) {
+        return;
+      }
+
+      const directionByArrowKey: Record<string, { dx: number; dy: number }> = {
+        ArrowRight: { dx: 1, dy: 0 },
+        ArrowLeft: { dx: -1, dy: 0 },
+        ArrowDown: { dx: 0, dy: 1 },
+        ArrowUp: { dx: 0, dy: -1 },
+      };
+
+      const direction = directionByArrowKey[event.key];
+      if (!direction) {
+        return;
+      }
+
+      // Stop the parent Draggable from moving the item instead of resizing it
+      event.preventDefault();
+      event.stopPropagation();
+      onResizeByCell(direction.dx, direction.dy);
+    },
+    [onResizeByCell],
+  );
+
   useEffect(() => {
-    /* 
-      These are tied to `window`, because the
-      cursor might not be on top of the element
-      when the drag action ends.
-    */
+    /* These are tied to `window`, because the cursor might not be on top of the element when the drag action ends. */
     window.addEventListener('mouseup', stopDrag);
     window.addEventListener('touchend', stopDrag);
 
@@ -66,11 +90,12 @@ export const ScaleHandle: FC<ScaleHandleProps> = ({
     <div
       ref={elementRef}
       role="button"
-      tabIndex={0}
-      className={`${styles.scaleHandle} ${className} scaleHandle`}
+      tabIndex={tabIndex}
+      className={`h5p-editor-topic-map-scale-handle ${className}`}
       aria-label={labelText}
       onMouseDown={startDrag}
       onTouchStart={startDrag}
+      onKeyDown={handleKeyDown}
     />
   );
 };

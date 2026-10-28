@@ -1,3 +1,4 @@
+import { H5P } from 'h5p-utils';
 import { ArrowItemType } from '../types/ArrowItemType';
 import { ArrowType } from '../types/ArrowType';
 import { Cell } from '../types/Cell';
@@ -97,6 +98,7 @@ export const getAllCells = (
   return cells;
 };
 
+/** @constant {number} marginOfErrorForPositioning Margin (px) used when checking which grid cells element occupies. */
 const marginOfErrorForPositioning = 5;
 
 export const cellIsOccupiedByElement = (
@@ -140,7 +142,7 @@ export const findOccupiedCells = (
 ): Array<OccupiedCell> => {
   const occupiedCells: Array<OccupiedCell> = [];
 
-   
+
   for (const element of elements) {
     occupiedCells.push(
       ...findCellsElementOccupies(
@@ -244,14 +246,6 @@ export const coordinatePosToPx = (
   return coordinate * stepSize;
 };
 
-export const coordinateSizeToPx = (
-  coordinate: number,
-  gapSize: number,
-  cellSize: number,
-): number => {
-  return coordinate * cellSize + (coordinate - 1) * gapSize;
-};
-
 export const isDraggingLeft = (
   indicatorIndex: number,
   boxStartPosition: number,
@@ -321,10 +315,9 @@ export const findHeightPercentage = (
 };
 
 export const createTopicMapItem = (): TopicMapItemType => {
-  const id = crypto.randomUUID();
+  const id = H5P.createUUID();
 
-  // backgroundImage is intentionally set to undefined here
-  // to correctly make the image field empty on item creation
+  // backgroundImage is intentionally set to undefined here to correctly make the image field empty on item creation
   const item: TopicMapItemType = {
     id,
     xPercentagePosition: 0,
@@ -351,7 +344,7 @@ export const createArrowItem = (
   breakpoints: Array<Position>,
   relativeBreakpoints: Array<Position>,
 ): ArrowItemType => {
-  const id = crypto.randomUUID();
+  const id = H5P.createUUID();
 
   const item: ArrowItemType = {
     id,
@@ -394,35 +387,6 @@ export const findConnectedArrows = (
   return arrows.filter((arrow) =>
     [arrow.startElementId, arrow.endElementId].includes(itemId),
   );
-};
-
-export const asGridPosition = (
-  position: Position,
-  width: number,
-  height: number,
-): Position => {
-  const xPercentagePosition = calculateXPercentage(position.x, width);
-  const yPercentagePosition = calculateYPercentage(position.y, height);
-  return {
-    x: xPercentagePosition,
-    y: yPercentagePosition,
-  } as Position;
-};
-
-export const straightenArrowEnd = (
-  start: Position,
-  end: Position,
-): Position => {
-  if (Math.abs(start.x - end.x) >= Math.abs(start.y - end.y)) {
-    return {
-      x: end.x,
-      y: start.y,
-    } as Position;
-  }
-  return {
-    x: start.x,
-    y: end.y,
-  } as Position;
 };
 
 export const gridToPercentage = (

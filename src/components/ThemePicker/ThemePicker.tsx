@@ -2,9 +2,12 @@ import { FC, useCallback, useMemo } from 'react';
 import { t } from '../../H5P/H5P.util';
 import { ColorTheme } from '../../types/ColorTheme';
 import { themes } from '../../utils/theme.utils';
-import * as styles from './ThemePicker.module.scss';
+import './ThemePicker.css';
 
-export type ThemePickerProps = {
+/** @constant {number} numberOfThemeColors Number of colors in a theme, each rendered as a circle. */
+const numberOfThemeColors = 4;
+
+type ThemePickerProps = {
   activeTheme: ColorTheme;
   setTheme: (theme: ColorTheme) => void;
 };
@@ -15,9 +18,9 @@ export const ThemePicker: FC<ThemePickerProps> = ({
 }) => {
   const renderColorCircles = useCallback(
     () =>
-      Array.from({ length: 4 }).map((_, index) => (
+      Array.from({ length: numberOfThemeColors }).map((_, index) => (
         <span
-          className={styles.colorCircle}
+          className="h5p-editor-topic-map-color-circle"
           key={index}
           style={{ backgroundColor: `var(--theme-color-${index + 1})` }}
         />
@@ -31,12 +34,15 @@ export const ThemePicker: FC<ThemePickerProps> = ({
         <button
           type="button"
           key={value}
-          className={`theme-${value} ${styles.button}${value === activeTheme ? ` ${styles.buttonActive}` : ''
+          className={`h5p-editor-topic-map-theme-${value} h5p-editor-topic-map-button${
+            value === activeTheme ? ' buttonActive' : ''
           }`}
           onClick={() => setTheme(value)}
         >
           {t(labelKey)}
-          <div className={styles.colorCircles}>{renderColorCircles()}</div>
+          <div className="h5p-editor-topic-map-color-circles">
+            {renderColorCircles()}
+          </div>
         </button>
       )),
     [activeTheme, renderColorCircles, setTheme],
@@ -45,9 +51,11 @@ export const ThemePicker: FC<ThemePickerProps> = ({
   const themePickerLabel = t('theme-picker_label');
 
   return (
-    <>
-      <div className="h5peditor-label">{themePickerLabel}</div>
-      <div className={styles.buttons}>{colorThemes}</div>
-    </>
+    <div className="h5p-editor-topic-map-theme-picker">
+      <div className="h5peditor-label-wrapper">
+        <div className="h5peditor-label">{themePickerLabel}</div>
+      </div>
+      <div className="h5p-editor-topic-map-buttons">{colorThemes}</div>
+    </div>
   );
 };

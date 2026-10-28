@@ -1,0 +1,58 @@
+.h5p-editor-topic-map-toolbar-button {
+  aspect-ratio: 1;
+  background: var(--topic-map-toolbar-color-base);
+  border: 1px solid var(--topic-map-toolbar-color-contrast);
+  border-radius: var(--h5p-theme-border-radius-small);
+  color: var(--topic-map-toolbar-color-text);
+  cursor: pointer;
+  font-size: var(--h5p-theme-font-size-l);
+  padding: 0;
+  position: relative;
+  width: calc(2.5 * var(--h5p-theme-spacing-m));
+
+  &:focus-visible {
+    outline: 2px ridge var(--topic-map-toolbar-color-contrast);
+    outline-offset: 1px;
+  }
+
+  &::before {
+    font-family: "H5PFontAwesome4", sans-serif;
+    left: 50%;
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  &.createArrow::before {
+    content: var(--icon-fontawesome-arrow-right);
+  }
+
+  &.createBox::before {
+    content: var(--icon-fontawesome-square-plus);
+    font-size: var(--h5p-theme-font-size-xl);
+  }
+
+  &.mapAppearance::before {
+    content: var(--icon-fontawesome-brush);
+  }
+
+  &:not(.active):hover {
+    background: var(--topic-map-toolbar-color-selected);
+    border-color: var(--topic-map-toolbar-color-selected-contrast);
+    transition: 0.1s;
+  }
+
+  &.active {
+    background: var(--theme-color-2);
+    border: 1px solid var(--theme-color-1);
+    color: var(--theme-color-base);
+
+    &:hover {
+      background: var(--theme-color-1);
+    }
+  }
+
+  &:disabled {
+    filter: grayscale(100%);
+  }
+}
